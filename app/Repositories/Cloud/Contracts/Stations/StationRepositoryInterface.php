@@ -14,7 +14,7 @@ interface StationRepositoryInterface
      * Get a list of stations based on the provided query
      * @param $request
      */
-    public function getStations($request): array;
+    public function getStations($request);
     /**
      * Get a specific station by its ID.
      * @param int $id
