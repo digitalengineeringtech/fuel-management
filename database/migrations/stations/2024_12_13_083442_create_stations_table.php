@@ -15,15 +15,16 @@ return new class extends Migration
             $table->id();
             $table->string('name', 50);
             $table->string('station_no', 20);
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->string('phone_one', 20);
-            $table->string('phone_two', 20);
+            $table->string('phone_two', 20)->nullable();
             $table->string('address', 50);
             $table->dateTime('opening_date');
             $table->integer('subscribe_year');
             $table->datetime('expiry_date');
             $table->string('opening_hour');
             $table->string('closing_hour');
+            $table->string('station_database')->nullable();
             $table->timestamps();
         });
     }
