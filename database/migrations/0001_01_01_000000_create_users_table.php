@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('station_id')->nullable();
             $table->string('name', 50);
-            $table->string('email', 20)->unique();
-            $table->string('phone', 20);
+            $table->string('email', 50)->unique();
+            $table->string('phone', 20)->nullable();
             $table->string('password');
             $table->string('card_id', 15)->nullable();
             $table->integer('tank_count')->nullable();
