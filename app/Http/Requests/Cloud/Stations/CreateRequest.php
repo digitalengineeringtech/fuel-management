@@ -23,7 +23,7 @@ class CreateRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:50',
-            'station_no' => 'required|string|max:20',
+            'station_no' => 'required|string|max:20|unique:stations',
             'image' => 'nullable|image|max:4096',
             'phone_one' => 'required|string|max:20',
             'phone_two' => 'nullable|string|max:20',
