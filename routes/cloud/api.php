@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Cloud\StationController;
+use App\Http\Controllers\Cloud\Stations\StationController;
 
 // Route::middleware('auth:sanctum')->group(function(){
 //     // Cloud API Routes goes here
