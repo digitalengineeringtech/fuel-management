@@ -32,8 +32,8 @@ class RepositoryServiceProvider extends ServiceProvider
     private function bindRepositories(string $type)
     {
         // Base directory for Contracts and Concretes
-        $contractsDir = app_path("Repositories/{$type}/Contracts");
-        $concretesDir = app_path("Repositories/{$type}/Concretes");
+        $contractsDir = base_path("app/Repositories/{$type}/Contracts");
+        $concretesDir = base_path("app/Repositories/{$type}/Concretes");
 
         // Get all contract interface files
         $interfaceFiles = File::allFiles($contractsDir);
@@ -68,13 +68,20 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     private function getNamespaceFromPath(string $filePath, string $contractFolder, string $type): string
     {
-        // Extract the relative path by removing the `app_path` prefix
-        $relativePath = str_replace(app_path() . '/', '', $filePath);
+        // Normalize file path to use the correct directory separator
+        $normalizedPath = str_replace(DIRECTORY_SEPARATOR, '/', $filePath);
+
+        // Remove the `base_path` prefix to get the relative path
+        $relativePath = str_replace(base_path() . '/', '', $normalizedPath);
+
+        // Remove the 'app/' prefix specifically
+        $relativePath = ltrim($relativePath, 'app/');
 
         // Convert the relative path into a namespace
         $namespace = str_replace(['/', '.php'], ['\\', ''], $relativePath);
 
         // Ensure the namespace starts with `App\`
         return 'App\\' . $namespace;
+
     }
 }
