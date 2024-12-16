@@ -68,20 +68,19 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     private function getNamespaceFromPath(string $filePath, string $contractFolder, string $type): string
     {
-        // Normalize file path to use the correct directory separator
+        // Normalize the file path to forward slashes
         $normalizedPath = str_replace(DIRECTORY_SEPARATOR, '/', $filePath);
 
-        // Remove the `base_path` prefix to get the relative path
-        $relativePath = str_replace(base_path() . '/', '', $normalizedPath);
+        // Remove the base path (ensure forward slashes are consistent)
+        $relativePath = str_replace(str_replace(DIRECTORY_SEPARATOR, '/', base_path() . '/'), '', $normalizedPath);
 
-        // Remove the 'app/' prefix specifically
-        $relativePath = ltrim($relativePath, 'app/');
+        // Remove 'app/' prefix if it exists
+        $relativePath = preg_replace('/^app\//', '', $relativePath);
 
-        // Convert the relative path into a namespace
+        // Convert the relative path to a namespace
         $namespace = str_replace(['/', '.php'], ['\\', ''], $relativePath);
 
-        // Ensure the namespace starts with `App\`
+        // Ensure the namespace starts with 'App\'
         return 'App\\' . $namespace;
-
     }
 }
