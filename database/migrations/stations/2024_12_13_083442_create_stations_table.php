@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('phone_one', 20);
             $table->string('phone_two', 20)->nullable();
-            $table->string('address', 50);
+            $table->string('address');
             $table->dateTime('opening_date');
             $table->integer('subscribe_year');
             $table->dateTime('expiry_date');
