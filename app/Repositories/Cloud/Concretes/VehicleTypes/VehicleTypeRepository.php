@@ -2,10 +2,10 @@
 
 namespace App\Repositories\Cloud\Concretes\VehicleTypes;
 
-use App\Http\Resources\Cloud\VehicleTypes\VehicleTypeResource;
 use Exception;
-use App\Traits\HasResponse;
 use App\Models\VehicleType;
+use App\Traits\HasResponse;
+use App\Http\Resources\Cloud\VehicleTypes\VehicleTypeResource;
 use App\Repositories\Cloud\Contracts\VehicleTypes\VehicleTypeRepositoryInterface;
 
 class VehicleTypeRepository implements VehicleTypeRepositoryInterface

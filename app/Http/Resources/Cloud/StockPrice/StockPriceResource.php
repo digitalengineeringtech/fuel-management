@@ -2,10 +2,10 @@
 
 namespace App\Http\Resources\Cloud\StockPrice;
 
-use App\Models\FuelType;
-use App\Models\Station;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Cloud\Stations\StationResource;
+use App\Http\Resources\Cloud\FuelTypes\FuelTypeResource;
 
 class StockPriceResource extends JsonResource
 {
@@ -18,10 +18,10 @@ class StockPriceResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'station' => Station::find($this->station_id),
-            'fuel_type' => FuelType::find($this->fuel_type_id),
             'nozzle_no' => $this->nozzle_no,
             'unit_price' => $this->unit_price,
+            'station' => new StationResource($this->station),
+            'fuel_type' => new FuelTypeResource($this->fuelType),
             'created_at' => $this->created_at->format('d-m-Y'),
             'updated_at' => $this->updated_at->format('d-m-Y'),
         ];
