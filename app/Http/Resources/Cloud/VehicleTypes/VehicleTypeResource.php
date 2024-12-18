@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Cloud\FuelTypes;
+namespace App\Http\Resources\Cloud\VehicleTypes;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FuelTypeResource extends JsonResource
+class VehicleTypeResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
