@@ -2,10 +2,10 @@
 
 namespace App\Repositories\Cloud\Concretes\FuelTypes;
 
-use App\Http\Resources\Cloud\FuelTypes\FuelTypeResource;
 use Exception;
-use App\Traits\HasResponse;
 use App\Models\FuelType;
+use App\Traits\HasResponse;
+use App\Http\Resources\Cloud\FuelTypes\FuelTypeResource;
 use App\Repositories\Cloud\Contracts\FuelTypes\FuelTypeRepositoryInterface;
 
 class FuelTypeRepository implements FuelTypeRepositoryInterface

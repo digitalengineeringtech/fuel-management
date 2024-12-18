@@ -2,12 +2,12 @@
 
 namespace App\Repositories\Cloud\Concretes\StockPrices;
 
+use Exception;
+use App\Models\StockPrice;
+use App\Models\VehicleType;
+use App\Traits\HasResponse;
 use App\Http\Resources\Cloud\StockPrice\StockPriceResource;
 use App\Http\Resources\Cloud\VehicleTypes\VehicleTypeResource;
-use App\Models\StockPrice;
-use Exception;
-use App\Traits\HasResponse;
-use App\Models\VehicleType;
 use App\Repositories\Cloud\Contracts\StockPrices\StockPriceRepositoryInterface;
 use App\Repositories\Cloud\Contracts\VehicleTypes\VehicleTypeRepositoryInterface;
 
@@ -17,7 +17,7 @@ class StockPriceRepository implements StockPriceRepositoryInterface
      use HasResponse;
      public function getStockPrices($request)
      {
-         $stock_prices = StockPrice::paginate(10);
+         $stock_prices = StockPrice::with('station', 'fuelType')->paginate(10);
 
          return StockPriceResource::collection($stock_prices);
      }
