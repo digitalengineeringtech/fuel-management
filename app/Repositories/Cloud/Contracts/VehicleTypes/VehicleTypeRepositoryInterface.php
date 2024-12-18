@@ -3,10 +3,10 @@
 namespace App\Repositories\Cloud\Contracts\VehicleTypes;
 
 /**
- * Interface defining the contract for a station repository.
- * This interface provides methods for managing stations, including
- * retrieving a list of stations, getting details of a specific station,
- * creating a new station, updating an existing station, and deleting a station.
+ * Interface defining the contract for a vehicle type repository.
+ * This interface provides methods for managing vehicle types, including
+ * retrieving a list of vehicle types, getting details of a specific vehicle type,
+ * creating a new vehicle type, updating an existing vehicle type, and deleting a vehicle type.
  */
 interface VehicleTypeRepositoryInterface
 {

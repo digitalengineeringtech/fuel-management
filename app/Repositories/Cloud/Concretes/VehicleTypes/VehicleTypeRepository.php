@@ -4,15 +4,13 @@ namespace App\Repositories\Cloud\Concretes\VehicleTypes;
 
 use App\Http\Resources\Cloud\VehicleTypes\VehicleTypeResource;
 use Exception;
-use App\Traits\HasImage;
 use App\Traits\HasResponse;
-use App\Models\FuelType;
 use App\Models\VehicleType;
 use App\Repositories\Cloud\Contracts\VehicleTypes\VehicleTypeRepositoryInterface;
 
 class VehicleTypeRepository implements VehicleTypeRepositoryInterface
 {
-     use HasImage;
+
      use HasResponse;
      public function getVehicleTypes($request)
      {

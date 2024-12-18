@@ -4,18 +4,12 @@ namespace App\Repositories\Cloud\Concretes\FuelTypes;
 
 use App\Http\Resources\Cloud\FuelTypes\FuelTypeResource;
 use Exception;
-use App\Models\Station;
-use App\Traits\HasImage;
 use App\Traits\HasResponse;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Artisan;
 use App\Models\FuelType;
 use App\Repositories\Cloud\Contracts\FuelTypes\FuelTypeRepositoryInterface;
 
 class FuelTypeRepository implements FuelTypeRepositoryInterface
 {
-     use HasImage;
      use HasResponse;
      public function getFuelType($request)
      {
