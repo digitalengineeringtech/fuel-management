@@ -2,8 +2,9 @@
 
 namespace App\Http\Resources\Cloud\Stations;
 
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Http\Resources\Cloud\Shops\ShopResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class StationResource extends JsonResource
@@ -17,9 +18,10 @@ class StationResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'store_id' => new ShopResource($this->store),
             'name' => $this->name,
             'station_no' => $this->station_no,
-            'image' => $this->image,
+            'image' => asset($this->image),
             'phone_one' => $this->phone_one,
             'phone_two' => $this->phone_two,
             'address' => $this->address,

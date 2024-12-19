@@ -35,7 +35,7 @@ class AuthenticatedSessionController extends Controller
     {
         Auth::guard('web')->logout();
 
-        $request->user()->currentAccessToken()->delete();
+        $request->user()->tokens()->delete();
 
         return $this->successResponse('Success', '200', null);
     }

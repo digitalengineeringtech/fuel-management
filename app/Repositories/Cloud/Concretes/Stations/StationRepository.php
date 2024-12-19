@@ -54,20 +54,19 @@ class StationRepository implements StationRepositoryInterface
                     return $this->errorResponse('Failed to create station', 400, null);
                 }
 
-                // Create a new database
+                // Create a new database for mysql
                 DB::statement("CREATE DATABASE $station->station_database");
 
                 // Configure dynamic connection for the station database
                 config(['database.connections.station' => [
-                    'driver' => 'pgsql',
+                    'driver' => 'mysql',
                     'host' => env('DB_HOST', '127.0.0.1'),
-                    'port' => env('DB_PORT', '5432'),
+                    'port' => env('DB_PORT', '3306'),
                     'database' => $station->station_database,
-                    'username' => env('DB_USERNAME', 'postgres'),
-                    'password' => env('DB_PASSWORD', ''),
+                    'username' => env('DB_USERNAME', 'hak'),
+                    'password' => env('DB_PASSWORD', 'hak5095905'),
                     'charset' => 'utf8',
-                    'prefix' => '',
-                    'schema' => 'public',
+                    'prefix' => ''
                 ]]);
 
                 // Run migrations for the station database using Artisan

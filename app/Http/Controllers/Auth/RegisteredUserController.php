@@ -10,7 +10,6 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\Casts\Json;
 
 class RegisteredUserController extends Controller
@@ -24,18 +23,24 @@ class RegisteredUserController extends Controller
     public function store(Request $request): JsonResponse
     {
         $request->validate([
+            'station_id' => ['nullable'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'phone' => ['nullable', 'string', 'max:20'],
+            'card_id' => ['nullable', 'string', 'max:15'],
+            'tank_count' => ['nullable', 'integer'],
         ]);
 
         $user = User::create([
+            'station_id' => null,
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->string('password')),
+            'phone' => $request->phone,
+            'card_id' => $request->card_id,
+            'tank_count' => $request->tank_count,
         ]);
-
-        event(new Registered($user));
 
         $token = $user->createToken('auth_token')->plainTextToken;
 

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('stations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('shop_id');
             $table->string('name', 50);
             $table->string('station_no', 20)->unique();
             $table->string('image')->nullable();
