@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Artisan;
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -12,8 +15,16 @@
 */
 
 pest()->extend(Tests\TestCase::class)
-    ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
-    ->in('Feature');
+    ->use(RefreshDatabase::class)->beforeEach(function(){
+        Artisan::call('migrate:fresh', [
+            '--path' => 'database/migrations'
+        ]);
+
+        Artisan::call('migrate', [
+            '--path' => 'database/migrations/stations'
+        ]);
+    })
+    ->in(__DIR__);
 
 /*
 |--------------------------------------------------------------------------

@@ -1,23 +1,28 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-test('users can authenticate using the login screen', function () {
+uses(RefreshDatabase::class);
+
+test('users can authenticate with email and password', function () {
     $user = User::factory()->create();
 
-    $response = $this->post('/login', [
+    $response = $this->post('/api/login', [
         'email' => $user->email,
         'password' => 'password',
     ]);
 
-    $this->assertAuthenticated();
-    $response->assertNoContent();
+    $responseData = $response->json();
+
+    expect($responseData)->toHaveKeys(['message', 'data']);
+    expect($responseData['data'])->toHaveKeys(['token']);
 });
 
 test('users can not authenticate with invalid password', function () {
     $user = User::factory()->create();
 
-    $this->post('/login', [
+    $this->post('/api/login', [
         'email' => $user->email,
         'password' => 'wrong-password',
     ]);
@@ -28,8 +33,7 @@ test('users can not authenticate with invalid password', function () {
 test('users can logout', function () {
     $user = User::factory()->create();
 
-    $response = $this->actingAs($user)->post('/logout');
+    $response = $this->actingAs($user)->post('/api/logout');
 
-    $this->assertGuest();
-    $response->assertNoContent();
+    expect($response->json())->toHaveKeys(['message']);
 });

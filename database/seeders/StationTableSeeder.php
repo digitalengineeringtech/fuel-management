@@ -14,8 +14,9 @@ class StationTableSeeder extends Seeder
     public function run(): void
     {
         $station = Station::create([
-            'name' => 'Station 1',
-            'station_no' => 'S001',
+            'shop_id' => 1,
+            'name' => 'Kyaw San 1',
+            'station_no' => 'KS001',
             'image' => NULL,
             'phone_one' => '0123456789',
             'phone_two' => '0123456789',

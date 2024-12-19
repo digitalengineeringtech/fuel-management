@@ -10,6 +10,13 @@ class Station extends Model
 {
     protected $guarded = [];
 
+    protected $with = ['shop'];
+
+    public function shop(): BelongsTo
+    {
+        return $this->belongsTo(Shop::class);
+    }
+
     public function users(): HasMany
     {
         return $this->hasMany(User::class);

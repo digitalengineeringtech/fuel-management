@@ -10,8 +10,8 @@ use App\Repositories\Cloud\Contracts\Stations\StationRepositoryInterface;
 
 class StationController extends Controller
 {
+    private StationRepositoryInterface $stationRepository;
 
-    private $stationRepository;
     public function __construct(StationRepositoryInterface $stationRepository)
     {
         $this->stationRepository = $stationRepository;
