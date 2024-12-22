@@ -22,6 +22,7 @@ class RepositoryServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->bindRepositories('Cloud');
+        $this->bindRepositories('Local');
     }
 
     /**
