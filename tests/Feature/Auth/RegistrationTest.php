@@ -1,7 +1,7 @@
 <?php
 
 test('new users can register', function () {
-    $response = $this->post('/api/register', [
+    $response = $this->post('/api/users/register', [
         'station_id' => null,
         'name' => 'Test User',
         'email' => 'test@example.com',

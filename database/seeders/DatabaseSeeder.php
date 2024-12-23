@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             ShopTableSeeder::class,
             StationTableSeeder::class,
             UserTableSeeder::class,
+            PermissionTableSeeder::class,
             VehicleTypeTableSeeder::class,
             FuelTypeTableSeeder::class,
             StockPriceTableSeeder::class,

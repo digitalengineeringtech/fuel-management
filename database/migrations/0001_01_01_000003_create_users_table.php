@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('phone', 20)->nullable();
             $table->string('password');
             $table->string('card_id', 15)->nullable();
+            $table->string('role')->nullable();
             $table->integer('tank_count')->nullable();
             $table->timestamps();
         });

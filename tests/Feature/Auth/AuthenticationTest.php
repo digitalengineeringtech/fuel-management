@@ -8,7 +8,7 @@ uses(RefreshDatabase::class);
 test('users can authenticate with email and password', function () {
     $user = User::factory()->create();
 
-    $response = $this->post('/api/login', [
+    $response = $this->post('/api/users/login', [
         'email' => $user->email,
         'password' => 'password',
     ]);
@@ -22,7 +22,7 @@ test('users can authenticate with email and password', function () {
 test('users can not authenticate with invalid password', function () {
     $user = User::factory()->create();
 
-    $this->post('/api/login', [
+    $this->post('/api/users/login', [
         'email' => $user->email,
         'password' => 'wrong-password',
     ]);
@@ -33,7 +33,7 @@ test('users can not authenticate with invalid password', function () {
 test('users can logout', function () {
     $user = User::factory()->create();
 
-    $response = $this->actingAs($user)->post('/api/logout');
+    $response = $this->actingAs($user)->post('/api/users/logout');
 
     expect($response->json())->toHaveKeys(['message']);
 });

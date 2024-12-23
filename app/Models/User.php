@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -26,7 +27,8 @@ class User extends Authenticatable
         'phone',
         'password',
         'card_id',
-        'tank_count'
+        'tank_count',
+        'role'
     ];
 
     /**
@@ -55,5 +57,10 @@ class User extends Authenticatable
     public function station(): BelongsTo
     {
         return $this->belongsTo(Station::class);
+    }
+
+    public function permissions(): HasMany
+    {
+        return $this->belongsTo(Permission::class);
     }
 }

@@ -1,19 +1,44 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\NewPasswordController;
-use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\GetUsersController;
+use App\Http\Controllers\Auth\GetUserController;
+use App\Http\Controllers\Auth\CreateUserController;
+use App\Http\Controllers\Auth\DeleteUserController;
+use App\Http\Controllers\Auth\UpdateUserController;
+use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
-Route::post('/register', [RegisteredUserController::class, 'store'])
+Route::post('users/register', [RegisteredUserController::class, 'store'])
     ->middleware('guest')
     ->name('register');
 
-Route::post('/login', [AuthenticatedSessionController::class, 'store'])
+Route::post('users/login', [AuthenticatedSessionController::class, 'store'])
     ->middleware('guest')
     ->name('login');
 
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+Route::post('users/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth:sanctum')
     ->name('logout');
+
+Route::get('users/all', GetUsersController::class)
+    ->middleware('auth:sanctum')
+    ->name('users.all');
+
+Route::get('users/show/{id}', GetUserController::class)
+    ->middleware('auth:sanctum')
+    ->name('users.show');
+
+Route::post('users/create', CreateUserController::class)
+    ->middleware('auth:sanctum')
+    ->name('users.create');
+
+Route::put('users/update/{id}', UpdateUserController::class)
+    ->middleware('auth:sanctum')
+    ->name('users.update');
+
+Route::delete('users/delete/{id}', DeleteUserController::class)
+    ->middleware('auth:sanctum')
+    ->name('users.delete');

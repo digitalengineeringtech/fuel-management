@@ -21,6 +21,7 @@ class UserTableSeeder extends Seeder
             'phone' => '1234567890',
             'card_id' => '00001',
             'tank_count' => 10,
+            'role' => 'admin',
         ]);
     }
 }
