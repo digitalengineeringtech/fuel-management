@@ -3,10 +3,10 @@
 namespace App\Repositories\Local\Contracts\Customers;
 
 /**
- * Interface defining the contract for a fuel_type repository.
- * This interface provides methods for managing fuel_types, including
- * retrieving a list of fuel_types, getting details of a specific fuel_type,
- * creating a new fuel_type, updating an existing fuel_type, and deleting a fuel_type.
+ * Interface defining the contract for a customer repository.
+ * This interface provides methods for managing customers, including
+ * retrieving a list of customer, getting details of a specific customer,
+ * creating a new customer, updating an existing customer, and deleting a customer.
  */
 interface CustomerRepositoryInterface
 {
