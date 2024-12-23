@@ -20,7 +20,7 @@ class FuelTypeController extends Controller
      */
     public function index(Request $request)
     {
-        return $this->fuelTypeRepository->getFuelType($request);
+        return $this->fuelTypeRepository->getFuelTypes($request);
     }
 
     /**
@@ -36,7 +36,7 @@ class FuelTypeController extends Controller
      */
     public function show($id)
     {
-        return $this->fuelTypeRepository->getDetailFuelType($id);
+        return $this->fuelTypeRepository->getFuelType($id);
     }
 
     /**

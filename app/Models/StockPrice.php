@@ -4,9 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class StockPrice extends Model
 {
+    /** @use HasFactory<\Database\Factories\StockPrice> */
+    use HasFactory;
+
     // Mass assignment is disabled by default, so we need to explicitly define the fillable fields.
     protected $guarded = [];
 
