@@ -14,12 +14,12 @@ interface FuelTypeRepositoryInterface
      * Get a list of fuel_types based on the provided query
      * @param $request
      */
-    public function getFuelType($request);
+    public function getFuelTypes($request);
     /**
      * Get a specific fuel_type by its ID.
      * @param int $id
     */
-    public function getDetailFuelType($id);
+    public function getFuelType($id);
 
     /**
      * Create a new fuel_type with the provided data.

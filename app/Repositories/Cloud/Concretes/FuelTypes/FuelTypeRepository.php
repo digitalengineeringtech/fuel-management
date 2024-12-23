@@ -11,14 +11,14 @@ use App\Repositories\Cloud\Contracts\FuelTypes\FuelTypeRepositoryInterface;
 class FuelTypeRepository implements FuelTypeRepositoryInterface
 {
      use HasResponse;
-     public function getFuelType($request)
+     public function getFuelTypes($request)
      {
          $fuel_types = FuelType::paginate(10);
 
          return FuelTypeResource::collection($fuel_types);
      }
 
-     public function getDetailFuelType($id)
+     public function getFuelType($id)
      {
          $fuel_type = FuelType::find($id);
 
