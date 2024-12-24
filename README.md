@@ -1,6 +1,6 @@
 # Fuel Management System
 
-## [![Testcase](https://github.com/zmkiihdev/fuel-management/actions/workflows/laravel.yml/badge.svg?branch=main&event=pull_request)](https://github.com/zmkiihdev/fuel-management/actions/workflows/laravel.yml)
+## [![Testcase](https://github.com/zmkiihdev/fuel-management/actions/workflows/laravel.yml/badge.svg?branch=main&event=push)](https://github.com/zmkiihdev/fuel-management/actions/workflows/laravel.yml)
 
 ### Installation Guide
 
