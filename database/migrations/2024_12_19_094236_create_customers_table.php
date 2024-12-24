@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('type', 10); // credit/ normal / debit
             $table->string('email', 30)->nullable();
             $table->string('phone', 20)->nullable();
-            $table->string('address', 100)->nullable();
+            $table->string('address')->nullable();
             $table->string('card_number', 30)->nullable();
             $table->float('debit_liter')->nullable();
             $table->bigInteger('debit_amount')->nullable();
