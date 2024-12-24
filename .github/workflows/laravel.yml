@@ -1,4 +1,4 @@
-name: Testcase
+name: Fuel Management
 
 on:
   push:
