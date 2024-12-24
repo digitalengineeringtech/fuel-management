@@ -14,12 +14,8 @@ use Illuminate\Support\Facades\Artisan;
 |
 */
 
-pest()->extend(Tests\TestCase::class)
+uses(Tests\TestCase::class)
     ->use(RefreshDatabase::class)->beforeEach(function(){
-        Artisan::call('migrate:fresh', [
-            '--path' => 'database/migrations'
-        ]);
-
         Artisan::call('migrate', [
             '--path' => 'database/migrations/stations'
         ]);

@@ -20,9 +20,13 @@ class PermissionFactory extends Factory
     {
 
         $user = User::factory()->create([
-            'name' => 'Example User', // Customize if needed
-            'email' => 'exampleuser@example.com',
+            'name' => 'admin', // Customize if needed
+            'email' => 'admin@gmail.com',
             'password' => bcrypt('password'),
+            'phone' => '0959959955',
+            'card_id' => '00001',
+            'tank_count' => '8',
+            'role' => 'admin'
         ]);
 
         // Define the permissions
