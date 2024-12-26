@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Cloud\Discounts\DiscountController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Cloud\Shops\ShopController;
 use App\Http\Controllers\Cloud\Stations\StationController;
@@ -18,3 +19,4 @@ Route::apiResource('fuel-types', FuelTypeController::class);
 Route::apiResource('vehicle-types', VehicleTypeController::class);
 Route::apiResource('stock-prices', StockPriceController::class);
 Route::apiResource('payments', PaymentController::class);
+Route::apiResource('discounts', DiscountController::class);
