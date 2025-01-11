@@ -31,6 +31,8 @@ class User extends Authenticatable
         'role'
     ];
 
+    protected $with = ['station', 'permissions'];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -61,6 +63,6 @@ class User extends Authenticatable
 
     public function permissions(): HasMany
     {
-        return $this->belongsTo(Permission::class);
+        return $this->hasMany(Permission::class);
     }
 }

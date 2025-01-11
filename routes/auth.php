@@ -1,16 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\GetUsersController;
-use App\Http\Controllers\Auth\GetUserController;
-use App\Http\Controllers\Auth\CreateUserController;
-use App\Http\Controllers\Auth\DeleteUserController;
-use App\Http\Controllers\Auth\UpdateUserController;
 use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Auth\Users\GetUserController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\Users\GetUsersController;
+use App\Http\Controllers\Auth\Users\CreateUserController;
+use App\Http\Controllers\Auth\Users\DeleteUserController;
+use App\Http\Controllers\Auth\Users\UpdateUserController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\PermissionController;
+use App\Http\Controllers\Auth\Permissions\PermissionController;
 
 Route::post('users/register', [RegisteredUserController::class, 'store'])
     ->middleware('guest')

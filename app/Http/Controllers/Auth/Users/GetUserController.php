@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth\Users;
+
 
 use App\Models\User;
 use App\Traits\HasResponse;
