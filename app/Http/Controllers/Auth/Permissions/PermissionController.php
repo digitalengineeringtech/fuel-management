@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth\Permissions;
 
 use Exception;
 use App\Traits\HasResponse;
