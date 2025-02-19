@@ -30,7 +30,6 @@ class RegisteredUserController extends Controller
             'phone' => ['nullable', 'string', 'max:20'],
             'card_id' => ['nullable', 'string', 'max:15'],
             'tank_count' => ['nullable', 'integer'],
-            'role' => ['nullable', 'string', 'max:255'],
         ]);
 
         $user = User::create([
@@ -40,8 +39,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->string('password')),
             'phone' => $request->phone,
             'card_id' => $request->card_id,
-            'tank_count' => $request->tank_count,
-            'role' => $request->role,
+            'tank_count' => $request->tank_count
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;

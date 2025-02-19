@@ -31,7 +31,6 @@ it('can create a new user', function(){
         'password' => "12345678",
         'card_id' => '99992',
         'tank_count' => 8,
-        'role' => 'cashier'
     ]);
 
     $user = $response->json();
@@ -50,7 +49,6 @@ it('can update an existing user with that user id', function(){
         'password' => "12345678",
         'card_id' => '99992',
         'tank_count' => 8,
-        'role' => 'cashier'
     ]);
 
     $user = $response->json();

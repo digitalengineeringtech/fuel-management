@@ -38,7 +38,7 @@ class StationRepository implements StationRepositoryInterface
      {
           try {
                 // Generate a unique database name for the station
-                $data['station_database'] = 'station_' . Str::slug($data['name'], '_') . '_' . $data['station_no'];
+                $data['station_database'] = 'station_' . Str::slug($data['name'], '_') . '_' . Str::lower($data['station_no']);
 
                 // Upload the image if provided
                 if(isset($data['image'])) {
@@ -59,7 +59,7 @@ class StationRepository implements StationRepositoryInterface
 
                 // Configure dynamic connection for the station database
                 config(['database.connections.station' => [
-                    'driver' => 'mysql',
+                    'driver' => env('DB_CONNECTION', 'mysql'),
                     'host' => env('DB_HOST', '127.0.0.1'),
                     'port' => env('DB_PORT', '3306'),
                     'database' => $station->station_database,

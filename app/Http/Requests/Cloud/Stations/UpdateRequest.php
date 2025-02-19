@@ -22,6 +22,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'shop_id' => 'required',
             'name' => 'required|string|max:50',
             'station_no' => 'required|string|max:20',
             'image' => 'nullable|image|max:4096',

@@ -2,10 +2,11 @@
 
 namespace App\Repositories\Cloud\Concretes\Shops;
 
-use App\Http\Resources\Cloud\Shops\ShopResource;
-use App\Repositories\Cloud\Contracts\Shops\ShopRepositoryInterface;
+use App\Models\Shop;
 use App\Traits\HasImage;
 use App\Traits\HasResponse;
+use App\Http\Resources\Cloud\Shops\ShopResource;
+use App\Repositories\Cloud\Contracts\Shops\ShopRepositoryInterface;
 
 class ShopRepository implements ShopRepositoryInterface
 {

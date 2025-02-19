@@ -30,8 +30,7 @@ class UserFactory extends Factory
             'phone' => fake()->phoneNumber(),
             'card_id' => rand(000001, 999999),
             'tank_count' => rand(1, 10),
-            'password' => static::$password ??= Hash::make('password'),
-            'role' => 'admin',
+            'password' => static::$password ??= Hash::make('password')
         ];
     }
 

@@ -10,7 +10,6 @@ use App\Http\Controllers\Auth\Users\DeleteUserController;
 use App\Http\Controllers\Auth\Users\UpdateUserController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\Permissions\PermissionController;
 
 Route::post('users/register', [RegisteredUserController::class, 'store'])
     ->middleware('guest')
@@ -44,5 +43,4 @@ Route::delete('users/delete/{id}', DeleteUserController::class)
     ->middleware('auth:sanctum')
     ->name('users.delete');
 
-Route::apiResource('users/permissions', PermissionController::class)
-    ->middleware('auth:sanctum');
+

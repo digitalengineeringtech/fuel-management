@@ -23,7 +23,6 @@ class CreateUserController extends Controller
                 'phone' => ['nullable', 'string', 'max:20'],
                 'card_id' => ['nullable', 'string', 'max:15'],
                 'tank_count' => ['nullable', 'integer'],
-                'role' => ['nullable', 'string', 'max:255'],
             ]);
 
             // Create a new user
@@ -36,7 +35,6 @@ class CreateUserController extends Controller
                 'phone' => $request->phone,
                 'card_id' => $request->card_id,
                 'tank_count' => $request->tank_count,
-                'role' => $request->role,
             ]);
 
             if($user) {
