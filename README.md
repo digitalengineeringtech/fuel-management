@@ -43,7 +43,14 @@ php artisan key:generate
  php artisan db:seed
 ```
 
-### Give permission to storage folder
+### Link storage for image or file to access in public
+
+```bash
+php artisan storage:link
+
+```
+
+### Give permission to storage folder 
 
 ```bash
 sudo chmod -R 777 storage bootstrap/cache
