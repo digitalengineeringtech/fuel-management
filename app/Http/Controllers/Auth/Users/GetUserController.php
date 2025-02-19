@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Traits\HasResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Auth\Users\UserResource;
 
 class GetUserController extends Controller
 {
@@ -22,11 +23,8 @@ class GetUserController extends Controller
         try {
             $user = User::find($id);
 
-            if (!$user) {
-                return $this->errorResponse('User not found', 404, null);
-            }
+            return new UserResource($user);
 
-            return $this->successResponse('User retrieved successfully', 200, $user);
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }

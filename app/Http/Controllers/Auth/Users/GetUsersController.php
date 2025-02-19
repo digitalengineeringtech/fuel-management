@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Traits\HasResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Auth\Users\UserResource;
 
 class GetUsersController extends Controller
 {
@@ -22,7 +23,7 @@ class GetUsersController extends Controller
         try {
             $users = User::paginate(10);
 
-            return $this->successResponse('Success', 200, $users);
+            return UserResource::collection($users);
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, []);
         }
