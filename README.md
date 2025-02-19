@@ -6,7 +6,7 @@
 ### Installation Guide
 
 ```bash
-git clone https://github.com/zmkiihdev/fuel-management.git
+git clone https://github.com/digitalengineeringtech/fuel-management.git
 
 cd /path/to/fuel-management
 
@@ -35,11 +35,11 @@ php artisan key:generate
 
 ### Running seeder or migrations
 ```bash
- php artisan migrate
 
  // run only one time for cloud server.
- php artisan migrate --path=database/migrations/stations
+ php artisan migrate && php artisan migrate --path=database/migrations/stations
 
+ // Seed to Database 
  php artisan db:seed
 ```
 
