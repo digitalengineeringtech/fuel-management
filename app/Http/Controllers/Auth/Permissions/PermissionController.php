@@ -2,17 +2,23 @@
 
 namespace App\Http\Controllers\Auth\Permissions;
 
-use App\Http\Controllers\Controller;
+use App\Traits\HasResponse;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Spatie\Permission\Models\Permission;
+use App\Http\Resources\Auth\Permissions\PermissionResource;
 
 class PermissionController extends Controller
 {
+    use HasResponse;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+         $permissions = Permission::paginate(10);
+
+         return PermissionResource::collection($permissions);
     }
 
     /**
@@ -20,7 +26,18 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         try {
+            $permission = Permission::create(['name' => $request->name]);
+
+            if(!$permission) {
+                return $this->errorResponse('Failed to create permission', 400, null);
+            }
+
+            return $this->successResponse('Permission created successfully', 201, $permission);
+
+         } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
+         }
     }
 
     /**
@@ -28,7 +45,13 @@ class PermissionController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $permission = Permission::find($id);
+
+        if(!$permission) {
+            return $this->errorResponse('Permission not found', 404, null);
+        }
+
+        return new PermissionResource($permission);
     }
 
     /**
@@ -36,7 +59,15 @@ class PermissionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $permission = Permission::find($id);
+
+        if(!$permission) {
+            return $this->errorResponse('Permission not found', 404, null);
+        }
+
+        $permission->update(['name' => $request->name]);
+
+        return $this->successResponse('Permission updated successfully', 200, $permission);
     }
 
     /**
@@ -44,6 +75,14 @@ class PermissionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $permission = Permission::find($id);
+
+        if(!$permission) {
+            return $this->errorResponse('Permission not found', 404, null);
+        }
+
+        $permission->delete();
+
+        return $this->successResponse('Permission deleted successfully', 200, null);
     }
 }
