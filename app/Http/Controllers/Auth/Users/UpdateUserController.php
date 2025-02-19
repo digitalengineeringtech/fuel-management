@@ -34,7 +34,6 @@ class UpdateUserController extends Controller
                 'phone' => ['nullable', 'string', 'max:20'],
                 'card_id' => ['nullable', 'string', 'max:15'],
                 'tank_count' => ['nullable', 'integer'],
-                'role' => ['nullable', 'string', 'max:255'],
             ]);
 
             $user->update([
@@ -45,7 +44,6 @@ class UpdateUserController extends Controller
                 'password' => Hash::make($request->password),
                 'card_id' => $request->card_id,
                 'tank_count' => $request->tank_count,
-                'role' => $request->role,
             ]);
             return $this->successResponse('User updated successfully', 200, $user);
         } catch (Exception $e) {
