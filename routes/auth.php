@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\Roles\RoleController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\Users\GetUserController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\Auth\Users\DeleteUserController;
 use App\Http\Controllers\Auth\Users\UpdateUserController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\Permissions\PermissionController;
 
 Route::post('users/register', [RegisteredUserController::class, 'store'])
     ->middleware('guest')
@@ -42,5 +44,8 @@ Route::put('users/update/{id}', UpdateUserController::class)
 Route::delete('users/delete/{id}', DeleteUserController::class)
     ->middleware('auth:sanctum')
     ->name('users.delete');
+
+Route::apiResource('users/roles', RoleController::class)->middleware('auth:sanctum');
+Route::apiResource('users/permissions', PermissionController::class)->middleware('auth:sanctum');
 
 

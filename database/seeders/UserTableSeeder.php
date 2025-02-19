@@ -21,6 +21,6 @@ class UserTableSeeder extends Seeder
             'card_id' => '00001',
             'tank_count' => 10,
             'cloud_user' => true
-        ])->assignRole('admin');
+        ]);
     }
 }
