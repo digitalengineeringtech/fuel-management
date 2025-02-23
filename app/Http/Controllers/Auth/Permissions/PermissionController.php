@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth\Permissions;
 
 use App\Traits\HasResponse;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Permission;
@@ -27,7 +28,9 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
          try {
-            $permission = Permission::create(['name' => $request->name]);
+            $permission = Permission::create([
+                'name' => Str::lower($request->name)
+            ]);
 
             if(!$permission) {
                 return $this->errorResponse('Failed to create permission', 400, null);
@@ -65,7 +68,9 @@ class PermissionController extends Controller
             return $this->errorResponse('Permission not found', 404, null);
         }
 
-        $permission->update(['name' => $request->name]);
+        $permission->update([
+            'name' => Str::lower($request->name)
+        ]);
 
         return $this->successResponse('Permission updated successfully', 200, $permission);
     }

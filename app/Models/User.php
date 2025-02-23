@@ -31,7 +31,9 @@ class User extends Authenticatable
         'tank_count'
     ];
 
-    protected $with = ['station', 'roles', 'permissions'];
+    protected $guard_name = 'api';
+
+    protected $with = ['station'];
 
     /**
      * The attributes that should be hidden for serialization.
