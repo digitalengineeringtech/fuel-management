@@ -13,9 +13,9 @@ class PermissionTableSeeder extends Seeder
      */
     public function run(): void
     {
-        Permission::create(['name' => 'read']);
-        Permission::create(['name' => 'create']);
-        Permission::create(['name' => 'update']);
-        Permission::create(['name' => 'delete']);
+        Permission::create(['name' => 'create', 'guard_name' => 'api']);
+        Permission::create(['name' => 'read', 'guard_name' => 'api']);
+        Permission::create(['name' => 'update', 'guard_name' => 'api']);
+        Permission::create(['name' => 'delete', 'guard_name' => 'api']);
     }
 }

@@ -7,6 +7,7 @@ use App\Traits\HasResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\Auth\Users\UserResource;
 
 class CreateUserController extends Controller
 {
@@ -38,7 +39,13 @@ class CreateUserController extends Controller
             ]);
 
             if($user) {
-                return $this->successResponse('User created successfully', 201, $user);
+                if($request->has('roles') && $request->has('permissions')) {
+                    $user->syncRoles($request->input('roles.*.name'));
+
+                    $user->syncPermissions($request->input('permissions.*.name'));
+                }
+
+                return $this->successResponse('User created successfully', 201, new UserResource($user));
             } else {
                 return $this->errorResponse('Failed to create user', 400, null);
             }

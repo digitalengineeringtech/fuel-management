@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth\Roles;
 
 use Exception;
 use App\Traits\HasResponse;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
@@ -29,7 +30,9 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         try {
-            $role = Role::create(['name' => $request->name]);
+            $role = Role::create([
+                'name' => Str::lower($request->name)
+            ]);
 
             if(!$role) {
                 return $this->errorResponse('Failed to create role', 400, null);
@@ -68,7 +71,9 @@ class RoleController extends Controller
                 return $this->errorResponse('Role not found', 404, null);
             }
 
-            $role->update(['name' => $request->name]);
+            $role->update([
+                'name' => Str::lower($request->name)
+            ]);
 
             return $this->successResponse('Role updated successfully', 200, $role);
         } catch (Exception $e) {

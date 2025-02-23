@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Traits\HasResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Auth\Users\UserResource;
 use Illuminate\Support\Facades\Hash;
 
 class UpdateUserController extends Controller
@@ -45,7 +46,14 @@ class UpdateUserController extends Controller
                 'card_id' => $request->card_id,
                 'tank_count' => $request->tank_count,
             ]);
-            return $this->successResponse('User updated successfully', 200, $user);
+
+            if($request->has('roles') && $request->has('permissions')) {
+                $user->syncRoles($request->input('roles.*.name'));
+
+                $user->syncPermissions($request->input('permissions.*.name'));
+            }
+
+            return $this->successResponse('User updated successfully', 200, new UserResource($user));
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
