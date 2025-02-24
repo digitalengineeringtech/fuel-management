@@ -4,6 +4,7 @@ namespace App\Http\Resources\Cloud\Shops;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Cloud\Stations\StationResource;
 
 class ShopResource extends JsonResource
 {
@@ -19,6 +20,7 @@ class ShopResource extends JsonResource
             'name' => $this->name,
             'image' => asset($this->image),
             'address' => $this->address,
+            'stations' => StationResource::collection($this->stations),
             'created_at' => $this->created_at->format('d-m-Y'),
             'updated_at' => $this->updated_at->format('d-m-Y'),
         ];

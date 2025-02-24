@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Cloud\Shops;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Cloud\Shops\CreateRequest;
+use App\Http\Requests\Cloud\Shops\UpdateRequest;
 use App\Repositories\Cloud\Contracts\Shops\ShopRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -25,7 +27,7 @@ class ShopController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
         return $this->shopRepository->createShop($request->validated());
     }
@@ -41,7 +43,7 @@ class ShopController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateRequest $request, string $id)
     {
         return $this->shopRepository->updateShop($id, $request->validated());
     }
