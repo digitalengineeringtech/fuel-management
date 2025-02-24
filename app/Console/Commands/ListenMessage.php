@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\Local;
+namespace App\Console\Commands;
 
 use Hakhant\Broker\Client;
 use Illuminate\Console\Command;
