@@ -18,7 +18,7 @@ class StationResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'shop_id' => new ShopResource($this->shop),
+            'shop' => new ShopResource($this->shop),
             'name' => $this->name,
             'station_no' => $this->station_no,
             'image' => asset($this->image),
