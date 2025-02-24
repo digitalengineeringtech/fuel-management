@@ -38,7 +38,11 @@ class RoleController extends Controller
                 return $this->errorResponse('Failed to create role', 400, null);
             }
 
-            return $this->successResponse('Role created successfully', 201, $role);
+            if($request->has('permissions')) {
+                $role->syncPermissions($request->input('permissions.*.name'));
+            }
+
+            return $this->successResponse('Role created successfully', 201, new RoleResource($role));
 
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
@@ -75,7 +79,7 @@ class RoleController extends Controller
                 'name' => Str::lower($request->name)
             ]);
 
-            return $this->successResponse('Role updated successfully', 200, $role);
+            return $this->successResponse('Role updated successfully', 200, new RoleResource($role));
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
