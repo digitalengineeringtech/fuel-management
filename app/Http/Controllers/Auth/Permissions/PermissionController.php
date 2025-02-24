@@ -36,7 +36,7 @@ class PermissionController extends Controller
                 return $this->errorResponse('Failed to create permission', 400, null);
             }
 
-            return $this->successResponse('Permission created successfully', 201, $permission);
+            return $this->successResponse('Permission created successfully', 201, new PermissionResource($permission));
 
          } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
@@ -72,7 +72,7 @@ class PermissionController extends Controller
             'name' => Str::lower($request->name)
         ]);
 
-        return $this->successResponse('Permission updated successfully', 200, $permission);
+        return $this->successResponse('Permission updated successfully', 200, new PermissionResource($permission));
     }
 
     /**

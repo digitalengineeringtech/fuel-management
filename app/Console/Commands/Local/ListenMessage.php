@@ -26,7 +26,7 @@ class ListenMessage extends Command
      */
     public function handle()
     {
-        $client = new Client(config('mqtt'));
+        $client = new Client(config('mqtt.default'));
 
         $client->subscribe('detpos/#', function ($topic, $message) {
             $this->info('Topic: ' . $topic);

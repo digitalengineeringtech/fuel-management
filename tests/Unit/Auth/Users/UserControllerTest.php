@@ -4,8 +4,6 @@ use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
-use function PHPSTORM_META\map;
-
 it('can get all users if the user is login', function(){
     $user = User::factory()->create();
 
