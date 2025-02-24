@@ -20,7 +20,7 @@ uses(Tests\TestCase::class)
             '--path' => 'database/migrations/stations'
         ]);
     })
-    ->in('Unit');
+    ->in(__DIR__);
 
 /*
 |--------------------------------------------------------------------------
