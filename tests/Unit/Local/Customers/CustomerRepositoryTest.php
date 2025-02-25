@@ -7,7 +7,6 @@ beforeEach(function () {
     $this->customerRepository = $this->mock(CustomerRepositoryInterface::class);
 });
 
-
 test('can get all customers and response with resource', function () {
     $customers = Customer::factory()->create();
 

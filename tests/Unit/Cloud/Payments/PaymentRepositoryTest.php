@@ -7,7 +7,6 @@ beforeEach(function () {
     $this->paymentRepository = $this->mock(PaymentRepositoryInterface::class);
 });
 
-
 test('can get all payment and response with resource', function () {
     $payments = Payment::factory()->create();
 

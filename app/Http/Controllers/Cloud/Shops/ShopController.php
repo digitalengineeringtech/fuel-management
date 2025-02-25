@@ -16,6 +16,7 @@ class ShopController extends Controller
     {
         $this->shopRepository = $shopRepository;
     }
+
     /**
      * Display a listing of the resource.
      */

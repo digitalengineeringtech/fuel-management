@@ -18,7 +18,7 @@ class MemberFactory extends Factory
     {
         return [
             'customer_id' => 1,
-            'type' => "silver",
+            'type' => 'silver',
         ];
     }
 }

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Cloud\Stations;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cloud\Stations\CreateRequest;
 use App\Http\Requests\Cloud\Stations\UpdateRequest;
 use App\Repositories\Cloud\Contracts\Stations\StationRepositoryInterface;
+use Illuminate\Http\Request;
 
 class StationController extends Controller
 {
@@ -16,6 +16,7 @@ class StationController extends Controller
     {
         $this->stationRepository = $stationRepository;
     }
+
     /**
      * Display a listing of the resource.
      */

@@ -18,7 +18,7 @@ class CustomerFactory extends Factory
     {
         return [
             'vehicle_type_id' => 1,
-            'type' => "credit",
+            'type' => 'credit',
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'phone' => fake()->phoneNumber(),

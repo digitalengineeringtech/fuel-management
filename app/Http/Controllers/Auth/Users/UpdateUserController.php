@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers\Auth\Users;
 
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Auth\Users\UserResource;
 use App\Models\User;
 use App\Traits\HasResponse;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Resources\Auth\Users\UserResource;
 use Illuminate\Support\Facades\Hash;
 
 class UpdateUserController extends Controller
 {
     use HasResponse;
+
     /**
      * Handle an incoming update request.
-     * @param Request $request
+     *
      * @return JsonResponse
+     *
      * @throws \Exception
      */
     public function __invoke(Request $request, $id)
@@ -24,7 +26,7 @@ class UpdateUserController extends Controller
             // Validate the request
             $user = User::find($id);
 
-            if (!$user) {
+            if (! $user) {
                 return $this->errorResponse('User not found', 404, null);
             }
 
@@ -47,7 +49,7 @@ class UpdateUserController extends Controller
                 'tank_count' => $request->tank_count,
             ]);
 
-            if($request->has('roles') && $request->has('permissions')) {
+            if ($request->has('roles') && $request->has('permissions')) {
                 $user->syncRoles($request->input('roles.*.name'));
 
                 $user->syncPermissions($request->input('permissions.*.name'));

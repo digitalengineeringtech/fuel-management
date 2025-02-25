@@ -7,7 +7,6 @@ beforeEach(function () {
     $this->stockPriceRepository = $this->mock(StockPriceRepositoryInterface::class);
 });
 
-
 test('can get all stock prices and response with resource', function () {
     $stock_prices = StockPrice::factory()->create();
 

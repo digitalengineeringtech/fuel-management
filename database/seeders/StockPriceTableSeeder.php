@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\StockPrice;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class StockPriceTableSeeder extends Seeder
 {
@@ -53,7 +52,7 @@ class StockPriceTableSeeder extends Seeder
                 'nozzle_no' => ['17', '18', '19', '20'],
                 'created_at' => now(),
                 'updated_at' => now(),
-            ]
+            ],
         ];
 
         foreach ($stock_prices as $stock_price) {

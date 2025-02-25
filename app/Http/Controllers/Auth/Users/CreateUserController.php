@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Auth\Users;
 
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Auth\Users\UserResource;
 use App\Models\User;
 use App\Traits\HasResponse;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Resources\Auth\Users\UserResource;
 
 class CreateUserController extends Controller
 {
@@ -15,7 +15,7 @@ class CreateUserController extends Controller
 
     public function __invoke(Request $request)
     {
-        try{
+        try {
             // Validate the request
             $request->validate([
                 'name' => ['required', 'string', 'max:255'],
@@ -38,8 +38,8 @@ class CreateUserController extends Controller
                 'tank_count' => $request->tank_count,
             ]);
 
-            if($user) {
-                if($request->has('roles') && $request->has('permissions')) {
+            if ($user) {
+                if ($request->has('roles') && $request->has('permissions')) {
                     $user->syncRoles($request->input('roles.*.name'));
 
                     $user->syncPermissions($request->input('permissions.*.name'));
@@ -49,7 +49,7 @@ class CreateUserController extends Controller
             } else {
                 return $this->errorResponse('Failed to create user', 400, null);
             }
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
     }

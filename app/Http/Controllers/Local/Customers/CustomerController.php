@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers\Local\Customers;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Local\Customers\CreateRequest;
 use App\Http\Requests\Local\Customers\UpdateRequest;
 use App\Repositories\Local\Contracts\Customers\CustomerRepositoryInterface;
+use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
     private $customerRepository;
+
     public function __construct(CustomerRepositoryInterface $customerRepository)
     {
         $this->customerRepository = $customerRepository;
     }
+
     /**
      * Display a listing of the resource.
      */

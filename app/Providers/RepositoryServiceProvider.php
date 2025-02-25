@@ -11,14 +11,11 @@ class RepositoryServiceProvider extends ServiceProvider
     /**
      * Bootstrap services.
      */
-    public function boot(): void
-    {
-
-    }
+    public function boot(): void {}
 
     /**
      * Register services.
-    */
+     */
     public function register(): void
     {
         $this->bindRepositories('Cloud');
@@ -27,8 +24,6 @@ class RepositoryServiceProvider extends ServiceProvider
 
     /**
      * Bind repositories dynamically.
-     *
-     * @param string $type
      */
     private function bindRepositories(string $type)
     {
@@ -61,11 +56,6 @@ class RepositoryServiceProvider extends ServiceProvider
 
     /**
      * Get the fully qualified namespace of a class from its file path.
-     *
-     * @param string $filePath
-     * @param string $contractFolder
-     * @param string $type
-     * @return string
      */
     private function getNamespaceFromPath(string $filePath, string $contractFolder, string $type): string
     {
@@ -73,7 +63,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $normalizedPath = str_replace(DIRECTORY_SEPARATOR, '/', $filePath);
 
         // Remove the base path (ensure forward slashes are consistent)
-        $relativePath = str_replace(str_replace(DIRECTORY_SEPARATOR, '/', base_path() . '/'), '', $normalizedPath);
+        $relativePath = str_replace(str_replace(DIRECTORY_SEPARATOR, '/', base_path().'/'), '', $normalizedPath);
 
         // Remove 'app/' prefix if it exists
         $relativePath = preg_replace('/^app\//', '', $relativePath);
@@ -82,6 +72,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $namespace = str_replace(['/', '.php'], ['\\', ''], $relativePath);
 
         // Ensure the namespace starts with 'App\'
-        return 'App\\' . $namespace;
+        return 'App\\'.$namespace;
     }
 }

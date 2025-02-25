@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Storage;
 
 trait HasImage
 {
-    public function uploadImage($path = 'stations', $file, $disk = 'public')
+    public function uploadImage($path, $file, $disk = 'public')
     {
         $uid = uniqid();
 
@@ -20,8 +20,9 @@ trait HasImage
         // Convert the database path to the correct storage path
         $filePath = str_replace('storage/', '', $image);
 
-        if(Storage::disk($disk)->exists($filePath)) {
+        if (Storage::disk($disk)->exists($filePath)) {
             Storage::disk($disk)->delete($filePath);
+
             return true;
         }
 

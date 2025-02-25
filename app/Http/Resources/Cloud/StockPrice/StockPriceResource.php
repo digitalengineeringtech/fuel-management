@@ -2,10 +2,10 @@
 
 namespace App\Http\Resources\Cloud\StockPrice;
 
+use App\Http\Resources\Cloud\FuelTypes\FuelTypeResource;
+use App\Http\Resources\Cloud\Stations\StationResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Cloud\Stations\StationResource;
-use App\Http\Resources\Cloud\FuelTypes\FuelTypeResource;
 
 class StockPriceResource extends JsonResource
 {

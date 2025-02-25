@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers\Cloud\StockPrices;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cloud\StockPrices\CreateRequest;
 use App\Http\Requests\Cloud\StockPrices\UpdateRequest;
 use App\Repositories\Cloud\Contracts\StockPrices\StockPriceRepositoryInterface;
+use Illuminate\Http\Request;
 
 class StockPriceController extends Controller
 {
     private $stockPriceRepository;
+
     public function __construct(StockPriceRepositoryInterface $stockPriceRepository)
     {
         $this->stockPriceRepository = $stockPriceRepository;
     }
+
     /**
      * Display a listing of the resource.
      */

@@ -7,7 +7,6 @@ beforeEach(function () {
     $this->shopRepository = $this->mock(ShopRepositoryInterface::class);
 });
 
-
 test('can get all shops and response with resource', function () {
     $shops = Shop::factory()->create();
 

@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources\Cloud\Shops;
 
+use App\Http\Resources\Cloud\Stations\StationResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Cloud\Stations\StationResource;
 
 class ShopResource extends JsonResource
 {
