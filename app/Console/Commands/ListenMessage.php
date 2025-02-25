@@ -29,8 +29,8 @@ class ListenMessage extends Command
         $client = new Client(config('mqtt.default'));
 
         $client->subscribe('detpos/#', function ($topic, $message) {
-            $this->info('Topic: ' . $topic);
-            $this->info('Message: ' . $message);
+            $this->info('Topic: '.$topic);
+            $this->info('Message: '.$message);
 
             // Do something with the message here ( Queue Job )
         });

@@ -7,7 +7,6 @@ beforeEach(function () {
     $this->fuelTypeRepository = $this->mock(FuelTypeRepositoryInterface::class);
 });
 
-
 test('can get all fuel types and response with resource', function () {
     $fuel_types = FuelType::factory()->create();
 

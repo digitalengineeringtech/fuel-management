@@ -2,122 +2,121 @@
 
 namespace App\Repositories\Cloud\Concretes\Stations;
 
-use Exception;
+use App\Http\Resources\Cloud\Stations\StationResource;
 use App\Models\Station;
+use App\Repositories\Cloud\Contracts\Stations\StationRepositoryInterface;
 use App\Traits\HasImage;
 use App\Traits\HasResponse;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
+use Exception;
 use Illuminate\Support\Facades\Artisan;
-use App\Http\Resources\Cloud\Stations\StationResource;
-use App\Repositories\Cloud\Contracts\Stations\StationRepositoryInterface;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class StationRepository implements StationRepositoryInterface
 {
-     use HasImage;
-     use HasResponse;
-     public function getStations($request)
-     {
-         $stations = Station::paginate(10);
+    use HasImage;
+    use HasResponse;
 
-         return StationResource::collection($stations);
-     }
+    public function getStations($request)
+    {
+        $stations = Station::paginate(10);
 
-     public function getStation($id)
-     {
-         $station = Station::find($id);
+        return StationResource::collection($stations);
+    }
 
-         if(!$station) {
-             return $this->errorResponse('Station not found', 404, null);
-         }
+    public function getStation($id)
+    {
+        $station = Station::find($id);
 
-         return new StationResource($station);
-     }
-
-     public function createStation($data)
-     {
-          try {
-                // Generate a unique database name for the station
-                $data['station_database'] = 'station_' . Str::slug($data['name'], '_') . '_' . Str::lower($data['station_no']);
-
-                // Upload the image if provided
-                if(isset($data['image'])) {
-                    $data['image'] = $this->uploadImage('stations', $data['image']);
-                }
-                // Create a new station
-                $station = Station::create($data);
-
-                // if the station doesn't exist, return an error response and delete the database
-                if(!$station) {
-                    DB::statement("DROP DATABASE IF EXISTS $station->station_database");
-
-                    return $this->errorResponse('Failed to create station', 400, null);
-                }
-
-                // Create a new database for mysql
-                DB::statement("CREATE DATABASE $station->station_database");
-
-                // Configure dynamic connection for the station database
-                config(['database.connections.station' => [
-                    'driver' => env('DB_CONNECTION', 'mysql'),
-                    'host' => env('DB_HOST', '127.0.0.1'),
-                    'port' => env('DB_PORT', '3306'),
-                    'database' => $station->station_database,
-                    'username' => env('DB_USERNAME', 'hak'),
-                    'password' => env('DB_PASSWORD', 'hak5095905'),
-                    'charset' => 'utf8',
-                    'prefix' => ''
-                ]]);
-
-                // Run migrations for the station database using Artisan
-                Artisan::call('migrate', ['--database' => 'station']);
-
-                return new StationResource($station);
-          } catch(Exception $e) {
-              return $this->errorResponse($e->getMessage(), 500,  null);;
-          }
-     }
-
-     public function updateStation($id, $data)
-     {
-        // Upload the image if provided
-         if(isset($data['image'])) {
-             $data['image'] = $this->uploadImage('stations', $data['image']);
-         }
-         // find the station by id
-         $station = Station::find($id);
-
-         // if the station doesn't exist, return an error response
-         if(!$station) {
+        if (! $station) {
             return $this->errorResponse('Station not found', 404, null);
-         }
+        }
 
-         // update the station
-         $station->update($data);
+        return new StationResource($station);
+    }
 
-         return new StationResource($station);
-     }
+    public function createStation($data)
+    {
+        try {
+            // Generate a unique database name for the station
+            $data['station_database'] = 'station_'.Str::slug($data['name'], '_').'_'.Str::lower($data['station_no']);
 
-     public function deleteStation($id)
-     {
+            // Upload the image if provided
+            if (isset($data['image'])) {
+                $data['image'] = $this->uploadImage('stations', $data['image']);
+            }
+            // Create a new station
+            $station = Station::create($data);
+
+            // if the station doesn't exist, return an error response and delete the database
+            if (! $station) {
+                DB::statement("DROP DATABASE IF EXISTS $station->station_database");
+
+                return $this->errorResponse('Failed to create station', 400, null);
+            }
+
+            // Create a new database for mysql
+            DB::statement("CREATE DATABASE $station->station_database");
+
+            // Configure dynamic connection for the station database
+            config(['database.connections.station' => [
+                'driver' => env('DB_CONNECTION', 'mysql'),
+                'host' => env('DB_HOST', '127.0.0.1'),
+                'port' => env('DB_PORT', '3306'),
+                'database' => $station->station_database,
+                'username' => env('DB_USERNAME', 'hak'),
+                'password' => env('DB_PASSWORD', 'hak5095905'),
+                'charset' => 'utf8',
+                'prefix' => '',
+            ]]);
+
+            // Run migrations for the station database using Artisan
+            Artisan::call('migrate', ['--database' => 'station']);
+
+            return new StationResource($station);
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
+        }
+    }
+
+    public function updateStation($id, $data)
+    {
+        // Upload the image if provided
+        if (isset($data['image'])) {
+            $data['image'] = $this->uploadImage('stations', $data['image']);
+        }
         // find the station by id
         $station = Station::find($id);
 
         // if the station doesn't exist, return an error response
-        if(!$station) {
+        if (! $station) {
             return $this->errorResponse('Station not found', 404, null);
         }
 
-         // Delete the station's image if it exists
-         if($station->image) {
-             $this->deleteImage($station->image);
-         }
+        // update the station
+        $station->update($data);
 
-         // Delete the station's database
-         $station->delete();
+        return new StationResource($station);
+    }
 
-         return $this->successResponse('Station deleted successfully', 200, null);
-     }
+    public function deleteStation($id)
+    {
+        // find the station by id
+        $station = Station::find($id);
 
+        // if the station doesn't exist, return an error response
+        if (! $station) {
+            return $this->errorResponse('Station not found', 404, null);
+        }
 
+        // Delete the station's image if it exists
+        if ($station->image) {
+            $this->deleteImage($station->image);
+        }
+
+        // Delete the station's database
+        $station->delete();
+
+        return $this->successResponse('Station deleted successfully', 200, null);
+    }
 }

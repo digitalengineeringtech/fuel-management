@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Station;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class StationTableSeeder extends Seeder
 {
@@ -17,7 +16,7 @@ class StationTableSeeder extends Seeder
             'shop_id' => 1,
             'name' => 'Kyaw San 1',
             'station_no' => 'KS001',
-            'image' => NULL,
+            'image' => null,
             'phone_one' => '0123456789',
             'phone_two' => '0123456789',
             'address' => '123 Main St',

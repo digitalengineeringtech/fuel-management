@@ -7,7 +7,6 @@ beforeEach(function () {
     $this->discountRepository = $this->mock(DiscountRepositoryInterface::class);
 });
 
-
 test('can get all discount and response with resource', function () {
     $discount = Discount::factory()->create();
 

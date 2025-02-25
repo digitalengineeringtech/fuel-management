@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Traits\HasResponse;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rules;
 use Illuminate\Http\JsonResponse;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Database\Eloquent\Casts\Json;
+use Illuminate\Validation\Rules;
 
 class RegisteredUserController extends Controller
 {
     use HasResponse;
+
     /**
      * Handle an incoming registration request.
      *
@@ -39,7 +38,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->string('password')),
             'phone' => $request->phone,
             'card_id' => $request->card_id,
-            'tank_count' => $request->tank_count
+            'tank_count' => $request->tank_count,
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;

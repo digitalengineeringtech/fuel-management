@@ -2,10 +2,10 @@
 
 namespace App\Http\Resources\Local\Customers;
 
+use App\Http\Resources\Cloud\VehicleTypes\VehicleTypeResource;
+use App\Http\Resources\Local\Members\MemberResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Local\Members\MemberResource;
-use App\Http\Resources\Cloud\VehicleTypes\VehicleTypeResource;
 
 class CustomerResource extends JsonResource
 {

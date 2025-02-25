@@ -12,31 +12,35 @@ interface StockPriceRepositoryInterface
 {
     /** *
      * Get a list of stock prices based on the provided query
-     * @param $request
      */
     public function getStockPrices($request);
+
     /**
      * Get a specific stock price by its ID.
-     * @param int $id
-    */
+     *
+     * @param  int  $id
+     */
     public function getStockPrice($id);
 
     /**
      * Create a new stock price with the provided data.
-     * @param array $data
-    */
+     *
+     * @param  array  $data
+     */
     public function createStockPrice($data);
 
     /**
      * Update an existing stock price by its ID and update the provided data.
-     * @param int $id
-     * @param array $data
-    */
+     *
+     * @param  int  $id
+     * @param  array  $data
+     */
     public function updateStockPrice($id, $data);
 
     /**
      *  Delete a stock price by its ID.
-     * @param int $id
-    */
+     *
+     * @param  int  $id
+     */
     public function deleteStockPrice($id);
 }

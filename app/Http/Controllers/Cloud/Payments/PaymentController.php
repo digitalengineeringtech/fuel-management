@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers\Cloud\Payments;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cloud\Payments\CreateRequest;
 use App\Http\Requests\Cloud\Payments\UpdateRequest;
 use App\Repositories\Cloud\Contracts\Payments\PaymentRepositoryInterface;
+use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
     private $paymentRepository;
+
     public function __construct(PaymentRepositoryInterface $paymentRepository)
     {
         $this->paymentRepository = $paymentRepository;
     }
+
     /**
      * Display a listing of the resource.
      */

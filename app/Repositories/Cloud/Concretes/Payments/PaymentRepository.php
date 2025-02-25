@@ -2,79 +2,78 @@
 
 namespace App\Repositories\Cloud\Concretes\Payments;
 
-use Exception;
-use App\Traits\HasResponse;
 use App\Http\Resources\Cloud\Payments\PaymentResource;
 use App\Models\Payment;
 use App\Repositories\Cloud\Contracts\Payments\PaymentRepositoryInterface;
+use App\Traits\HasResponse;
+use Exception;
 
 class PaymentRepository implements PaymentRepositoryInterface
 {
-     use HasResponse;
-     public function getPayments($request)
-     {
-         $payments = Payment::paginate(10);
+    use HasResponse;
 
-         return PaymentResource::collection($payments);
-     }
+    public function getPayments($request)
+    {
+        $payments = Payment::paginate(10);
 
-     public function getPayment($id)
-     {
-         $payment = Payment::find($id);
+        return PaymentResource::collection($payments);
+    }
 
-         if(!$payment) {
-             return $this->errorResponse('Payment not found', 404, null);
-         }
+    public function getPayment($id)
+    {
+        $payment = Payment::find($id);
 
-         return new PaymentResource($payment);
-     }
+        if (! $payment) {
+            return $this->errorResponse('Payment not found', 404, null);
+        }
 
-     public function createPayment($data)
-     {
-          try {
+        return new PaymentResource($payment);
+    }
 
-                // Create a new payment
-                $payment = Payment::create($data);
+    public function createPayment($data)
+    {
+        try {
 
-                return new PaymentResource($payment);
+            // Create a new payment
+            $payment = Payment::create($data);
 
-          } catch(Exception $e) {
-              return $this->errorResponse($e->getMessage(), 500,  null);;
-          }
-     }
+            return new PaymentResource($payment);
 
-     public function updatePayment($id, $data)
-     {
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
+        }
+    }
 
-         // find the payment by id
-         $payment = Payment::find($id);
+    public function updatePayment($id, $data)
+    {
 
-         // if the payment doesn't exist, return an error response
-         if(!$payment) {
-            return $this->errorResponse('Fuel Type not found', 404, null);
-         }
-
-         // update the payment
-         $payment->update($data);
-
-         return new PaymentResource($payment);
-     }
-
-     public function deletePayment($id)
-     {
         // find the payment by id
         $payment = Payment::find($id);
 
         // if the payment doesn't exist, return an error response
-        if(!$payment) {
+        if (! $payment) {
+            return $this->errorResponse('Fuel Type not found', 404, null);
+        }
+
+        // update the payment
+        $payment->update($data);
+
+        return new PaymentResource($payment);
+    }
+
+    public function deletePayment($id)
+    {
+        // find the payment by id
+        $payment = Payment::find($id);
+
+        // if the payment doesn't exist, return an error response
+        if (! $payment) {
             return $this->errorResponse('Payment not found', 404, null);
         }
 
-         // Delete the payment's database
-         $payment->delete();
+        // Delete the payment's database
+        $payment->delete();
 
-         return $this->successResponse('Payment deleted successfully', 200, null);
-     }
-
-
+        return $this->successResponse('Payment deleted successfully', 200, null);
+    }
 }

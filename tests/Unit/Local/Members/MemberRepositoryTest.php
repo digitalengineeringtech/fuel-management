@@ -7,7 +7,6 @@ beforeEach(function () {
     $this->memberRepository = $this->mock(MemberRepositoryInterface::class);
 });
 
-
 test('can get all members and response with resource', function () {
     $members = Member::factory()->create();
 

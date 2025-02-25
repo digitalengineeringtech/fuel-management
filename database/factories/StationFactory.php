@@ -17,7 +17,7 @@ class StationFactory extends Factory
     public function definition(): array
     {
         return [
-            'store_id' => rand(1,3),
+            'store_id' => rand(1, 3),
             'name' => fake()->name(),
             'station_no' => rand(000001, 999999),
             'image' => fake()->imageUrl(500, 500),

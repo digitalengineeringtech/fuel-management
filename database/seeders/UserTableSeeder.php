@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class UserTableSeeder extends Seeder
 {
@@ -20,7 +19,7 @@ class UserTableSeeder extends Seeder
             'phone' => '1234567890',
             'card_id' => '00001',
             'tank_count' => 10,
-            'cloud_user' => true
+            'cloud_user' => true,
         ]);
     }
 }

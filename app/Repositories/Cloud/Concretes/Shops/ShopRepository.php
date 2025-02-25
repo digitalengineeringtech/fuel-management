@@ -2,11 +2,11 @@
 
 namespace App\Repositories\Cloud\Concretes\Shops;
 
+use App\Http\Resources\Cloud\Shops\ShopResource;
 use App\Models\Shop;
+use App\Repositories\Cloud\Contracts\Shops\ShopRepositoryInterface;
 use App\Traits\HasImage;
 use App\Traits\HasResponse;
-use App\Http\Resources\Cloud\Shops\ShopResource;
-use App\Repositories\Cloud\Contracts\Shops\ShopRepositoryInterface;
 
 class ShopRepository implements ShopRepositoryInterface
 {
@@ -24,7 +24,7 @@ class ShopRepository implements ShopRepositoryInterface
     {
         $shop = Shop::find($id);
 
-        if(!$shop) {
+        if (! $shop) {
             return $this->errorResponse('Shop not found', 404, null);
         }
 
@@ -35,19 +35,19 @@ class ShopRepository implements ShopRepositoryInterface
     {
         try {
             // Upload the image if provided
-            if(isset($data['image'])) {
+            if (isset($data['image'])) {
                 $data['image'] = $this->uploadImage('shops', $data['image']);
             }
 
             // Create a new shop
             $shop = Shop::create($data);
 
-            if(!$shop) {
+            if (! $shop) {
                 return $this->errorResponse('Failed to create shop', 400, null);
             }
 
             return new ShopResource($shop);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
     }
@@ -57,19 +57,19 @@ class ShopRepository implements ShopRepositoryInterface
         try {
             $shop = Shop::find($id);
 
-            if(!$shop) {
+            if (! $shop) {
                 return $this->errorResponse('Shop not found', 404, null);
             }
 
             // Upload the image if provided
-            if(isset($data['image'])) {
+            if (isset($data['image'])) {
                 $data['image'] = $this->uploadImage('shops', $data['image']);
             }
 
             $shop->update($data);
 
             return new ShopResource($shop);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
     }
@@ -78,11 +78,11 @@ class ShopRepository implements ShopRepositoryInterface
     {
         $shop = Shop::find($id);
 
-        if(!$shop) {
+        if (! $shop) {
             return $this->errorResponse('Shop not found', 404, null);
         }
 
-        if($shop->image) {
+        if ($shop->image) {
             $this->deleteImage($shop->image);
         }
 

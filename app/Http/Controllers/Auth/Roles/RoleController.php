@@ -2,26 +2,26 @@
 
 namespace App\Http\Controllers\Auth\Roles;
 
-use Exception;
-use App\Traits\HasResponse;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Auth\Roles\RoleResource;
+use App\Traits\HasResponse;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
-
     use HasResponse;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-         $roles = Role::paginate(10);
+        $roles = Role::paginate(10);
 
-         return RoleResource::collection($roles);
+        return RoleResource::collection($roles);
     }
 
     /**
@@ -31,14 +31,14 @@ class RoleController extends Controller
     {
         try {
             $role = Role::create([
-                'name' => Str::lower($request->name)
+                'name' => Str::lower($request->name),
             ]);
 
-            if(!$role) {
+            if (! $role) {
                 return $this->errorResponse('Failed to create role', 400, null);
             }
 
-            if($request->has('permissions')) {
+            if ($request->has('permissions')) {
                 $role->syncPermissions($request->input('permissions.*.name'));
             }
 
@@ -56,7 +56,7 @@ class RoleController extends Controller
     {
         $role = Role::find($id);
 
-        if(!$role) {
+        if (! $role) {
             return $this->errorResponse('Role not found', 404, null);
         }
 
@@ -71,12 +71,12 @@ class RoleController extends Controller
         try {
             $role = Role::find($id);
 
-            if(!$role) {
+            if (! $role) {
                 return $this->errorResponse('Role not found', 404, null);
             }
 
             $role->update([
-                'name' => Str::lower($request->name)
+                'name' => Str::lower($request->name),
             ]);
 
             return $this->successResponse('Role updated successfully', 200, new RoleResource($role));
@@ -93,7 +93,7 @@ class RoleController extends Controller
         try {
             $role = Role::find($id);
 
-            if(!$role) {
+            if (! $role) {
                 return $this->errorResponse('Role not found', 404, null);
             }
 

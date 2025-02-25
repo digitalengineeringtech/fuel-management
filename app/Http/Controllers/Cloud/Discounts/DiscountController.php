@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers\Cloud\Discounts;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cloud\Discounts\CreateRequest;
 use App\Http\Requests\Cloud\Discounts\UpdateRequest;
 use App\Repositories\Cloud\Contracts\Discounts\DiscountRepositoryInterface;
+use Illuminate\Http\Request;
 
 class DiscountController extends Controller
 {
     private $discountRepository;
+
     public function __construct(DiscountRepositoryInterface $discountRepository)
     {
         $this->discountRepository = $discountRepository;
     }
+
     /**
      * Display a listing of the resource.
      */

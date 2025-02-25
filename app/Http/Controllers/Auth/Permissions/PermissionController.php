@@ -2,24 +2,25 @@
 
 namespace App\Http\Controllers\Auth\Permissions;
 
-use App\Traits\HasResponse;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Spatie\Permission\Models\Permission;
 use App\Http\Resources\Auth\Permissions\PermissionResource;
+use App\Traits\HasResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {
     use HasResponse;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-         $permissions = Permission::paginate(10);
+        $permissions = Permission::paginate(10);
 
-         return PermissionResource::collection($permissions);
+        return PermissionResource::collection($permissions);
     }
 
     /**
@@ -27,20 +28,20 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-         try {
+        try {
             $permission = Permission::create([
-                'name' => Str::lower($request->name)
+                'name' => Str::lower($request->name),
             ]);
 
-            if(!$permission) {
+            if (! $permission) {
                 return $this->errorResponse('Failed to create permission', 400, null);
             }
 
             return $this->successResponse('Permission created successfully', 201, new PermissionResource($permission));
 
-         } catch (Exception $e) {
+        } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
-         }
+        }
     }
 
     /**
@@ -50,7 +51,7 @@ class PermissionController extends Controller
     {
         $permission = Permission::find($id);
 
-        if(!$permission) {
+        if (! $permission) {
             return $this->errorResponse('Permission not found', 404, null);
         }
 
@@ -64,12 +65,12 @@ class PermissionController extends Controller
     {
         $permission = Permission::find($id);
 
-        if(!$permission) {
+        if (! $permission) {
             return $this->errorResponse('Permission not found', 404, null);
         }
 
         $permission->update([
-            'name' => Str::lower($request->name)
+            'name' => Str::lower($request->name),
         ]);
 
         return $this->successResponse('Permission updated successfully', 200, new PermissionResource($permission));
@@ -82,7 +83,7 @@ class PermissionController extends Controller
     {
         $permission = Permission::find($id);
 
-        if(!$permission) {
+        if (! $permission) {
             return $this->errorResponse('Permission not found', 404, null);
         }
 

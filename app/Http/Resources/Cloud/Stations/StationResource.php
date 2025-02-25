@@ -2,9 +2,8 @@
 
 namespace App\Http\Resources\Cloud\Stations;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
 use App\Http\Resources\Cloud\Shops\ShopResource;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class StationResource extends JsonResource

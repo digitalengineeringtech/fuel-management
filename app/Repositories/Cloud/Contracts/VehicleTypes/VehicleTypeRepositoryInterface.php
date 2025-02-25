@@ -12,31 +12,35 @@ interface VehicleTypeRepositoryInterface
 {
     /** *
      * Get a list of vehicle types based on the provided query
-     * @param $request
      */
     public function getVehicleTypes($request);
+
     /**
      * Get a specific vehicle type by its ID.
-     * @param int $id
-    */
+     *
+     * @param  int  $id
+     */
     public function getVehicleType($id);
 
     /**
      * Create a new vehicle type with the provided data.
-     * @param array $data
-    */
+     *
+     * @param  array  $data
+     */
     public function createVehicleType($data);
 
     /**
      * Update an existing vehicle type by its ID and update the provided data.
-     * @param int $id
-     * @param array $data
-    */
+     *
+     * @param  int  $id
+     * @param  array  $data
+     */
     public function updateVehicleType($id, $data);
 
     /**
      *  Delete a vehicle by its ID.
-     * @param int $id
-    */
+     *
+     * @param  int  $id
+     */
     public function deleteVehicleType($id);
 }

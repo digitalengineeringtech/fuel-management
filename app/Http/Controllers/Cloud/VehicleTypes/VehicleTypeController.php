@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers\Cloud\VehicleTypes;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cloud\VehicleTypes\CreateRequest;
 use App\Http\Requests\Cloud\VehicleTypes\UpdateRequest;
 use App\Repositories\Cloud\Contracts\VehicleTypes\VehicleTypeRepositoryInterface;
+use Illuminate\Http\Request;
 
 class VehicleTypeController extends Controller
 {
     private $vehicleTypeRepository;
+
     public function __construct(VehicleTypeRepositoryInterface $vehicleTypeRepository)
     {
         $this->vehicleTypeRepository = $vehicleTypeRepository;
     }
+
     /**
      * Display a listing of the resource.
      */

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class AuthenticatedSessionController extends Controller
 {
     use HasResponse;
+
     /**
      * Handle an incoming authentication request.
      */

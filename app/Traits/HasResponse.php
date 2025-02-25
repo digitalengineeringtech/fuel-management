@@ -8,15 +8,15 @@ trait HasResponse
     {
         return response()->json([
             'message' => $message,
-            'data' => $data
+            'data' => $data,
         ], $code);
     }
 
-    public function errorResponse($message = 'Error', $code = 400 , $data = null)
+    public function errorResponse($message = 'Error', $code = 400, $data = null)
     {
         return response()->json([
             'message' => $message,
-            'data' => $data
+            'data' => $data,
         ], $code);
     }
 }

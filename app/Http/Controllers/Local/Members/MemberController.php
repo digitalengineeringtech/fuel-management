@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers\Local\Members;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Local\Members\CreateRequest;
 use App\Http\Requests\Local\Members\UpdateRequest;
 use App\Repositories\Local\Contracts\Members\MemberRepositoryInterface;
+use Illuminate\Http\Request;
 
 class MemberController extends Controller
 {
     private $memberRepository;
+
     public function __construct(MemberRepositoryInterface $memberRepository)
     {
         $this->memberRepository = $memberRepository;
     }
+
     /**
      * Display a listing of the resource.
      */
