@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Local\Contracts\Customers;
+namespace App\Repositories\Cloud\Contracts\Customers;
 
 /**
  * Interface defining the contract for a customer repository.

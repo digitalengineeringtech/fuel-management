@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Member;
-use App\Repositories\Local\Contracts\Members\MemberRepositoryInterface;
+use App\Repositories\Cloud\Contracts\Members\MemberRepositoryInterface;
 
 beforeEach(function () {
     $this->memberRepository = $this->mock(MemberRepositoryInterface::class);

@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Customer;
-use App\Repositories\Local\Contracts\Customers\CustomerRepositoryInterface;
+use App\Repositories\Cloud\Contracts\Customers\CustomerRepositoryInterface;
 
 beforeEach(function () {
     $this->customerRepository = $this->mock(CustomerRepositoryInterface::class);

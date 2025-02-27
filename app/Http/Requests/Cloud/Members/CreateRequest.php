@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Local\Members;
+namespace App\Http\Requests\Cloud\Members;
 
 use Illuminate\Foundation\Http\FormRequest;
 

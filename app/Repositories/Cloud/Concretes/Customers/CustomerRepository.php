@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repositories\Local\Concretes\Customers;
+namespace App\Repositories\Cloud\Concretes\Customers;
 
-use App\Http\Resources\Local\Customers\CustomerResource;
+use App\Http\Resources\Cloud\Customers\CustomerResource;
 use App\Models\Customer;
-use App\Repositories\Local\Contracts\Customers\CustomerRepositoryInterface;
+use App\Repositories\Cloud\Contracts\Customers\CustomerRepositoryInterface;
 use App\Traits\HasResponse;
 use Exception;
 

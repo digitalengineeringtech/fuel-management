@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('dispenser_id');
             $table->foreignId('stock_price_id');
+            $table->integer('nozzle_no');
             $table->boolean('auto_approve')->default(false);
             $table->boolean('semi_approve')->default(false);
             $table->boolean('cashier_approve')->default(true);

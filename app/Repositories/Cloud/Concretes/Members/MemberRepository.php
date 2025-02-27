@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repositories\Local\Concretes\Members;
+namespace App\Repositories\Cloud\Concretes\Members;
 
-use App\Http\Resources\Local\Members\MemberResource;
+use App\Http\Resources\Cloud\Members\MemberResource;
 use App\Models\Member;
-use App\Repositories\Local\Contracts\Members\MemberRepositoryInterface;
+use App\Repositories\Cloud\Contracts\Members\MemberRepositoryInterface;
 use App\Traits\HasResponse;
 use Exception;
 

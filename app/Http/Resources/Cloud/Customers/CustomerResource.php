@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Resources\Local\Customers;
+namespace App\Http\Resources\Cloud\Customers;
 
+use App\Http\Resources\Cloud\Members\MemberResource;
 use App\Http\Resources\Cloud\VehicleTypes\VehicleTypeResource;
-use App\Http\Resources\Local\Members\MemberResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

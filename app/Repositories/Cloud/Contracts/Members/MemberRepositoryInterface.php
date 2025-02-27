@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Local\Contracts\Members;
+namespace App\Repositories\Cloud\Contracts\Members;
 
 /**
  * Interface defining the contract for a member repository.

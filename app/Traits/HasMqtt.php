@@ -7,8 +7,8 @@ trait HasMqtt
     /**
      * Attempt to connect to the MQTT broker with retries.
      *
-     * @param array $mqttConfig
-     * @param int $retry
+     * @param  array  $mqttConfig
+     * @param  int  $retry
      * @return array|null
      */
     public function handleConnectionWithRetry($mqttConfig, $retry = 3)
@@ -38,9 +38,9 @@ trait HasMqtt
     /**
      * Check if a connection can be established to the given host and port.
      *
-     * @param string $host
-     * @param int $port
-     * @param int $timeout
+     * @param  string  $host
+     * @param  int  $port
+     * @param  int  $timeout
      * @return bool
      */
     public function checkConnection($host, $port, $timeout = 2)
@@ -50,6 +50,7 @@ trait HasMqtt
 
         if ($connection) {
             fclose($connection);
+
             return true;  // Successfully connected
         }
 

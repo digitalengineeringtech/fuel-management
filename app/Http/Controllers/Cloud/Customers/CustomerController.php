@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Local\Customers;
+namespace App\Http\Controllers\Cloud\Customers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Local\Customers\CreateRequest;
-use App\Http\Requests\Local\Customers\UpdateRequest;
-use App\Repositories\Local\Contracts\Customers\CustomerRepositoryInterface;
+use App\Http\Requests\Cloud\Customers\CreateRequest;
+use App\Http\Requests\Cloud\Customers\UpdateRequest;
+use App\Repositories\Cloud\Contracts\Customers\CustomerRepositoryInterface;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller

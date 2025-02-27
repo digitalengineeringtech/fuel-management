@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Local\Members;
+namespace App\Http\Resources\Cloud\Members;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;

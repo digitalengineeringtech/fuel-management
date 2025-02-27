@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Local\Members;
+namespace App\Http\Controllers\Cloud\Members;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Local\Members\CreateRequest;
-use App\Http\Requests\Local\Members\UpdateRequest;
-use App\Repositories\Local\Contracts\Members\MemberRepositoryInterface;
+use App\Http\Requests\Cloud\Members\CreateRequest;
+use App\Http\Requests\Cloud\Members\UpdateRequest;
+use App\Repositories\Cloud\Contracts\Members\MemberRepositoryInterface;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller

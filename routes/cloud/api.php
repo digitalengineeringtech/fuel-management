@@ -13,10 +13,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return response()->json(['message' => 'Cloud API is working']);
 });
+
 Route::apiResource('shops', ShopController::class);
-Route::apiResource('stations', StationController::class);
-Route::apiResource('fuel-types', FuelTypeController::class);
-Route::apiResource('vehicle-types', VehicleTypeController::class);
-Route::apiResource('stock-prices', StockPriceController::class);
+Route::apiResource('members', MemberController::class);
 Route::apiResource('payments', PaymentController::class);
+Route::apiResource('stations', StationController::class);
 Route::apiResource('discounts', DiscountController::class);
+Route::apiResource('customers', CustomerController::class);
+Route::apiResource('fuel-types', FuelTypeController::class);
+Route::apiResource('stock-prices', StockPriceController::class);
+Route::apiResource('vehicle-types', VehicleTypeController::class);

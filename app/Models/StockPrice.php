@@ -14,6 +14,7 @@ class StockPrice extends Model
 
     // Mass assignment is disabled by default, so we need to explicitly define the fillable fields.
     protected $guarded = [];
+
     // Always eager load these relationships
     protected $with = ['station', 'fuelType'];
 
