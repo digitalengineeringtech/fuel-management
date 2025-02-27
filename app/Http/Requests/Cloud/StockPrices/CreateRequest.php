@@ -24,7 +24,6 @@ class CreateRequest extends FormRequest
         return [
             'station_id' => 'required',
             'fuel_type_id' => 'required',
-            'nozzle_no' => 'required',
             'unit_price' => 'required',
         ];
     }

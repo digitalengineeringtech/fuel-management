@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('station_id');
             $table->foreignId('fuel_type_id');
-            $table->json('nozzle_no');
             $table->bigInteger('unit_price');
             $table->timestamps();
         });
