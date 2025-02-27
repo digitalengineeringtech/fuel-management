@@ -9,6 +9,7 @@ use Illuminate\Console\Command;
 class ListenMessage extends Command
 {
     use HasMqtt;
+
     /**
      * The name and signature of the console command.
      *
@@ -36,15 +37,16 @@ class ListenMessage extends Command
         $configs = $this->handleConnectionWithRetry($mqttOne, $this->retry);
 
         // If connection fails after retries, fallback to the second broker (mqttTwo)
-        if (!$configs) {
+        if (! $configs) {
             $this->warn('Failed to connect to the first MQTT broker after 3 retries...');
 
             $this->info('Trying to connect to the second MQTT broker...');
 
             $configs = $this->handleConnectionWithRetry($mqttTwo, $this->retry);
 
-            if (!$configs) {
+            if (! $configs) {
                 $this->warn('Failed to connect to both MQTT brokers. Please check your mqtt connections...');
+
                 return;
             }
         }

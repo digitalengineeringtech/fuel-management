@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('discounts', function (Blueprint $table) {
             $table->id();
-            $table->string('type', 30); //amount, percent
+            $table->string('type', 30); // amount, percent
             $table->bigInteger('amount')->nullable()->default(null);
             $table->integer('percent_amount')->nullable()->default(null);
             $table->timestamps();

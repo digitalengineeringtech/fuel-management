@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Artisan;
 uses(Tests\TestCase::class)
     ->use(RefreshDatabase::class)->beforeEach(function () {
         Artisan::call('migrate', [
-            '--path' => 'database/migrations/stations',
+            '--path' => 'database/migrations/cloud',
         ]);
     })
     ->in(__DIR__);

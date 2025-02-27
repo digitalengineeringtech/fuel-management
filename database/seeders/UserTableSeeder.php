@@ -18,7 +18,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('password'),
             'phone' => '1234567890',
             'card_id' => '00001',
-            'tank_count' => 10
+            'tank_count' => 10,
         ]);
     }
 }
