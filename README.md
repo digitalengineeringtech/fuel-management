@@ -37,7 +37,7 @@ php artisan key:generate
 ```bash
 
  // run only one time for cloud server.
- php artisan migrate && php artisan migrate --path=database/migrations/stations
+ php artisan migrate && php artisan migrate --path=database/migrations/cloud
 
  // Seed to Database 
  php artisan db:seed
