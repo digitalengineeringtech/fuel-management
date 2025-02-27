@@ -19,7 +19,6 @@ class StockPriceFactory extends Factory
         return [
             'station_id' => 1,
             'fuel_type_id' => 1,
-            'nozzle_no' => json_encode([1, 2, 3]),
             'unit_price' => rand(1000, 5555),
         ];
     }

@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('password');
             $table->string('card_id', 15)->nullable();
             $table->integer('tank_count')->nullable();
-            $table->boolean('cloud_user')->default(false);
             $table->timestamps();
         });
 
