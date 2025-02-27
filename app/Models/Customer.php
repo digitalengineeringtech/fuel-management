@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Customer extends Model
 {
@@ -12,12 +14,12 @@ class Customer extends Model
 
     protected $guarded = [];
 
-    public function vehicleType()
+    public function vehicleType(): BelongsTo
     {
         return $this->belongsTo(VehicleType::class);
     }
 
-    public function member()
+    public function member(): HasOne
     {
         return $this->hasOne(Member::class);
     }
