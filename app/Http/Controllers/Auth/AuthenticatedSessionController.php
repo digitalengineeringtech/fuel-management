@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Resources\Auth\Users\UserResource;
 use App\Traits\HasResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class AuthenticatedSessionController extends Controller
         return $this->successResponse('Success', '200', [
             'token' => $token,
             'token_type' => 'Bearer',
-            'user' => $request->user(),
+            'user' => new UserResource($request->user()),
         ]);
     }
 
