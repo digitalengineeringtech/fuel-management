@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Auth\Users\UserResource;
 use App\Models\User;
 use App\Traits\HasResponse;
 use Illuminate\Http\JsonResponse;
@@ -46,7 +47,7 @@ class RegisteredUserController extends Controller
         return $this->successResponse('Success', '201', [
             'token' => $token,
             'token_type' => 'Bearer',
-            'user' => $user,
+            'user' => new UserResource($user),
         ]);
     }
 }
