@@ -39,11 +39,9 @@ class CreateUserController extends Controller
             ]);
 
             if ($user) {
-                if ($request->has('roles') && $request->has('permissions')) {
-                    $user->syncRoles($request->input('roles.*.name'));
+                $user->syncRoles($request->input('roles.*.name'));
 
-                    $user->syncPermissions($request->input('permissions.*.name'));
-                }
+                $user->syncPermissions($request->input('permissions.*.name'));
 
                 return $this->successResponse('User created successfully', 201, new UserResource($user));
             } else {
