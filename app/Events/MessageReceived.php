@@ -4,8 +4,6 @@ namespace App\Events;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
@@ -15,8 +13,10 @@ class MessageReceived implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $topic;
+
     public $message;
-    public function __construct(string $topic,string $message)
+
+    public function __construct(string $topic, string $message)
     {
         $this->topic = $topic;
         $this->message = $message;
@@ -29,9 +29,9 @@ class MessageReceived implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-        $topic = explode("/", $this->topic);
+        $topic = explode('/', $this->topic);
 
-        if($topic[2] != 'livedata') {
+        if ($topic[2] != 'livedata') {
             return [];
         }
 
