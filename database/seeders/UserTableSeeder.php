@@ -12,7 +12,7 @@ class UserTableSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
+       $user = User::create([
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
             'password' => bcrypt('password'),
@@ -20,5 +20,8 @@ class UserTableSeeder extends Seeder
             'card_id' => '00001',
             'tank_count' => 10,
         ]);
+
+        $user->syncRoles('admin');
+        $user->syncPermissions('create', 'read', 'update', 'delete');
     }
 }
