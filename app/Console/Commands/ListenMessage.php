@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Traits\HasMqtt;
 use Hakhant\Broker\Client;
+use App\Events\MessageReceived;
 use Illuminate\Console\Command;
 
 class ListenMessage extends Command
@@ -37,7 +38,7 @@ class ListenMessage extends Command
         $configs = $this->handleConnectionWithRetry($mqttOne, $this->retry);
 
         // If connection fails after retries, fallback to the second broker (mqttTwo)
-        if (! $configs) {
+        if (!$configs) {
             $this->warn('Failed to connect to the first MQTT broker after 3 retries...');
 
             $this->info('Trying to connect to the second MQTT broker...');
@@ -59,7 +60,7 @@ class ListenMessage extends Command
             $this->info('Topic: '.$topic);
             $this->info('Message: '.$message);
 
-            // Do something with the message here ( Queue Job )
+            broadcast(new MessageReceived($topic, $message));
         });
 
         $this->info('Successfully connected to MQTT broker and listening for messages...');
