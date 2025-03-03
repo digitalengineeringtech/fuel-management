@@ -2,23 +2,29 @@
 
 namespace App\Listeners;
 
+use App\Traits\HasMqtt;
+use App\Jobs\ProcessFinal;
+use App\Jobs\ProcessPermit;
+use App\Jobs\ProcessPreset;
 use App\Events\MessageReceived;
+use App\Jobs\ProcessPriceChange;
 
 class HandleMessage
 {
+    use HasMqtt;
     /**
      * Handle the event.
      */
     public function handle(MessageReceived $event): void
     {
-        $topic = explode('/', $event->topic);
+        $topics = $this->splitTopic($event->topic);
+        $messages = $this->splitMessage($event->message);
 
-        match ($topic[2]) {
-            'preset' => info($event->message), // Handle ProcessPreset Job
-            'permit' => info($event->message), // Handle ProcessPermit Job
-            'livedata' => info($event->message), // Handle ProcessLiveData Job
-            'Final' => info($event->message), // Handle ProcessFinal Job
-            'pricechange' => info($event->message), // Handle ProcessPriceChange Job
+        match ($topics[2]) {
+            'preset' => ProcessPreset::dispatch($topics, $messages),
+            'permit' => ProcessPermit::dispatch($topics, $messages),
+            'Final' =>  ProcessFinal::dispatch($topics, $messages),
+            'pricechange' => ProcessPriceChange::dispatch($topics, $messages),
         };
     }
 }
