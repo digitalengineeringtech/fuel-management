@@ -2,12 +2,13 @@
 
 namespace App\Console\Commands;
 
-use App\Events\MessageReceived;
 use App\Traits\HasMqtt;
 use Hakhant\Broker\Client;
+use App\Events\MessageReceived;
 use Illuminate\Console\Command;
+use App\Events\LivedataReceived;
 
-class ListenMessage extends Command
+class SubscribeMessage extends Command
 {
     use HasMqtt;
 
@@ -16,14 +17,14 @@ class ListenMessage extends Command
      *
      * @var string
      */
-    protected $signature = 'listen:message';
+    protected $signature = 'subscribe:message';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Listen for mqtt topic';
+    protected $description = 'Subscribe for mqtt topic';
 
     protected $retry = 3;
 
@@ -48,7 +49,7 @@ class ListenMessage extends Command
             if (! $configs) {
                 $this->warn('Failed to connect to both MQTT brokers. Please check your mqtt connections...');
 
-                return;
+                $this->handleConnectionWithRetry($mqttOne, $this->retry);
             }
         }
 
@@ -60,11 +61,18 @@ class ListenMessage extends Command
             $this->info('Topic: '.$topic);
             $this->info('Message: '.$message);
 
-            broadcast(new MessageReceived($topic, $message));
+            $topics = $this->splitTopic($topic);
+
+            if($topics[2] == 'livedata') {
+                broadcast(new LivedataReceived($topic, $message));
+            } else {
+                event(new MessageReceived($topic, $message));
+            }
         });
 
         $this->info('Successfully connected to MQTT broker and listening for messages...');
 
         $client->loop();
     }
+
 }

@@ -17,4 +17,4 @@ return [
         'client_id' => env('MQTT_TWO_CLIENT_ID', 'mqtt-two-'.uniqid()),  // Unique client ID for mqtt-two
         'keep_alive' => env('MQTT_TWO_KEEP_ALIVE', 60),  // Keep Alive Interval for second broker
     ],
-];
+]; 

@@ -57,4 +57,19 @@ trait HasMqtt
         // Connection failed
         return false;
     }
+
+    public function splitTopic(string $topic): array
+    {
+        return explode('/', $topic);
+    }
+
+
+    public function splitMessage(string $message)
+    {
+        // 01S10000.L3.92P3320T12345.533A123456
+        // i want only numbers from the string
+        preg_match_all('/\d+(\.\d+)?/', $message, $matches);
+
+        return $matches[0];
+    }
 }
