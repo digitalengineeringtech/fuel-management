@@ -8,6 +8,7 @@ use App\Traits\HasResponse;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Spatie\Permission\Exceptions\RoleAlreadyExists;
 use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
@@ -32,6 +33,7 @@ class RoleController extends Controller
         try {
             $role = Role::create([
                 'name' => Str::lower($request->name),
+                'guard_name' => 'api'
             ]);
 
             if (! $role) {
@@ -44,6 +46,8 @@ class RoleController extends Controller
 
             return $this->successResponse('Role created successfully', 201, new RoleResource($role));
 
+        } catch(RoleAlreadyExists $e) {
+            return $this->errorResponse('Role already exists', 409, null);
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
