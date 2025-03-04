@@ -17,11 +17,11 @@ return new class extends Migration
             $table->integer('device_ip');
             $table->integer('server_ip');
             $table->integer('server_port');
-            $table->integer('firmware_version');
+            $table->integer('firmware_version')->nullable();
             $table->integer('boot_count')->nullable();
             $table->integer('retry_count')->nullable();
             $table->string('debug_bit')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->string('wifi_ssid');
             $table->string('wifi_password');
             $table->timestamps();
