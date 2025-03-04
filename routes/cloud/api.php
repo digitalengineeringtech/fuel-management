@@ -1,13 +1,15 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Cloud\Shops\ShopController;
+use App\Http\Controllers\Cloud\Members\MemberController;
+use App\Http\Controllers\Cloud\Payments\PaymentController;
+use App\Http\Controllers\Cloud\Stations\StationController;
+use App\Http\Controllers\Cloud\Customers\CustomerController;
 use App\Http\Controllers\Cloud\Discounts\DiscountController;
 use App\Http\Controllers\Cloud\FuelTypes\FuelTypeController;
-use App\Http\Controllers\Cloud\Payments\PaymentController;
-use App\Http\Controllers\Cloud\Shops\ShopController;
-use App\Http\Controllers\Cloud\Stations\StationController;
 use App\Http\Controllers\Cloud\StockPrices\StockPriceController;
 use App\Http\Controllers\Cloud\VehicleTypes\VehicleTypeController;
-use Illuminate\Support\Facades\Route;
 
 // need to remove this after testing done
 Route::get('/', function () {
