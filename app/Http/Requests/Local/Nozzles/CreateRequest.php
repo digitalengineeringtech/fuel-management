@@ -25,7 +25,7 @@ class CreateRequest extends FormRequest
             'nozzle_no' => ['required', 'numeric'],
             'auto_approve' => ['boolean'],
             'semi_approve' => ['boolean'],
-            'cashier_approve' => ['boolean']
+            'cashier_approve' => ['boolean'],
         ];
     }
 }

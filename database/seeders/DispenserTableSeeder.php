@@ -3,9 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Dispenser;
-use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Str;
 
 class DispenserTableSeeder extends Seeder
 {
@@ -53,10 +52,10 @@ class DispenserTableSeeder extends Seeder
                 'password' => 'password',
                 'wifi_ssid' => Str::random(12),
                 'wifi_password' => Str::random(8),
-            ]
+            ],
         ];
 
-        foreach($dispensers as $dispenser) {
+        foreach ($dispensers as $dispenser) {
             Dispenser::create($dispenser);
         }
     }

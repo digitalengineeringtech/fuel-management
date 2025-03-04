@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 class DispenserController extends Controller
 {
     public DispenserRepositoryInterface $dispenserRepository;
+
     public function __construct(DispenserRepositoryInterface $dispenserRepository)
     {
         $this->dispenserRepository = $dispenserRepository;

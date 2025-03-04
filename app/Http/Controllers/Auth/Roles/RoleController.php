@@ -33,7 +33,7 @@ class RoleController extends Controller
         try {
             $role = Role::create([
                 'name' => Str::lower($request->name),
-                'guard_name' => 'api'
+                'guard_name' => 'api',
             ]);
 
             if (! $role) {
@@ -46,7 +46,7 @@ class RoleController extends Controller
 
             return $this->successResponse('Role created successfully', 201, new RoleResource($role));
 
-        } catch(RoleAlreadyExists $e) {
+        } catch (RoleAlreadyExists $e) {
             return $this->errorResponse('Role already exists', 409, null);
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);

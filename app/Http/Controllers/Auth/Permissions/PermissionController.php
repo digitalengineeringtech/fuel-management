@@ -41,7 +41,7 @@ class PermissionController extends Controller
 
             return $this->successResponse('Permission created successfully', 201, new PermissionResource($permission));
 
-        } catch(PermissionAlreadyExists $e) {
+        } catch (PermissionAlreadyExists $e) {
             return $this->errorResponse('Permission already exists', 409, null);
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);

@@ -11,10 +11,12 @@ use Illuminate\Http\Request;
 class NozzleController extends Controller
 {
     public NozzleRepositoryInterface $nozzleRepository;
+
     public function __construct(NozzleRepositoryInterface $nozzleRepository)
     {
         $this->nozzleRepository = $nozzleRepository;
     }
+
     /**
      * Display a listing of the resource.
      */

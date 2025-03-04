@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Nozzle;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class NozzleTableSeeder extends Seeder
 {
@@ -20,7 +19,7 @@ class NozzleTableSeeder extends Seeder
                 'nozzle_no' => 01,
                 'auto_approve' => true,
                 'semi_approve' => false,
-                'cashier_approve' => false
+                'cashier_approve' => false,
             ],
             [
                 'dispenser_id' => 1,
@@ -28,11 +27,11 @@ class NozzleTableSeeder extends Seeder
                 'nozzle_no' => 02,
                 'auto_approve' => true,
                 'semi_approve' => false,
-                'cashier_approve' => false
-            ]
+                'cashier_approve' => false,
+            ],
         ];
 
-        foreach($nozzles as $nozzle) {
+        foreach ($nozzles as $nozzle) {
             Nozzle::create($nozzle);
         }
     }
