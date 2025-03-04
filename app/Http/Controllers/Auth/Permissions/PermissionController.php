@@ -7,6 +7,7 @@ use App\Http\Resources\Auth\Permissions\PermissionResource;
 use App\Traits\HasResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Spatie\Permission\Exceptions\PermissionAlreadyExists;
 use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
@@ -31,6 +32,7 @@ class PermissionController extends Controller
         try {
             $permission = Permission::create([
                 'name' => Str::lower($request->name),
+                'guard_name' => 'api',
             ]);
 
             if (! $permission) {
@@ -39,6 +41,8 @@ class PermissionController extends Controller
 
             return $this->successResponse('Permission created successfully', 201, new PermissionResource($permission));
 
+        } catch(PermissionAlreadyExists $e) {
+            return $this->errorResponse('Permission already exists', 409, null);
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
