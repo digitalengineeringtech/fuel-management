@@ -3,9 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Dispenser;
-use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Str;
 
 class DispenserTableSeeder extends Seeder
 {
@@ -20,11 +19,11 @@ class DispenserTableSeeder extends Seeder
                 'device_ip' => '192.168.0.101',
                 'server_ip' => '192.168.0.100',
                 'server_port' => 9000,
-                'firmware_version' => 1,
-                'boot_count' => 1,
-                'retry_count' => 1,
-                'debug_bit' => random_bytes(16),
-                'password' => 'password',
+                'firmware_version' => 'v'. rand(1, 10),
+                'boot_count' => rand(1, 10),
+                'retry_count' => rand(1, 10),
+                'debug_bit' => Str::random(6),
+                'password' => Str::random(12),
                 'wifi_ssid' => Str::random(12),
                 'wifi_password' => Str::random(8),
             ],
@@ -33,11 +32,11 @@ class DispenserTableSeeder extends Seeder
                 'device_ip' => '192.168.0.102',
                 'server_ip' => '192.168.0.100',
                 'server_port' => 9000,
-                'firmware_version' => 1,
-                'boot_count' => 1,
-                'retry_count' => 1,
-                'debug_bit' => random_bytes(16),
-                'password' => 'password',
+                'firmware_version' => 'v'. rand(1, 10),
+                'boot_count' => rand(1, 10),
+                'retry_count' => rand(1, 10),
+                'debug_bit' => Str::random(6),
+                'password' => Str::random(12),
                 'wifi_ssid' => Str::random(12),
                 'wifi_password' => Str::random(8),
             ],
@@ -46,17 +45,17 @@ class DispenserTableSeeder extends Seeder
                 'device_ip' => '192.168.0.103',
                 'server_ip' => '192.168.0.100',
                 'server_port' => 9000,
-                'firmware_version' => 1,
-                'boot_count' => 1,
-                'retry_count' => 1,
-                'debug_bit' => random_bytes(16),
-                'password' => 'password',
+                'firmware_version' => 'v'. rand(1, 10),
+                'boot_count' => rand(1, 10),
+                'retry_count' => rand(1, 10),
+                'debug_bit' => Str::random(6),
+                'password' => Str::random(12),
                 'wifi_ssid' => Str::random(12),
                 'wifi_password' => Str::random(8),
-            ]
+            ],
         ];
 
-        foreach($dispensers as $dispenser) {
+        foreach ($dispensers as $dispenser) {
             Dispenser::create($dispenser);
         }
     }

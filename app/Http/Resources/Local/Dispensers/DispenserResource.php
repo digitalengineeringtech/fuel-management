@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources\Local\Dispensers;
 
+use App\Http\Resources\Cloud\Stations\StationResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Cloud\Stations\StationResource;
 
 class DispenserResource extends JsonResource
 {
@@ -27,7 +27,7 @@ class DispenserResource extends JsonResource
             'debug_bit' => $this->debug_bit,
             'password' => $this->password,
             'wifi_ssid' => $this->wifi_ssid,
-            'wifi_password' => $this->wifi_password
+            'wifi_password' => $this->wifi_password,
         ];
     }
 }

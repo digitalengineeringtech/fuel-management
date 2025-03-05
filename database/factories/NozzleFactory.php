@@ -22,7 +22,7 @@ class NozzleFactory extends Factory
             'nozzle_no' => 02,
             'auto_approve' => true,
             'semi_approve' => false,
-            'cashier_approve' => false
+            'cashier_approve' => false,
         ];
     }
 }

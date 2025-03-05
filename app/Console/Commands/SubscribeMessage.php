@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Events\LivedataReceived;
+use App\Events\MessageReceived;
 use App\Traits\HasMqtt;
 use Hakhant\Broker\Client;
-use App\Events\MessageReceived;
 use Illuminate\Console\Command;
-use App\Events\LivedataReceived;
 
 class SubscribeMessage extends Command
 {
@@ -63,8 +63,8 @@ class SubscribeMessage extends Command
 
             $topics = $this->splitTopic($topic);
 
-            if($topics[2] == 'livedata') {
-                broadcast(new LivedataReceived($topic, $message));
+            if ($topics[2] == 'livedata') {
+                event(new LivedataReceived($topic, $message));
             } else {
                 event(new MessageReceived($topic, $message));
             }
@@ -74,5 +74,4 @@ class SubscribeMessage extends Command
 
         $client->loop();
     }
-
 }

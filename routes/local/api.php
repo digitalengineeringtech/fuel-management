@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Local\Nozzles\NozzleController;
 use App\Http\Controllers\Local\Dispensers\DispenserController;
+use App\Http\Controllers\Local\Nozzles\NozzleController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return response()->json(['message' => 'Local API is working']);

@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Dispenser;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -24,7 +23,7 @@ class DatabaseSeeder extends Seeder
             FuelTypeTableSeeder::class,
             StockPriceTableSeeder::class,
             DispenserTableSeeder::class,
-            NozzleTableSeeder::class
+            NozzleTableSeeder::class,
         ]);
     }
 }

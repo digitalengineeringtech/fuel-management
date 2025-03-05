@@ -63,7 +63,6 @@ trait HasMqtt
         return explode('/', $topic);
     }
 
-
     public function splitMessage(string $message)
     {
         // 01S10000.L3.92P3320T12345.533A123456

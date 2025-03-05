@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('dispensers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('station_id');
-            $table->integer('device_ip');
-            $table->integer('server_ip');
+            $table->string('device_ip');
+            $table->string('server_ip');
             $table->integer('server_port');
-            $table->integer('firmware_version')->nullable();
+            $table->string('firmware_version')->nullable();
             $table->integer('boot_count')->nullable();
             $table->integer('retry_count')->nullable();
             $table->string('debug_bit')->nullable();
