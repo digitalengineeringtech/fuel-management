@@ -64,7 +64,7 @@ class SubscribeMessage extends Command
             $topics = $this->splitTopic($topic);
 
             if ($topics[2] == 'livedata') {
-                broadcast(new LivedataReceived($topic, $message));
+                event(new LivedataReceived($topic, $message));
             } else {
                 event(new MessageReceived($topic, $message));
             }
