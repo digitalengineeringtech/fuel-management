@@ -14,7 +14,7 @@ use App\Http\Controllers\Auth\Users\Revokes\RemoveRoleFromUserController;
 use App\Http\Controllers\Auth\Users\UpdateUserController;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['middleware' => 'guest'], function() {
+Route::group(['middleware' => 'guest'], function () {
     // Users Register Route
     Route::post('users/register', [RegisteredUserController::class, 'store'])->name('register');
 
