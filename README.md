@@ -1,67 +1,94 @@
-# Fuel Management System
+# Fuel Monitoring System
 
-### Test Status
+A Fuel Monitoring System is a technology-based solution designed to track daily sale and managing fuel in, device control,monitor tank data,watch dispensing fuel in real-time and much more.
+
+## Key Features:
+- Real-time fuel level tracking using sensors and IoT technology
+- Fuel consumption analysis to monitor efficiency and detect anomalies
+- Export Reports in excel.
+- Monitor tank data with ATG.
+- Cloud-based or Local-based data storage for easy access and management
+
+## Test Status
 [![Fuel Management](https://github.com/digitalengineeringtech/fuel-management/actions/workflows/laravel.yml/badge.svg?event=push)](https://github.com/digitalengineeringtech/fuel-management/actions/workflows/laravel.yml)
 
-### Installation Guide
+## Project Setup
+
+### First you will need to clone the github repo.
 
 ```bash
-git clone https://github.com/digitalengineeringtech/fuel-management.git
+  git clone https://github.com/digitalengineeringtech/fuel-management.git
 
-cd /path/to/fuel-management
+  cd fuel-management
 
 ```
+#### Install Composer
 
-### Copy .env file
+```bash
+composer install 
+```
+## Environment Variables
+
+### Copy to .env.example to .env
 
 ```bash
 cp .env.example .env
-
 ```
 
-### Composer install
+To run this project, you will need redis and update the following environment variables to your .env file
+
+`QUEUE_CONNECTION=redis`
+
+`CACHE_STORE=redis`
+
+`MQTT_HOST=127.0.0.1`
+
+`MQTT_PORT=1883`
+
+`MQTT_USERNAME=mqttusername`
+
+`MQTT_PASSWORD=mqttpassword`
+
+`MQTT_CLIENT_ID=mqttclientid`
+
+`MQTT_KEEP_ALIVE=60`
+
+## Database migrations and seeding
 
 ```bash
-composer install
-
+php artisan migrate
 ```
 
-### Generate Application Key
+### For Cloud migrations ( Run only once )
+```bash
+php artisan migrate --path=database/migrations/cloud
+```
+
+### Seeding to database
+```bash
+php artisan db:seed
+```
+
+###  You will need to run console command to subscribe mqtt topic and listen for incoming connection.
+
+#### This is for local development,for production use supervisor to run in backgroud.
+```bash
+php artisan subscribe:message
+```
+### Run laravel queue work command
 
 ```bash
-php artisan key:generate
-
+php artisan queue:work
 ```
 
-### Running seeder or migrations
-```bash
+## Running Tests
 
- // run only one time for cloud server.
- php artisan migrate && php artisan migrate --path=database/migrations/cloud
-
- // Seed to Database 
- php artisan db:seed
-```
-
-### Link storage for image or file to access in public
-
-```bash
-php artisan storage:link
-
-```
-
-### Give permission to storage folder 
-
-```bash
-sudo chmod -R 777 storage bootstrap/cache
-
-```
-
-### Running Testcase
+To run tests, run the following command
 
 ```bash
 php artisan test
-
 ```
+
+
 
     
