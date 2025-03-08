@@ -1,0 +1,40 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('fuel_ins', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('station_id');
+            $table->foreignId('fuel_type_id');
+            $table->integer('code');
+            $table->integer('tank_no');
+            $table->string('terminal_name', 50);
+            $table->string('driver_name', 50);
+            $table->string('bowser_no', 20);
+            $table->float('tank_capacity');
+            $table->float('opening_balance')->nullable();
+            $table->float('current_balance')->nullable();
+            $table->float('send_balance')->nullable();
+            $table->float('receive_balance')->nullable();
+            $table->dateTime('receive_date')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('fuel_ins');
+    }
+};
