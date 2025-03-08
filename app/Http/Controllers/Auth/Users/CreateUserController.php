@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Auth\Users;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\Auth\Users\UserResource;
+use Exception;
 use App\Models\User;
 use App\Traits\HasResponse;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\Auth\Users\UserResource;
 
 class CreateUserController extends Controller
 {
