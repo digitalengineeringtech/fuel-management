@@ -29,4 +29,9 @@ class Station extends Model
     {
         return $this->hasMany(StockPrice::class);
     }
+
+    public function sales(): HasMany
+    {
+        return $this->hasMany(Sale::class);
+    }
 }
