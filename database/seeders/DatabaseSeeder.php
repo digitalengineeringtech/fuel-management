@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
             StockPriceTableSeeder::class,
             DispenserTableSeeder::class,
             NozzleTableSeeder::class,
-            FuelInSeeder::class
+            FuelInSeeder::class,
+            SaleTableSeeder::class,
         ]);
     }
 }
