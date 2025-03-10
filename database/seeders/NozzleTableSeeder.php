@@ -16,7 +16,7 @@ class NozzleTableSeeder extends Seeder
             [
                 'dispenser_id' => 1,
                 'stock_price_id' => 1,
-                'nozzle_no' => 01,
+                'nozzle_no' => '01',
                 'auto_approve' => true,
                 'semi_approve' => false,
                 'cashier_approve' => false,
@@ -24,7 +24,7 @@ class NozzleTableSeeder extends Seeder
             [
                 'dispenser_id' => 1,
                 'stock_price_id' => 1,
-                'nozzle_no' => 02,
+                'nozzle_no' => '02',
                 'auto_approve' => true,
                 'semi_approve' => false,
                 'cashier_approve' => false,

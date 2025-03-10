@@ -2,21 +2,32 @@
 
 namespace App\Jobs;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Models\Sale;
+use App\Models\Nozzle;
+use App\Traits\HasMqtt;
+use App\Traits\HasSale;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Redis;
 
-class ProcessPermit implements ShouldQueue
+class ProcessPermit
 {
+    use HasSale;
+    use HasMqtt;
     use Queueable;
 
     public $topics;
 
     public $messages;
 
+    public $client;
+
     public function __construct(array $topics, array $messages)
     {
         $this->topics = $topics;
         $this->messages = $messages;
+        $this->client = $this->getClient();
     }
 
     /**
@@ -24,6 +35,26 @@ class ProcessPermit implements ShouldQueue
      */
     public function handle(): void
     {
-        //
+        $nozzle = Nozzle::where('nozzle_no', $this->messages[0])->first();
+        $cashier = 'C1';
+        $stationNo = $nozzle->dispenser->station->station_no;
+        $voucherNo = $this->generateVoucherNo($stationNo, $nozzle->id, $cashier);
+
+        if($nozzle) {
+             $sale = Sale::create([
+                 'station_id' => $nozzle->dispenser->station_id,
+                 'dispenser_id' => $nozzle->dispenser_id,
+                 'nozzle_id' => $nozzle->id,
+                 'fuel_type_id' => $nozzle->stockPrice->fuel_type_id,
+                 'voucher_no' => $voucherNo,
+                 'cashier_code' => $cashier,
+             ]);
+
+             Redis::set('sale', $sale->id);
+
+             $this->client->publish("detpos/local_server/$sale->dispenser_id", '01appro');
+
+             $this->client->disconnect();
+        }
     }
 }

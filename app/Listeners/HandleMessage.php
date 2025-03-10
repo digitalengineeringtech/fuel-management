@@ -2,12 +2,12 @@
 
 namespace App\Listeners;
 
-use App\Events\MessageReceived;
+use App\Traits\HasMqtt;
 use App\Jobs\ProcessFinal;
 use App\Jobs\ProcessPermit;
 use App\Jobs\ProcessPreset;
+use App\Events\MessageReceived;
 use App\Jobs\ProcessPriceChange;
-use App\Traits\HasMqtt;
 
 class HandleMessage
 {

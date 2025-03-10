@@ -2,8 +2,33 @@
 
 namespace App\Traits;
 
+use Hakhant\Broker\Client;
+use PHPUnit\Event\Runtime\PHP;
+
 trait HasMqtt
 {
+    public function getClient()
+    {
+        $retry = 3;
+        $mqttOne = config('mqtt.default');
+        $mqttTwo = config('mqtt.mqtt-two');
+
+        $configs = $this->handleConnectionWithRetry($mqttOne, $retry);
+
+        if (! $configs) {
+            echo 'Connection to mqtt service one failed.Attempting to connect to mqtt service two...';
+            $configs = $this->handleConnectionWithRetry($mqttTwo, $retry);
+
+            if (! $configs) {
+                echo 'Connection to mqtt service two failed. Retrying with mqtt service one...';
+                $this->handleConnectionWithRetry($mqttOne, $retry);
+            }
+        }
+
+        $client = new Client($configs);
+
+        return $client;
+    }
     /**
      * Attempt to connect to the MQTT broker with retries.
      *
