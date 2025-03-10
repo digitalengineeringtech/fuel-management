@@ -26,7 +26,7 @@ class ProcessFinal
     {
          $redis = Redis::get('sale');
 
-         $sale = json_decode($sale, true);
+         $sale = json_decode($redis, true);
 
          // TODO: Handle the message
 
