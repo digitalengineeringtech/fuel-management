@@ -7,6 +7,7 @@ use App\Jobs\ProcessFinal;
 use App\Jobs\ProcessPermit;
 use App\Jobs\ProcessPreset;
 use App\Events\MessageReceived;
+use App\Jobs\ProcessLivedata;
 use App\Jobs\ProcessPriceChange;
 
 class HandleMessage
@@ -24,8 +25,10 @@ class HandleMessage
         match ($topics[2]) {
             'preset' => ProcessPreset::dispatch($topics, $messages),
             'permit' => ProcessPermit::dispatch($topics, $messages),
+            'livedata' => ProcessLivedata::dispatch($topics, $messages),
             'Final' => ProcessFinal::dispatch($topics, $messages),
             'pricechange' => ProcessPriceChange::dispatch($topics, $messages),
+            default => null
         };
     }
 }

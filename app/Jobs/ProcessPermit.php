@@ -6,11 +6,8 @@ use App\Models\Sale;
 use App\Models\Nozzle;
 use App\Traits\HasMqtt;
 use App\Traits\HasSale;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Foundation\Queue\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Redis;
-
+use Illuminate\Foundation\Queue\Queueable;
 class ProcessPermit
 {
     use HasSale;
@@ -50,7 +47,7 @@ class ProcessPermit
                  'cashier_code' => $cashier,
              ]);
 
-             Redis::set('sale', $sale->id);
+             Redis::set('sale', json_encode($sale));
 
              $this->client->publish("detpos/local_server/$sale->dispenser_id", '01appro');
 

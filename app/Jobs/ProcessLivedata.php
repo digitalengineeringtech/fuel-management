@@ -2,21 +2,25 @@
 
 namespace App\Jobs;
 
+use App\Traits\HasMqtt;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Foundation\Queue\Queueable;
 
-class ProcessFinal
+class ProcessLivedata
 {
+    use HasMqtt;
     use Queueable;
 
     public $topics;
 
     public $messages;
 
-    public function __construct(array $topics, array $messages)
+    public $client;
+    public function __construct($topics, $messages)
     {
         $this->topics = $topics;
         $this->messages = $messages;
+        $this->client = $this->getClient();
     }
 
     /**
@@ -24,12 +28,10 @@ class ProcessFinal
      */
     public function handle(): void
     {
-         $redis = Redis::get('sale');
+        $redis = Redis::get('sale');
 
-         $sale = json_decode($sale, true);
+        $sale = json_decode($redis, true);
 
-         // TODO: Handle the message
-
-         Redis::del('sale');
+        // TODO: Handle the message
     }
 }
