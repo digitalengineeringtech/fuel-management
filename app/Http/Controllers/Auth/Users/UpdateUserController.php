@@ -37,6 +37,7 @@ class UpdateUserController extends Controller
                 'phone' => ['nullable', 'string', 'max:20'],
                 'card_id' => ['nullable', 'string', 'max:15'],
                 'tank_count' => ['nullable', 'integer'],
+                'cloud_user' => ['boolean']
             ]);
 
             $user->update([
@@ -47,6 +48,7 @@ class UpdateUserController extends Controller
                 'password' => Hash::make($request->password),
                 'card_id' => $request->card_id,
                 'tank_count' => $request->tank_count,
+                'cloud_user' => $request->cloud_user
             ]);
 
             if ($request->has('roles') && $request->has('permissions')) {
