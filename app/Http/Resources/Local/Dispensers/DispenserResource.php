@@ -21,6 +21,7 @@ class DispenserResource extends JsonResource
             'device_ip' => $this->device_ip,
             'server_ip' => $this->server_ip,
             'server_port' => $this->server_port,
+            'dispenser_no' => $this->dispenser_no,
             'firmware_version' => $this->firmware_version,
             'boot_count' => $this->boot_count,
             'retry_count' => $this->retry_count,

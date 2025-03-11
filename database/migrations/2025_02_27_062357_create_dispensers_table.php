@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('device_ip');
             $table->string('server_ip');
             $table->integer('server_port');
+            $table->string('dispenser_no')->nullable();
             $table->string('firmware_version')->nullable();
             $table->integer('boot_count')->nullable();
             $table->integer('retry_count')->nullable();
