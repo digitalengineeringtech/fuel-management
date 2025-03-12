@@ -17,7 +17,7 @@ class TankFactory extends Factory
     public function definition(): array
     {
         return [
-            'station_id' => StationFactory::create()->id,
+            'station_id' => 1,
             'oil_type' => '92 Octane',
             'state_info' => 'No alarm',
             'volume' => 5000,

@@ -17,10 +17,10 @@ class FuelInFactory extends Factory
     public function definition(): array
     {
         return [
+            'tank_id' => 1,
             'station_id' => 1,
             'fuel_type_id' => rand(1, 4),
             'code' => rand(1, 100),
-            'tank_no' => rand(1, 8),
             'terminal_name' => 'Terminal 1',
             'driver_name' => 'Driver 1',
             'bowser_no' => 'B1',
