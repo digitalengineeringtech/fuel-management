@@ -15,10 +15,10 @@ class FuelInSeeder extends Seeder
     {
          $fuelins = [
             [
+                'tank_id' => 1,
                 'station_id' => 1,
                 'fuel_type_id' => 1,
                 'code' => 1,
-                'tank_no' => 1,
                 'terminal_name' => 'Terminal 1',
                 'driver_name' => 'Driver 1',
                 'bowser_no' => 'B1',
@@ -30,10 +30,10 @@ class FuelInSeeder extends Seeder
                 'receive_date' => now(),
             ],
             [
+                'tank_id' => 1,
                 'station_id' => 1,
                 'fuel_type_id' => 2,
                 'code' => 2,
-                'tank_no' => 2,
                 'terminal_name' => 'Terminal 1',
                 'driver_name' => 'Driver 1',
                 'bowser_no' => 'B1',

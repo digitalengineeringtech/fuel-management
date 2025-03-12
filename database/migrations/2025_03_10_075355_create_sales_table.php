@@ -21,9 +21,9 @@ return new class extends Migration
             $table->foreignId('discount_id')->nullable();
             $table->foreignId('customer_id')->nullable();
             $table->foreignId('vehicle_type_id')->nullable();
+            $table->foreignId('tank_id');
             $table->string('voucher_no');
             $table->string('cashier_code');
-            $table->string('tank_no')->nullable();
             $table->string('car_no')->nullable();
             $table->string('device')->nullable(); // web, mobile, tablet
             $table->float('tank_balance')->default(0);

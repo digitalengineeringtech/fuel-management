@@ -12,6 +12,11 @@ class FuelIn extends Model
 
     protected $guarded = [];
 
+    public function tank(): BelongsTo
+    {
+         return $this->belongsTo(Tank::class);
+    }
+
     public function station(): BelongsTo
     {
         return $this->belongsTo(Station::class);

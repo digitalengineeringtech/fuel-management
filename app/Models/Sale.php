@@ -17,6 +17,11 @@ class Sale extends Model
         return $this->belongsTo(Station::class);
     }
 
+    public function tank(): BelongsTo
+    {
+        return $this->belongsTo(Tank::class);
+    }
+
     public function dispenser(): BelongsTo
     {
         return $this->belongsTo(Dispenser::class);
