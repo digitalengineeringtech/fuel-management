@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('fuel_types', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tank_id');
             $table->string('name', 30);
             $table->string('description', 100)->nullable();
             $table->timestamps();

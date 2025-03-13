@@ -2,6 +2,10 @@
 
 namespace App\Jobs;
 
+use App\Models\Sale;
+use App\Models\Nozzle;
+use App\Traits\HasMqtt;
+use App\Traits\HasSale;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Foundation\Queue\Queueable;
 
@@ -9,14 +13,21 @@ class ProcessFinal
 {
     use Queueable;
 
+    use HasMqtt;
+
+    use HasSale;
+
     public $topics;
 
     public $messages;
+
+    public $client;
 
     public function __construct(array $topics, array $messages)
     {
         $this->topics = $topics;
         $this->messages = $messages;
+        $this->client = $this->getClient();
     }
 
     /**
@@ -26,10 +37,12 @@ class ProcessFinal
     {
          $redis = Redis::get('sale');
 
-         $sale = json_decode($redis, true);
+         $cachedSale = json_decode($redis, true);
 
+         $nozzle = Nozzle::where('id', $cachedSale['id'])->first();
          // TODO: Handle the message
+         $updatedSale = $this->updateSale($cachedSale, $this->messages);
 
-         Redis::del('sale');
+         $this->client->publish('detpos/local_server/'.$nozzle->dispenser_id, $nozzle->nozzle_no.'D1S1');
     }
 }

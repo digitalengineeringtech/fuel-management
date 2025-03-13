@@ -39,6 +39,8 @@ class SaleFactory extends Factory
             'sale_price' => $this->faker->numberBetween(1000, 5000),
             'sale_liter' => $this->faker->numberBetween(1, 100),
             'total_price' => $this->faker->numberBetween(5000, 500000),
+            'is_preset' => false,
+            'preset_amount' => 0,
             'daily_report_date' => now(),
         ];
     }

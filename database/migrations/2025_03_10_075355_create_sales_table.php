@@ -25,15 +25,17 @@ return new class extends Migration
             $table->string('voucher_no');
             $table->string('cashier_code');
             $table->string('car_no')->nullable();
-            $table->string('device')->nullable(); // web, mobile, tablet
+            $table->string('device')->default('web'); // web, mobile, tablet
             $table->float('tank_balance')->default(0);
             $table->float('totalizer_liter')->default(0);
             $table->float('totalizer_amount')->default(0);
             $table->float('device_totalizer_liter')->default(0);
             $table->float('device_totalizer_amount')->default(0);
+            $table->float('sale_liter')->default(0);
             $table->bigInteger('sale_price')->default(0);
-            $table->bigInteger('sale_liter')->default(0);
             $table->bigInteger('total_price')->default(0);
+            $table->boolean('is_preset')->nullable();
+            $table->bigInteger('preset_amount')->default(0);
             $table->dateTime('daily_report_date')->default(now());
             $table->timestamps();
         });

@@ -12,6 +12,7 @@ use App\Http\Resources\Cloud\Discounts\DiscountResource;
 use App\Http\Resources\Cloud\FuelTypes\FuelTypeResource;
 use App\Http\Resources\Local\Dispensers\DispenserResource;
 use App\Http\Resources\Cloud\VehicleTypes\VehicleTypeResource;
+use App\Http\Resources\Local\Tanks\TankResource;
 
 class SaleResource extends JsonResource
 {
@@ -32,7 +33,7 @@ class SaleResource extends JsonResource
             'discount' => new DiscountResource($this->discount),
             'customer' => new CustomerResource($this->customer),
             'vehicleType' => new VehicleTypeResource($this->vehicleType),
-            'tank_no' => $this->tank_no,
+            'tank' => new TankResource($this->tank),
             'voucher_no' => $this->voucher_no,
             'cashier_code' => $this->cashier_code,
             'car_no' => $this->car_no,

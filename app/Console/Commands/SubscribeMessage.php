@@ -36,11 +36,7 @@ class SubscribeMessage extends Command
             $this->info('Topic: '.$topic);
             $this->info('Message: '.$message);
 
-            $topics = $this->splitTopic($topic);
-
-            Concurrency::run(function () use ($topic, $message) {
-                event(new MessageReceived($topic, $message));
-            });
+            event(new MessageReceived($topic, $message));
         });
 
         $this->info('Successfully connected to MQTT broker and listening for messages...');
