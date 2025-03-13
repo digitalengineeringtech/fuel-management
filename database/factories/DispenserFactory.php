@@ -22,6 +22,7 @@ class DispenserFactory extends Factory
             'device_ip' => '192.168.0.101',
             'server_ip' => '192.168.0.100',
             'server_port' => 9000,
+            'dispenser_no' => Str::random(5),
             'firmware_version' => 1,
             'boot_count' => 1,
             'retry_count' => 1,

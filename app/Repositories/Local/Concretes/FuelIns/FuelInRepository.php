@@ -37,6 +37,13 @@ class FuelInRepository implements FuelInRepositoryInterface
     public function createFuelIn($data)
     {
         try {
+
+            $lastFuelIn = FuelIn::where('tank_no', $data['tank_no'])
+                            ->orderBy('code', 'desc')
+                            ->first();
+
+            $data['code'] = $lastFuelIn ? $lastFuelIn->code + 1 : 1;
+
             $fuelIn = FuelIn::create($data);
 
             if (! $fuelIn) {

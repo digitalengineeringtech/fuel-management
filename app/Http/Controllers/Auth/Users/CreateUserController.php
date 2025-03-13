@@ -25,6 +25,7 @@ class CreateUserController extends Controller
                 'phone' => ['nullable', 'string', 'max:20'],
                 'card_id' => ['nullable', 'string', 'max:15'],
                 'tank_count' => ['nullable', 'integer'],
+                'cloud_user' => ['boolean']
             ]);
 
             // Create a new user
@@ -37,6 +38,7 @@ class CreateUserController extends Controller
                 'phone' => $request->phone,
                 'card_id' => $request->card_id,
                 'tank_count' => $request->tank_count,
+                'cloud_user' => $request->cloud_user
             ]);
 
             if ($user) {

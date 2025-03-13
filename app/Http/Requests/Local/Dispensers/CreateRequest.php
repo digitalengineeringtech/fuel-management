@@ -26,6 +26,7 @@ class CreateRequest extends FormRequest
             'device_ip' => ['required'],
             'server_ip' => ['required'],
             'server_port' => ['required'],
+            'dispenser_no' => ['nullable'],
             'firmware_version' => ['nullable'],
             'boot_count' => ['nullable'],
             'retry_count' => ['nullable'],

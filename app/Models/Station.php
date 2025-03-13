@@ -29,4 +29,24 @@ class Station extends Model
     {
         return $this->hasMany(StockPrice::class);
     }
+
+    public function dispensers(): HasMany
+    {
+        return $this->hasMany(Dispenser::class);
+    }
+
+    public function fuelIns(): HasMany
+    {
+        return $this->hasMany(FuelIn::class);
+    }
+
+    public function sales(): HasMany
+    {
+        return $this->hasMany(Sale::class);
+    }
+
+    public function tanks(): HasMany
+    {
+        return $this->hasMany(Tank::class);
+    }
 }

@@ -19,7 +19,7 @@ class NozzleFactory extends Factory
         return [
             'dispenser_id' => 1,
             'stock_price_id' => 1,
-            'nozzle_no' => 02,
+            'nozzle_no' => $this->faker->randomElement(['01', '02']),
             'auto_approve' => true,
             'semi_approve' => false,
             'cashier_approve' => false,

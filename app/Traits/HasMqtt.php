@@ -2,8 +2,47 @@
 
 namespace App\Traits;
 
+use Hakhant\Broker\Client;
+use PHPUnit\Event\Runtime\PHP;
+
 trait HasMqtt
 {
+    public function splitTopic(string $topic): array
+    {
+        return explode('/', $topic);
+    }
+
+    public function splitMessage(string $message)
+    {
+        // 01S10000.L3.92P3320T12345.533A123456
+        // i want only numbers from the string
+        preg_match_all('/\d+(\.\d+)?/', $message, $matches);
+
+        return $matches[0];
+    }
+
+    public function getClient()
+    {
+        $retry = 3;
+        $mqttOne = config('mqtt.default');
+        $mqttTwo = config('mqtt.mqtt-two');
+
+        $configs = $this->handleConnectionWithRetry($mqttOne, $retry);
+
+        if (! $configs) {
+            echo 'Connection to mqtt service one failed.Attempting to connect to mqtt service two...';
+            $configs = $this->handleConnectionWithRetry($mqttTwo, $retry);
+
+            if (! $configs) {
+                echo 'Connection to mqtt service two failed. Retrying with mqtt service one...';
+                $this->handleConnectionWithRetry($mqttOne, $retry);
+            }
+        }
+
+        $client = new Client($configs);
+
+        return $client;
+    }
     /**
      * Attempt to connect to the MQTT broker with retries.
      *
@@ -11,7 +50,7 @@ trait HasMqtt
      * @param  int  $retry
      * @return array|null
      */
-    public function handleConnectionWithRetry($mqttConfig, $retry = 3)
+    protected function handleConnectionWithRetry($mqttConfig, $retry = 3)
     {
         $attempts = 0;
 
@@ -43,7 +82,7 @@ trait HasMqtt
      * @param  int  $timeout
      * @return bool
      */
-    public function checkConnection($host, $port, $timeout = 2)
+    protected function checkConnection($host, $port, $timeout = 2)
     {
         // Try to open a socket to the MQTT broker host and port
         $connection = @fsockopen($host, $port, $errno, $errstr, $timeout);
@@ -56,19 +95,5 @@ trait HasMqtt
 
         // Connection failed
         return false;
-    }
-
-    public function splitTopic(string $topic): array
-    {
-        return explode('/', $topic);
-    }
-
-    public function splitMessage(string $message)
-    {
-        // 01S10000.L3.92P3320T12345.533A123456
-        // i want only numbers from the string
-        preg_match_all('/\d+(\.\d+)?/', $message, $matches);
-
-        return $matches[0];
     }
 }

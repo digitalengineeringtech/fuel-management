@@ -11,7 +11,7 @@ namespace App\Repositories\Local\Contracts\Nozzles;
 interface NozzleRepositoryInterface
 {
     /** *
-     * Get a list of dispensers based on the provided query
+     * Get a list of nozzles based on the provided query
      */
     public function getNozzles($request);
 

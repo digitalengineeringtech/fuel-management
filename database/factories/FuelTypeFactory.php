@@ -17,6 +17,7 @@ class FuelTypeFactory extends Factory
     public function definition(): array
     {
         return [
+            'tank_id' => 1,
             'name' => '001-Octane Ron(92)',
             'description' => 'Octane Ron(92) fuel type',
         ];

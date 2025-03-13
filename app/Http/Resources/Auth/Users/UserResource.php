@@ -24,6 +24,7 @@ class UserResource extends JsonResource
             'phone' => $this->phone,
             'card_id' => $this->card_id,
             'tank_count' => $this->tank_count,
+            'cloud_user' => $this->cloud_user,
             'roles' => RoleResource::collection($this->roles),
             'permissions' => PermissionResource::collection($this->permissions),
         ];

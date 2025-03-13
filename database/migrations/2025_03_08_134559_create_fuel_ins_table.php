@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('fuel_ins', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tank_id');
             $table->foreignId('station_id');
             $table->foreignId('fuel_type_id');
             $table->integer('code');
-            $table->integer('tank_no');
             $table->string('terminal_name', 50);
             $table->string('driver_name', 50);
             $table->string('bowser_no', 20);

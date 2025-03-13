@@ -18,10 +18,9 @@ class StockPriceResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'nozzle_no' => $this->nozzle_no,
             'unit_price' => $this->unit_price,
             'station' => new StationResource($this->station),
-            'fuel_type' => new FuelTypeResource($this->fuelType),
+            'fuelType' => new FuelTypeResource($this->fuelType),
             'created_at' => $this->created_at->format('d-m-Y'),
             'updated_at' => $this->updated_at->format('d-m-Y'),
         ];

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Nozzle extends Model
 {
@@ -11,7 +13,7 @@ class Nozzle extends Model
 
     protected $guarded = [];
 
-    public function dispenser()
+    public function dispenser(): BelongsTo
     {
         return $this->belongsTo(Dispenser::class);
     }
@@ -19,5 +21,10 @@ class Nozzle extends Model
     public function stockPrice(): BelongsTo
     {
         return $this->belongsTo(StockPrice::class);
+    }
+
+    public function sales(): HasMany
+    {
+        return $this->hasMany(Sale::class);
     }
 }

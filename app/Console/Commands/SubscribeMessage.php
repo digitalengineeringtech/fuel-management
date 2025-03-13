@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Events\LivedataReceived;
 use App\Events\MessageReceived;
 use App\Traits\HasMqtt;
 use Hakhant\Broker\Client;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Concurrency;
 
 class SubscribeMessage extends Command
 {
@@ -25,49 +25,18 @@ class SubscribeMessage extends Command
      * @var string
      */
     protected $description = 'Subscribe for mqtt topic';
-
-    protected $retry = 3;
-
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        $mqttOne = config('mqtt.default');
-        $mqttTwo = config('mqtt.mqtt-two');
+        $client = $this->getClient();
 
-        $configs = $this->handleConnectionWithRetry($mqttOne, $this->retry);
-
-        // If connection fails after retries, fallback to the second broker (mqttTwo)
-        if (! $configs) {
-            $this->warn('Failed to connect to the first MQTT broker after 3 retries...');
-
-            $this->info('Trying to connect to the second MQTT broker...');
-
-            $configs = $this->handleConnectionWithRetry($mqttTwo, $this->retry);
-
-            if (! $configs) {
-                $this->warn('Failed to connect to both MQTT brokers. Please check your mqtt connections...');
-
-                $this->handleConnectionWithRetry($mqttOne, $this->retry);
-            }
-        }
-
-        $client = new Client($configs);
-
-        $this->info("Connected to MQTT broker at {$configs['host']}:{$configs['port']}");
-
-        $client->subscribe('detpos/#', function ($topic, $message) {
+        $client->subscribe('detpos/device/#', function ($topic, $message) {
             $this->info('Topic: '.$topic);
             $this->info('Message: '.$message);
 
-            $topics = $this->splitTopic($topic);
-
-            if ($topics[2] == 'livedata') {
-                event(new LivedataReceived($topic, $message));
-            } else {
-                event(new MessageReceived($topic, $message));
-            }
+            event(new MessageReceived($topic, $message));
         });
 
         $this->info('Successfully connected to MQTT broker and listening for messages...');

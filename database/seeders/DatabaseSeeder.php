@@ -19,11 +19,14 @@ class DatabaseSeeder extends Seeder
             StationTableSeeder::class,
             RolePermissionTableSeeder::class,
             UserTableSeeder::class,
+            TankTableSeeder::class,
             VehicleTypeTableSeeder::class,
             FuelTypeTableSeeder::class,
             StockPriceTableSeeder::class,
             DispenserTableSeeder::class,
             NozzleTableSeeder::class,
+            FuelInSeeder::class,
+            SaleTableSeeder::class,
         ]);
     }
 }

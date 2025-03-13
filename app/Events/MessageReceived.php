@@ -3,12 +3,12 @@
 namespace App\Events;
 
 use Illuminate\Broadcasting\Channel;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
-class MessageReceived implements ShouldBroadcast
+class MessageReceived implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -30,7 +30,7 @@ class MessageReceived implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('messages'),
+            new Channel('mqtt:message'),
         ];
     }
 }
