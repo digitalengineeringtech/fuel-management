@@ -15,14 +15,14 @@ class ProcessPreset
 
     use HasSale;
 
-    public $topics;
+    public array $attributes;
 
-    public $messages;
+    public $client;
 
-    public function __construct(array $topics, array $messages)
+    public function __construct(array $attributes)
     {
-        $this->topics = $topics;
-        $this->messages = $messages;
+        $this->attributes = $attributes;
+        $this->client = $this->getClient();
     }
 
     /**
@@ -30,21 +30,19 @@ class ProcessPreset
      */
     public function handle(): void
     {
-        $nozzle = Nozzle::where('nozzle_no', $this->messages[0])->first();
+        $nozzle = Nozzle::where('id', $this->attributes['nozzle_id'])->first();
         $cashier = 'C1';
         $stationNo = $nozzle->dispenser->station->station_no;
         $voucherNo = $this->generateVoucherNo($stationNo, $nozzle->id, $cashier);
 
         $sale = $this->createSale([
-            'station_id' => $nozzle->dispenser->station_id,
-            'dispenser_id' => $nozzle->dispenser_id,
-            'nozzle_id' => $nozzle->id,
-            'fuel_type_id' => $nozzle->stockPrice->fuel_type_id,
-            'tank_id' => $nozzle->stockPrice->fuelType->tank->id,
+            ...$this->attributes,
             'voucher_no' => $voucherNo,
             'cashier_code' => $cashier,
             'is_preset' => true,
-            'preset_amount' => $this->messages[1],
+            'preset_amount' => $this->getPresetAmount($this->attributes['type'], $this->attributes['preset_amount']),
         ]);
+
+        $this->client->publish('detpos/local_server/preset', $nozzle->nozzle_no . $this->attributes['type'] . $this->attributes['preset_amount']);
     }
 }
