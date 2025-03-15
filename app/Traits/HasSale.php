@@ -22,7 +22,6 @@ trait HasSale
             'totalizer_amount' => $previousSale ? $previousSale->totalizer_amount : 0
         ]);
 
-
         $existedSale = $this->checkCachedSaleExist($attributes['nozzle_id']);
 
         if($existedSale) {
@@ -68,9 +67,13 @@ trait HasSale
     {
         $redis = Redis::get('sale');
 
+        if($redis == null) {
+            return false;
+        }
+
         $cachedSale = json_decode($redis, true);
 
-        if($cachedSale != null && $cachedSale['nozzle_id'] == $nozzleId) {
+        if($cachedSale['nozzle_id'] == $nozzleId) {
             return true;
         } else {
             return false;
