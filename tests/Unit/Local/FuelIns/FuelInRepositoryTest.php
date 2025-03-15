@@ -25,7 +25,6 @@ it('can get fuelIn by id and response with resource', function () {
     $response = $this->fuelInRepository->getFuelIn($fuelIn->id);
 
     expect($response->id)->toBe($fuelIn->id);
-    expect($fuelIn->device_ip)->toBe($fuelIn->device_ip);
 });
 
 it('can create fuelIn and response with resource', function () {
@@ -36,7 +35,6 @@ it('can create fuelIn and response with resource', function () {
     $response = $this->fuelInRepository->createFuelIn($fuelIn->toArray());
 
     expect($response->id)->toBe($fuelIn->id);
-    expect($fuelIn->device_ip)->toBe($fuelIn->device_ip);
 });
 
 it('can update fuelIn and response with resource', function () {
@@ -47,7 +45,6 @@ it('can update fuelIn and response with resource', function () {
     $response = $this->fuelInRepository->updateFuelIn($fuelIn->id, $fuelIn->toArray());
 
     expect($response->id)->toBe($fuelIn->id);
-    expect($fuelIn->device_ip)->toBe($fuelIn->device_ip);
 });
 
 it('can delete fuelIn and response with resource', function () {

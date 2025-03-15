@@ -25,7 +25,6 @@ it('can get nozzle by id and response with resource', function () {
     $response = $this->nozzleRepository->getNozzle($nozzle->id);
 
     expect($response->id)->toBe($nozzle->id);
-    expect($nozzle->device_ip)->toBe($nozzle->device_ip);
 });
 
 it('can create nozzle and response with resource', function () {
@@ -36,7 +35,6 @@ it('can create nozzle and response with resource', function () {
     $response = $this->nozzleRepository->createNozzle($nozzle->toArray());
 
     expect($response->id)->toBe($nozzle->id);
-    expect($nozzle->device_ip)->toBe($nozzle->device_ip);
 });
 
 it('can update nozzle and response with resource', function () {
@@ -47,7 +45,6 @@ it('can update nozzle and response with resource', function () {
     $response = $this->nozzleRepository->updateNozzle($nozzle->id, $nozzle->toArray());
 
     expect($response->id)->toBe($nozzle->id);
-    expect($nozzle->device_ip)->toBe($nozzle->device_ip);
 });
 
 it('can delete nozzle and response with resource', function () {
