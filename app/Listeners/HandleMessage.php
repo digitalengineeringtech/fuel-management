@@ -23,11 +23,10 @@ class HandleMessage
         $messages = $this->splitMessage($event->message);
 
         match ($topics[2]) {
-            'preset' => ProcessPreset::dispatch($topics, $messages),
-            'permit' => ProcessPermit::dispatch($topics, $messages),
+            'permit' => ProcessPermit::dispatch($topics, $messages), // only for auto approve and semi approve
             'livedata' => ProcessLivedata::dispatch($topics, $messages),
             'Final' => ProcessFinal::dispatch($topics, $messages),
-            'pricechange' => ProcessPriceChange::dispatch($topics, $messages),
+            'pricereq' => ProcessPriceChange::dispatch($topics, $messages),
             default => null
         };
     }
