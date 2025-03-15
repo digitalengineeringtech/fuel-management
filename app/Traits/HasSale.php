@@ -96,7 +96,7 @@ trait HasSale
         }
 
         // Generate new voucher number
-        $voucherNo = "{$stationNo}/".Str::upper($cashier)."/".$today."/{$counter}";
+        $voucherNo = "{$stationId}/".Str::upper($cashier)."/".$today."/{$counter}";
 
         return $voucherNo;
     }

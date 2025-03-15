@@ -25,7 +25,6 @@ it('can get tank by id and response with resource', function () {
     $response = $this->tankRepository->getTank($tank->id);
 
     expect($response->id)->toBe($tank->id);
-    expect($tank->device_ip)->toBe($tank->device_ip);
 });
 
 it('can create tank and response with resource', function () {
@@ -36,7 +35,6 @@ it('can create tank and response with resource', function () {
     $response = $this->tankRepository->createTank($tank->toArray());
 
     expect($response->id)->toBe($tank->id);
-    expect($tank->device_ip)->toBe($tank->device_ip);
 });
 
 it('can update tank and response with resource', function () {
@@ -47,7 +45,6 @@ it('can update tank and response with resource', function () {
     $response = $this->tankRepository->updateTank($tank->id, $tank->toArray());
 
     expect($response->id)->toBe($tank->id);
-    expect($tank->device_ip)->toBe($tank->device_ip);
 });
 
 it('can delete tank and response with resource', function () {
