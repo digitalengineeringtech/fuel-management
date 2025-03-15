@@ -19,7 +19,7 @@ return new class extends Migration
             $table->float('volume');
             $table->float('oil_ratio')->nullable();
             $table->integer('level')->nullable();
-            $table->integer('temperature')->nullable();
+            $table->float('temperature')->nullable();
             $table->float('weight')->default(0);
             $table->float('water_ratio')->default(0);
             $table->float('avaliable_oil_weight')->default(0);
