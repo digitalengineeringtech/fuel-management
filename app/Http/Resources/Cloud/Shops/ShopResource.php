@@ -20,7 +20,6 @@ class ShopResource extends JsonResource
             'name' => $this->name,
             'image' => asset($this->image),
             'address' => $this->address,
-            'stations' => StationResource::collection($this->stations),
             'created_at' => $this->created_at->format('d-m-Y'),
             'updated_at' => $this->updated_at->format('d-m-Y'),
         ];
