@@ -25,13 +25,13 @@ class UpdateRequest extends FormRequest
             'station_id' => ['required'],
             'oil_type' => ['required', 'string'],
             'state_info' => ['nullable', 'string'],
-            'volume' => ['nullable', 'float'],
-            'oil_ratio' => ['nullable', 'float'],
-            'level' => ['nullable', 'number'],
-            'temperature' => ['nullable', 'number'],
-            'weight' => ['required', 'float'],
-            'water_ratio' => ['required', 'float'],
-            'avaliable_oil_weight' => ['required', 'float']
+            'volume' => ['nullable', 'numeric'],
+            'oil_ratio' => ['nullable', 'numeric'],
+            'level' => ['nullable', 'numeric'],
+            'temperature' => ['nullable', 'numeric'],
+            'weight' => ['required', 'numeric'],
+            'water_ratio' => ['required', 'numeric'],
+            'avaliable_oil_weight' => ['required', 'numeric']
         ];
     }
 }
