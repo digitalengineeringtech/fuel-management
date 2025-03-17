@@ -32,7 +32,7 @@ class SubscribeMessage extends Command
     {
         $client = $this->getClient();
 
-        $client->subscribe('detpos/device/#', function ($topic, $message) {
+        $client->subscribe('detpos/#', function ($topic, $message) {
             $this->info('Topic: '.$topic);
             $this->info('Message: '.$message);
 
