@@ -29,11 +29,11 @@ class CreateRequest extends FormRequest
             'terminal_name' => ['required', 'string', 'max:50'],
             'driver_name' => ['required', 'string', 'max:50'],
             'bowser_no' => ['required', 'string', 'max:20'],
-            'tank_capacity' => ['required', 'float'],
-            'opening_balance' => ['nullable', 'float'],
-            'current_balance' => ['nullable', 'float'],
-            'send_balance' => ['nullable', 'float'],
-            'receive_balance' => ['nullable', 'float'],
+            'tank_capacity' => ['required', 'numeric'],
+            'opening_balance' => ['nullable', 'numeric'],
+            'current_balance' => ['nullable', 'numeric'],
+            'send_balance' => ['nullable', 'numeric'],
+            'receive_balance' => ['nullable', 'numeric'],
             'receive_date' => ['nullable'],
         ];
     }
