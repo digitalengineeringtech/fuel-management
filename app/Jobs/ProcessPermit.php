@@ -51,6 +51,8 @@ class ProcessPermit
             ]);
 
             $this->client->publish("detpos/local_server/".$sale->dispenser->dispenser_no, $sale->nozzle->nozzle_no."appro");
+
+            $this->client->disconnect();
         }
     }
 }
