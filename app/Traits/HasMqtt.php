@@ -3,7 +3,6 @@
 namespace App\Traits;
 
 use Hakhant\Broker\Client;
-use PHPUnit\Event\Runtime\PHP;
 
 trait HasMqtt
 {
@@ -43,6 +42,7 @@ trait HasMqtt
 
         return $client;
     }
+
     /**
      * Attempt to connect to the MQTT broker with retries.
      *

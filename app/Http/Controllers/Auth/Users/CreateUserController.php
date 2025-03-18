@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Auth\Users;
 
-use Exception;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Auth\Users\UserResource;
 use App\Models\User;
 use App\Traits\HasResponse;
+use Exception;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Resources\Auth\Users\UserResource;
 
 class CreateUserController extends Controller
 {
@@ -25,7 +25,7 @@ class CreateUserController extends Controller
                 'phone' => ['nullable', 'string', 'max:20'],
                 'card_id' => ['nullable', 'string', 'max:15'],
                 'tank_count' => ['nullable', 'integer'],
-                'cloud_user' => ['boolean']
+                'cloud_user' => ['boolean'],
             ]);
 
             // Create a new user
@@ -38,7 +38,7 @@ class CreateUserController extends Controller
                 'phone' => $request->phone,
                 'card_id' => $request->card_id,
                 'tank_count' => $request->tank_count,
-                'cloud_user' => $request->cloud_user
+                'cloud_user' => $request->cloud_user,
             ]);
 
             if ($user) {

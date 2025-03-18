@@ -9,6 +9,7 @@ use App\Traits\HasResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -22,6 +23,8 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $token = $request->user()->createToken('auth_token')->plainTextToken;
+
+        Redis::set('user', $request->user()->name);
 
         return $this->successResponse('Success', '200', [
             'token' => $token,
@@ -38,6 +41,8 @@ class AuthenticatedSessionController extends Controller
         Auth::guard('web')->logout();
 
         $request->user()->tokens()->delete();
+
+        Redis::delete('user');
 
         return $this->successResponse('Success', '200', null);
     }

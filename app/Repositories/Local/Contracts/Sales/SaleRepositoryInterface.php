@@ -2,7 +2,6 @@
 
 namespace App\Repositories\Local\Contracts\Sales;
 
-
 /**
  * Interface defining the contract for a sale repository.
  * This interface provides methods for managing sales, including
@@ -37,6 +36,7 @@ interface SaleRepositoryInterface
      * @param  array  $data
      */
     public function updateSale($id, $data);
+
     /**
      *  Delete a sale by its ID.
      *
@@ -46,14 +46,16 @@ interface SaleRepositoryInterface
 
     /**
      * Create Preset Sale Request
-     * @param string $type = liter or kyat ( default kyat )
-     * @param array $data
+     *
+     * @param  string  $type  = liter or kyat ( default kyat )
+     * @param  array  $data
      */
     public function presetSale($type, $data);
 
     /**
      *  Approve By Casher Sale Data
-     * @param array $data
+     *
+     * @param  array  $data
      */
     public function cashierSale($data);
 }

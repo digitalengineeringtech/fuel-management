@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Tank;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class TankTableSeeder extends Seeder
 {
@@ -37,10 +36,10 @@ class TankTableSeeder extends Seeder
                 'weight' => 22,
                 'water_ratio' => 0.5,
                 'avaliable_oil_weight' => 6000,
-            ]
+            ],
         ];
 
-        foreach($tanks as $tank) {
+        foreach ($tanks as $tank) {
             Tank::create($tank);
         }
     }

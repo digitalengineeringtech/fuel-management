@@ -4,9 +4,8 @@ namespace App\Console\Commands;
 
 use App\Events\MessageReceived;
 use App\Traits\HasMqtt;
-use Hakhant\Broker\Client;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Concurrency;
+use Illuminate\Support\Facades\Redis;
 
 class SubscribeMessage extends Command
 {
@@ -25,22 +24,36 @@ class SubscribeMessage extends Command
      * @var string
      */
     protected $description = 'Subscribe for mqtt topic';
+
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        $client = $this->getClient();
+        try {
+            $client = $this->getClient();
 
-        $client->subscribe('detpos/#', function ($topic, $message) {
-            $this->info('Topic: '.$topic);
-            $this->info('Message: '.$message);
+            $client->subscribe('detpos/#', function ($topic, $message) {
+                $user = Redis::get('user');
 
-            event(new MessageReceived($topic, $message));
-        });
+                if (empty($user)) {
+                    $this->error('Please login first...');
 
-        $this->info('Successfully connected to MQTT broker and listening for messages...');
+                    return;
+                }
 
-        $client->loop();
+                $this->info('Topic: '.$topic);
+                $this->info('Message: '.$message);
+
+                event(new MessageReceived($user, $topic, $message));
+            });
+
+            $this->info('Successfully connected to MQTT broker and listening for messages...');
+
+            $client->loop();
+
+        } catch (Exception $e) {
+            $this->error($e->getMessage());
+        }
     }
 }

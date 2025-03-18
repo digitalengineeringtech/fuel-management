@@ -2,21 +2,19 @@
 
 namespace App\Repositories\Local\Concretes\Sales;
 
-use Exception;
-use App\Models\Sale;
-use App\Traits\HasSale;
-use App\Traits\HasResponse;
 use App\Http\Resources\Local\Sales\SaleResource;
+use App\Models\Sale;
 use App\Repositories\Local\Contracts\Sales\SaleRepositoryInterface;
 use App\Traits\HasMqtt;
+use App\Traits\HasResponse;
+use App\Traits\HasSale;
+use Exception;
 
 class SaleRepository implements SaleRepositoryInterface
 {
-    use HasResponse;
-
-    use HasSale;
-
     use HasMqtt;
+    use HasResponse;
+    use HasSale;
 
     public function getSales($request)
     {
@@ -43,12 +41,12 @@ class SaleRepository implements SaleRepositoryInterface
     public function createSale($data)
     {
         try {
-            $voucherNo = $this->generateVoucherNo($data['station_id'], $data['nozzle_id'], $data['cashier_code']);
+            $voucherNo = $this->generateVoucherNo( $data['nozzle_id'], $data['cashier_code']);
 
             $sale = $this->createSale([
                 ...$data,
                 'voucher_no' => $voucherNo,
-                'cashier_code' => $cashier
+                'cashier_code' => $data['cashier_code'],
             ]);
 
             if (! $sale) {
@@ -97,26 +95,24 @@ class SaleRepository implements SaleRepositoryInterface
         }
     }
 
-    public function presetSale($type = 'kyat', $data)
+    public function presetSale($type, $data)
     {
         try {
-            $voucherNo = $this->generateVoucherNo($data['station_id'], $data['nozzle_id'], $data['cashier_code']);
-
-            $nozzle = Nozzle::where('id', $data['nozzle_id'])->first();
+            $voucherNo = $this->generateVoucherNo($data['nozzle_id'], $data['cashier_code']);
 
             $sale = $this->createSale([
                 ...$data,
                 'voucher_no' => $voucherNo,
                 'cashier_code' => $data['cashier_code'],
                 'is_preset' => true,
-                'preset_amount' => $this->getPresetAmount($type, $data['preset_amount'])
+                'preset_amount' => $this->getPresetAmount($type, $data['preset_amount']),
             ]);
 
             if (! $sale) {
                 return $this->errorResponse('Failed to create sale', 400, null);
             }
 
-            $this->getClient()->publish('detpos/local_server/preset', $nozzle->nozzle_no . $type . $data['preset_amount']);
+            $this->getClient()->publish('detpos/local_server/preset', $sale->nozzle->nozzle_no.$type.$data['preset_amount']);
 
             $this->getClient()->disconnect();
 
@@ -130,12 +126,12 @@ class SaleRepository implements SaleRepositoryInterface
     public function cashierSale($data)
     {
         try {
-            $voucherNo = $this->generateVoucherNo($data['station_id'], $data['nozzle_id'], $data['cashier_code']);
+            $voucherNo = $this->generateVoucherNo($data['nozzle_id'], $data['cashier_code']);
 
             $sale = $this->createSale([
                 ...$data,
                 'voucher_no' => $voucherNo,
-                'cashier_code' => $data['cashier_code']
+                'cashier_code' => $data['cashier_code'],
             ]);
 
             if (! $sale) {

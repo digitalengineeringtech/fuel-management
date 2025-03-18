@@ -14,7 +14,7 @@ class FuelIn extends Model
 
     public function tank(): BelongsTo
     {
-         return $this->belongsTo(Tank::class);
+        return $this->belongsTo(Tank::class);
     }
 
     public function station(): BelongsTo

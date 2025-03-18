@@ -37,7 +37,7 @@ class UpdateRequest extends FormRequest
             'device' => ['required', 'string'],
             'tank_balance' => ['nullable'],
             'totalizer_liter' => ['nullable'],
-            'totalizer_amount' =>['nullable'],
+            'totalizer_amount' => ['nullable'],
             'device_totalizer_liter' => ['nullable'],
             'device_totalizer_amount' => ['nullable'],
             'sale_liter' => ['nullable'],
@@ -45,7 +45,7 @@ class UpdateRequest extends FormRequest
             'total_price' => ['nullable'],
             'is_preset' => ['nullable', 'boolean'],
             'preset_amount' => ['nullable'],
-            'daily_report_date' => ['datetime', 'nullable']
+            'daily_report_date' => ['datetime', 'nullable'],
         ];
     }
 }

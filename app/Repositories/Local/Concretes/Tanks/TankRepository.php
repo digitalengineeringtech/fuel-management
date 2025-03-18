@@ -2,11 +2,11 @@
 
 namespace App\Repositories\Local\Concretes\Tanks;
 
-use Exception;
-use App\Models\Tank;
-use App\Traits\HasResponse;
 use App\Http\Resources\Local\Tanks\TankResource;
+use App\Models\Tank;
 use App\Repositories\Local\Contracts\Tanks\TankRepositoryInterface;
+use App\Traits\HasResponse;
+use Exception;
 
 class TankRepository implements TankRepositoryInterface
 {

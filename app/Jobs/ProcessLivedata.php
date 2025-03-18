@@ -8,12 +8,13 @@ class ProcessLivedata
 {
     use Queueable;
 
-    public $topics;
+    public $user;
 
     public $messages;
-    public function __construct($topics, $messages)
+
+    public function __construct(string $user, array $messages)
     {
-        $this->topics = $topics;
+        $this->user = $user;
         $this->messages = $messages;
     }
 

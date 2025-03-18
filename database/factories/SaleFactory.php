@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Sale>
@@ -28,7 +28,7 @@ class SaleFactory extends Factory
             'vehicle_type_id' => 1,
             'tank_id' => 1,
             'voucher_no' => Str::random(10),
-            'cashier_code' => 'C' . rand(100, 999),
+            'cashier_code' => 'C'.rand(100, 999),
             'car_no' => '1F-'.rand(0001, 9999),
             'device' => $this->faker->randomElement(['web', 'mobile', 'tablet']),
             'tank_balance' => $this->faker->randomFloat(3, 0, 10000),

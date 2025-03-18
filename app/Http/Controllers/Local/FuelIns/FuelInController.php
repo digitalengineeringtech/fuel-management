@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 
 class FuelInController extends Controller
 {
-
     protected FuelInRepositoryInterface $fuelInRepository;
 
     public function __construct(FuelInRepositoryInterface $fuelInRepository)

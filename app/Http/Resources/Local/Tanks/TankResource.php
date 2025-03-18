@@ -26,7 +26,7 @@ class TankResource extends JsonResource
             'temperature' => $this->temperature,
             'weight' => $this->weight,
             'water_ratio' => $this->water_ratio,
-            'avaliable_oil_weight' => $this->avaliable_oil_weight
+            'avaliable_oil_weight' => $this->avaliable_oil_weight,
         ];
     }
 }

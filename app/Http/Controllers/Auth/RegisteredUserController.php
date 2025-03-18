@@ -9,6 +9,7 @@ use App\Traits\HasResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Validation\Rules;
 
 class RegisteredUserController extends Controller
@@ -30,6 +31,7 @@ class RegisteredUserController extends Controller
             'phone' => ['nullable', 'string', 'max:20'],
             'card_id' => ['nullable', 'string', 'max:15'],
             'tank_count' => ['nullable', 'integer'],
+            'cloud_user' => ['boolean'],
         ]);
 
         $user = User::create([
@@ -40,7 +42,10 @@ class RegisteredUserController extends Controller
             'phone' => $request->phone,
             'card_id' => $request->card_id,
             'tank_count' => $request->tank_count,
+            'cloud_user' => false,
         ]);
+
+        Redis::set('user', $user->name);
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
