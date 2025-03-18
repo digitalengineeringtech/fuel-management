@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\FuelIn;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class FuelInSeeder extends Seeder
 {
@@ -13,7 +12,7 @@ class FuelInSeeder extends Seeder
      */
     public function run(): void
     {
-         $fuelins = [
+        $fuelins = [
             [
                 'tank_id' => 1,
                 'station_id' => 1,
@@ -43,11 +42,11 @@ class FuelInSeeder extends Seeder
                 'send_balance' => 1000,
                 'receive_balance' => 1000,
                 'receive_date' => now(),
-            ]
-         ];
+            ],
+        ];
 
-         foreach ($fuelins as $fuelin) {
+        foreach ($fuelins as $fuelin) {
             FuelIn::create($fuelin);
-         }
+        }
     }
 }

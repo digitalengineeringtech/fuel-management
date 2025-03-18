@@ -31,7 +31,7 @@ class CreateRequest extends FormRequest
             'temperature' => ['nullable', 'number'],
             'weight' => ['required', 'numeric'],
             'water_ratio' => ['required', 'numeric'],
-            'avaliable_oil_weight' => ['required', 'numeric']
+            'avaliable_oil_weight' => ['required', 'numeric'],
         ];
     }
 }

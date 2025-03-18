@@ -2,30 +2,27 @@
 
 namespace App\Jobs;
 
-use App\Models\Sale;
 use App\Models\Nozzle;
 use App\Traits\HasMqtt;
 use App\Traits\HasSale;
-use Illuminate\Support\Facades\Redis;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Support\Facades\Redis;
 
 class ProcessFinal
 {
+    use HasMqtt;
+    use HasSale;
     use Queueable;
 
-    use HasMqtt;
-
-    use HasSale;
-
-    public $topics;
+    public $user;
 
     public $messages;
 
     public $client;
 
-    public function __construct(array $topics, array $messages)
+    public function __construct(string $user, array $messages)
     {
-        $this->topics = $topics;
+        $this->user = $user;
         $this->messages = $messages;
         $this->client = $this->getClient();
     }
@@ -35,16 +32,16 @@ class ProcessFinal
      */
     public function handle(): void
     {
-         $redis = Redis::get('sale');
+        $redis = Redis::get('sale');
 
-         $cachedSale = json_decode($redis, true);
+        $cachedSale = json_decode($redis, true);
 
-         $nozzle = Nozzle::where('id', $cachedSale['id'])->first();
-         // TODO: Handle the message
-         $updatedSale = $this->updateSale($cachedSale, $this->messages);
+        $nozzle = Nozzle::where('id', $cachedSale['id'])->first();
+        // TODO: Handle the message
+        $updatedSale = $this->updateSale($cachedSale, $this->messages);
 
-         $this->client->publish('detpos/local_server/'.$nozzle->dispenser->dispenser_no, $nozzle->nozzle_no.'D1S1');
+        $this->client->publish('detpos/local_server/'.$nozzle->dispenser->dispenser_no, $nozzle->nozzle_no.'D1S1');
 
-         $this->client->disconnect();
+        $this->client->disconnect();
     }
 }

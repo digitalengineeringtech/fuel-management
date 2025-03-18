@@ -2,21 +2,23 @@
 
 namespace App\Jobs;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Models\Nozzle;
+use App\Traits\HasMqtt;
 use Illuminate\Foundation\Queue\Queueable;
 
-class ProcessPriceChange implements ShouldQueue
+class ProcessPriceChange
 {
+    use HasMqtt;
     use Queueable;
-
-    public $topics;
 
     public $messages;
 
-    public function __construct(array $topics, array $messages)
+    public $client;
+
+    public function __construct(array $messages)
     {
-        $this->topics = $topics;
         $this->messages = $messages;
+        $this->client = $this->getClient();
     }
 
     /**
@@ -24,6 +26,16 @@ class ProcessPriceChange implements ShouldQueue
      */
     public function handle(): void
     {
-        //
+        $nozzle = Nozzle::where('nozzle_no', $this->messages[0])->first();
+
+        $unit_price = str_pad($this->messages[1], 4, '0', STR_PAD_LEFT);
+
+        $nozzle->stockPrice()->update([
+            'unit_price' => $unit_price,
+        ]);
+
+        $this->client->publish('detpos/local_server/price', $nozzle->nozzle_no.$unit_price);
+
+        $this->client->disconnect();
     }
 }

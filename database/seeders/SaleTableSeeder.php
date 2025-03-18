@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Sale;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class SaleTableSeeder extends Seeder
 {
@@ -65,10 +64,10 @@ class SaleTableSeeder extends Seeder
                 'is_preset' => false,
                 'preset_amount' => 0,
                 'daily_report_date' => now(),
-            ]
+            ],
         ];
 
-        foreach($sales as $sale) {
+        foreach ($sales as $sale) {
             Sale::create($sale);
         }
     }

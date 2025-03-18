@@ -2,11 +2,11 @@
 
 namespace App\Http\Resources\Local\FuelIns;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Cloud\FuelTypes\FuelTypeResource;
 use App\Http\Resources\Cloud\Stations\StationResource;
 use App\Http\Resources\Local\Tanks\TankResource;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class FuelInResource extends JsonResource
 {

@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers\Local\Sales;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Local\Sales\CreateRequest;
 use App\Http\Requests\Local\Sales\UpdateRequest;
 use App\Repositories\Local\Contracts\Sales\SaleRepositoryInterface;
+use Illuminate\Http\Request;
 
 class SaleController extends Controller
 {
     public SaleRepositoryInterface $saleRepository;
+
     public function __construct(SaleRepositoryInterface $saleRepository)
     {
         $this->saleRepository = $saleRepository;
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -57,8 +59,8 @@ class SaleController extends Controller
 
     /**
      * Create Preset Sale
-     * @param string $type = liter or kyat ( default kyat )
-     * @param CreateRequest $request
+     *
+     * @param  string  $type  = liter or kyat ( default kyat )
      */
     public function presetSale(CreateRequest $request, string $type = 'kyat')
     {
@@ -67,7 +69,6 @@ class SaleController extends Controller
 
     /**
      * Approve By Casher Sale Request
-     * @param CreateRequest $request
      */
     public function cashierSale(CreateRequest $request)
     {

@@ -2,7 +2,6 @@
 
 namespace App\Repositories\Local\Contracts\Tanks;
 
-
 /**
  * Interface defining the contract for a tank repository.
  * This interface provides methods for managing tanks, including

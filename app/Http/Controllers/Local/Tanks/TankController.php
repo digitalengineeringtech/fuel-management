@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers\Local\Tanks;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Local\Tanks\CreateRequest;
 use App\Http\Requests\Local\Tanks\UpdateRequest;
 use App\Repositories\Local\Contracts\Tanks\TankRepositoryInterface;
+use Illuminate\Http\Request;
 
 class TankController extends Controller
 {
-     private TankRepositoryInterface $tankRepository;
-     public function __construct(TankRepositoryInterface $tankRepository)
-     {
-          $this->tankRepository = $tankRepository;
-     }
+    private TankRepositoryInterface $tankRepository;
 
-     public function index(Request $request)
+    public function __construct(TankRepositoryInterface $tankRepository)
+    {
+        $this->tankRepository = $tankRepository;
+    }
+
+    public function index(Request $request)
     {
         return $this->tankRepository->getTanks($request);
     }

@@ -1,11 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Local\Dispensers\DispenserController;
 use App\Http\Controllers\Local\FuelIns\FuelInController;
 use App\Http\Controllers\Local\Nozzles\NozzleController;
-use App\Http\Controllers\Local\Dispensers\DispenserController;
 use App\Http\Controllers\Local\Sales\SaleController;
 use App\Http\Controllers\Local\Tanks\TankController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return response()->json(['message' => 'Local API is working']);

@@ -2,11 +2,11 @@
 
 namespace App\Repositories\Local\Concretes\FuelIns;
 
-use Exception;
-use App\Models\FuelIn;
-use App\Traits\HasResponse;
 use App\Http\Resources\Local\FuelIns\FuelInResource;
+use App\Models\FuelIn;
 use App\Repositories\Local\Contracts\FuelIns\FuelInRepositoryInterface;
+use App\Traits\HasResponse;
+use Exception;
 
 class FuelInRepository implements FuelInRepositoryInterface
 {
@@ -39,8 +39,8 @@ class FuelInRepository implements FuelInRepositoryInterface
         try {
 
             $lastFuelIn = FuelIn::where('tank_no', $data['tank_no'])
-                            ->orderBy('code', 'desc')
-                            ->first();
+                ->orderBy('code', 'desc')
+                ->first();
 
             $data['code'] = $lastFuelIn ? $lastFuelIn->code + 1 : 1;
 
