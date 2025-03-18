@@ -55,8 +55,7 @@ trait HasSale
             'device_totalizer_amount' => $messages[5],
         ];
 
-        $updatedSale = Sale::where('id', $cachedSale['id'])
-            ->update($data);
+        $updatedSale = Sale::where('id', $cachedSale['id'])->update($data);
 
         Redis::delete('sale');
 
