@@ -43,6 +43,8 @@ class ProcessFinal
          // TODO: Handle the message
          $updatedSale = $this->updateSale($cachedSale, $this->messages);
 
-         $this->client->publish('detpos/local_server/'.$nozzle->dispenser_id, $nozzle->nozzle_no.'D1S1');
+         $this->client->publish('detpos/local_server/'.$nozzle->dispenser->dispenser_no, $nozzle->nozzle_no.'D1S1');
+
+         $this->client->disconnect();
     }
 }

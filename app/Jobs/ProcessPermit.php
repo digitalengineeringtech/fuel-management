@@ -50,7 +50,9 @@ class ProcessPermit
                 'cashier_code' => $cashier,
             ]);
 
-             $this->client->publish("detpos/local_server/$sale->dispenser_id", $sale->nozzle->nozzle_no."appro");
+            $this->client->publish("detpos/local_server/".$sale->dispenser->dispenser_no, $sale->nozzle->nozzle_no."appro");
+
+            $this->client->disconnect();
         }
     }
 }
