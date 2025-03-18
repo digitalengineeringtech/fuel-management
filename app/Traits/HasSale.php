@@ -79,9 +79,13 @@ trait HasSale
         }
     }
 
-    public function generateVoucherNo($stationId, $nozzleId, $cashier)
+    public function generateVoucherNo($nozzleId, $cashier)
     {
         $today = Carbon::today()->format('Ymd'); // Get current date
+
+        $nozzle = DB::table('nozzles')->where('id', $nozzleId)->first();
+
+        $stationNo = $nozzle->dispenser->station->station_no;
 
         $latestVoucher = DB::table('sales')
             ->where('nozzle_id', $nozzleId)
@@ -98,7 +102,7 @@ trait HasSale
         }
 
         // Generate new voucher number
-        $voucherNo = "{$stationId}/".Str::upper($cashier).'/'.$today."/{$counter}";
+        $voucherNo = "{$stationNo}/".Str::upper($cashier).'/'.$today."/{$counter}";
 
         return $voucherNo;
     }

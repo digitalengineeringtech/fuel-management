@@ -33,8 +33,8 @@ class ProcessPermit
     public function handle(): void
     {
         $nozzle = Nozzle::where('nozzle_no', $this->messages[0])->first();
-        $stationId = $nozzle->dispenser->station_id;
-        $voucherNo = $this->generateVoucherNo($stationId, $nozzle->id, $this->user);
+
+        $voucherNo = $this->generateVoucherNo ($nozzle->id, $this->user);
 
         if ($nozzle->auto_approve || $nozzle->semi_approve) {
             $sale = $this->createSale([

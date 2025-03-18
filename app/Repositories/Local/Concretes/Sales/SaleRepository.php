@@ -41,12 +41,12 @@ class SaleRepository implements SaleRepositoryInterface
     public function createSale($data)
     {
         try {
-            $voucherNo = $this->generateVoucherNo($data['station_id'], $data['nozzle_id'], $data['cashier_code']);
+            $voucherNo = $this->generateVoucherNo( $data['nozzle_id'], $data['cashier_code']);
 
             $sale = $this->createSale([
                 ...$data,
                 'voucher_no' => $voucherNo,
-                'cashier_code' => $cashier,
+                'cashier_code' => $data['cashier_code'],
             ]);
 
             if (! $sale) {
@@ -98,9 +98,7 @@ class SaleRepository implements SaleRepositoryInterface
     public function presetSale($type, $data)
     {
         try {
-            $voucherNo = $this->generateVoucherNo($data['station_id'], $data['nozzle_id'], $data['cashier_code']);
-
-            $nozzle = Nozzle::where('id', $data['nozzle_id'])->first();
+            $voucherNo = $this->generateVoucherNo($data['nozzle_id'], $data['cashier_code']);
 
             $sale = $this->createSale([
                 ...$data,
@@ -114,7 +112,7 @@ class SaleRepository implements SaleRepositoryInterface
                 return $this->errorResponse('Failed to create sale', 400, null);
             }
 
-            $this->getClient()->publish('detpos/local_server/preset', $nozzle->nozzle_no.$type.$data['preset_amount']);
+            $this->getClient()->publish('detpos/local_server/preset', $sale->nozzle->nozzle_no.$type.$data['preset_amount']);
 
             $this->getClient()->disconnect();
 
@@ -128,7 +126,7 @@ class SaleRepository implements SaleRepositoryInterface
     public function cashierSale($data)
     {
         try {
-            $voucherNo = $this->generateVoucherNo($data['station_id'], $data['nozzle_id'], $data['cashier_code']);
+            $voucherNo = $this->generateVoucherNo($data['nozzle_id'], $data['cashier_code']);
 
             $sale = $this->createSale([
                 ...$data,
