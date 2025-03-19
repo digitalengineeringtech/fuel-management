@@ -19,7 +19,7 @@ class FuelInFactory extends Factory
         return [
             'tank_id' => 1,
             'station_id' => 1,
-            'fuel_type_id' => rand(1, 4),
+            'fuel_type_id' => 1,
             'code' => rand(1, 100),
             'terminal_name' => 'Terminal 1',
             'driver_name' => 'Driver 1',

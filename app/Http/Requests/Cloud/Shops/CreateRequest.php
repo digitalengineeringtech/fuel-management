@@ -23,7 +23,7 @@ class CreateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:30'],
-            'image' => ['nullable', 'image', 'max:4096'],
+            'image' => ['nullable', 'image', 'max:4096', 'mimes:jpg,jpeg,png'],
             'address' => ['required', 'string', 'max:100'],
         ];
     }

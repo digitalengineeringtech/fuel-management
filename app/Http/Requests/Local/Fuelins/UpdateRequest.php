@@ -22,10 +22,10 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'station_id' => ['required', 'exists:dispensers,id'],
-            'fuel_type_id' => ['required', 'exists:fuel_types,id'],
+            'tank_id' => ['required'],
+            'station_id' => ['required'],
+            'fuel_type_id' => ['required'],
             'code' => ['required', 'numeric'],
-            'tank_no' => ['required', 'numeric'],
             'terminal_name' => ['required', 'string', 'max:50'],
             'driver_name' => ['required', 'string', 'max:50'],
             'bowser_no' => ['required', 'string', 'max:20'],

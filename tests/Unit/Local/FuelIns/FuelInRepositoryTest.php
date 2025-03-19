@@ -1,58 +1,61 @@
 <?php
 
 use App\Models\FuelIn;
-use App\Repositories\Local\Contracts\FuelIns\FuelInRepositoryInterface;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->fuelInRepository = $this->mock(FuelInRepositoryInterface::class);
+    $this->user = User::factory()->create();
 });
 
-it('can get all fuelIns and response with resource', function () {
-    $fuelIns = FuelIn::factory()->create();
+// Test: Get All fuelins
+test('can get all fuelins and response with resource', function () {
+    FuelIn::factory()->count(5)->create();
 
-    $this->fuelInRepository->shouldReceive('getFuelIns')->andReturn($fuelIns);
+    $response = $this->actingAs($this->user)->get('/api/local/fuelins');
 
-    $response = $this->fuelInRepository->getFuelIns(request());
-
-    expect($response)->toBe($fuelIns);
+    $response->assertStatus(200)
+             ->assertJsonCount(5, 'data');
 });
 
-it('can get fuelIn by id and response with resource', function () {
+// Test: Get FuelIn by ID
+test('can get FuelIn by id and response with resource', function () {
     $fuelIn = FuelIn::factory()->create();
 
-    $this->fuelInRepository->shouldReceive('getFuelIn')->andReturn($fuelIn);
+    $response = $this->actingAs($this->user)->get("/api/local/fuelins/{$fuelIn->id}");
 
-    $response = $this->fuelInRepository->getFuelIn($fuelIn->id);
-
-    expect($response->id)->toBe($fuelIn->id);
+    $response->assertStatus(200);
 });
 
-it('can create fuelIn and response with resource', function () {
-    $fuelIn = FuelIn::factory()->create();
+// Test: Create FuelIn
+test('can create FuelIn and response with resource', function () {
+    $fuelInData = FuelIn::factory()->make()->toArray();
 
-    $this->fuelInRepository->shouldReceive('createFuelIn')->andReturn($fuelIn);
+    $response = $this->actingAs($this->user)->post('/api/local/fuelins', $fuelInData);
 
-    $response = $this->fuelInRepository->createFuelIn($fuelIn->toArray());
-
-    expect($response->id)->toBe($fuelIn->id);
+    $response->assertStatus(201);
 });
 
-it('can update fuelIn and response with resource', function () {
+// Test: Update FuelIn
+test('can update FuelIn and response with resource', function () {
     $fuelIn = FuelIn::factory()->create();
 
-    $this->fuelInRepository->shouldReceive('updateFuelIn')->andReturn($fuelIn);
+    $updatedData = FuelIn::factory()->make([
+        'driver_name' => 'Updated Driver Name',
+    ])->toArray();
 
-    $response = $this->fuelInRepository->updateFuelIn($fuelIn->id, $fuelIn->toArray());
+    $response = $this->actingAs($this->user)->put("/api/local/fuelins/{$fuelIn->id}", $updatedData);
 
-    expect($response->id)->toBe($fuelIn->id);
+    $response->assertStatus(200);
 });
 
-it('can delete fuelIn and response with resource', function () {
+// Test: Delete FuelIn
+test('can delete FuelIn and response with resource', function () {
     $fuelIn = FuelIn::factory()->create();
 
-    $this->fuelInRepository->shouldReceive('deleteFuelIn')->andReturn(['message' => 'FuelIn deleted successfully']);
+    $response = $this->actingAs($this->user)->delete("/api/local/fuelins/{$fuelIn->id}");
 
-    $response = $this->fuelInRepository->deleteFuelIn($fuelIn->id);
-
-    expect($response['message'])->toBe('FuelIn deleted successfully');
+    $response->assertStatus(200);
 });

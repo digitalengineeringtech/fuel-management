@@ -37,7 +37,7 @@ class ProcessPermit
         $voucherNo = $this->generateVoucherNo ($nozzle->id, $this->user);
 
         if ($nozzle->auto_approve || $nozzle->semi_approve) {
-            $sale = $this->createSale([
+            $sale = $this->addSale([
                 'station_id' => $nozzle->dispenser->station_id,
                 'dispenser_id' => $nozzle->dispenser_id,
                 'nozzle_id' => $nozzle->id,

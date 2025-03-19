@@ -16,7 +16,11 @@ class NozzleRepository implements NozzleRepositoryInterface
         try {
             $nozzles = Nozzle::paginate(10);
 
-            return NozzleResource::collection($nozzles);
+            if(!$nozzles) {
+                return $this->errorResponse('Nozzle not found', 404, null);
+            }
+
+            return $this->successResponse('Nozzle found successfully', 200, NozzleResource::collection($nozzles));
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
@@ -27,7 +31,11 @@ class NozzleRepository implements NozzleRepositoryInterface
         try {
             $nozzle = Nozzle::find($id);
 
-            return new NozzleResource($nozzle);
+            if (!$nozzle) {
+                return $this->errorResponse('Nozzle not found', 404, null);
+            }
+
+            return $this->successResponse('Nozzle found successfully', 200, new NozzleResource($nozzle));
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
@@ -38,11 +46,11 @@ class NozzleRepository implements NozzleRepositoryInterface
         try {
             $nozzle = Nozzle::create($data);
 
-            if (! $nozzle) {
+            if (!$nozzle) {
                 return $this->errorResponse('Failed to create nozzle', 400, null);
             }
 
-            return $this->successResponse('Nozzle created successfully', 201, new NozzleResource($nozzle));
+            return $this->successResponse('Nozzle successfully created', 201, new NozzleResource($nozzle));
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
@@ -53,13 +61,13 @@ class NozzleRepository implements NozzleRepositoryInterface
         try {
             $nozzle = Nozzle::find($id);
 
-            if (! $nozzle) {
+            if (!$nozzle) {
                 return $this->errorResponse('Nozzle not found', 404, null);
             }
 
             $nozzle->update($data);
 
-            return $this->successResponse('Nozzle updated successfully', 200, new NozzleResource($nozzle));
+            return $this->successResponse('Nozzle successfully updated', 200, new NozzleResource($nozzle));
 
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
@@ -71,13 +79,13 @@ class NozzleRepository implements NozzleRepositoryInterface
         try {
             $nozzle = Nozzle::find($id);
 
-            if (! $nozzle) {
+            if (!$nozzle) {
                 return $this->errorResponse('Nozzle not found', 404, null);
             }
 
             $nozzle->delete();
 
-            return $this->successResponse('Nozzle deleted successfully', 200, null);
+            return $this->successResponse('Nozzle successfully deleted', 200, null);
 
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);

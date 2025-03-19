@@ -3,6 +3,7 @@
 namespace App\Repositories\Local\Concretes\Sales;
 
 use App\Http\Resources\Local\Sales\SaleResource;
+use App\Models\Nozzle;
 use App\Models\Sale;
 use App\Repositories\Local\Contracts\Sales\SaleRepositoryInterface;
 use App\Traits\HasMqtt;
@@ -21,7 +22,11 @@ class SaleRepository implements SaleRepositoryInterface
         try {
             $sales = Sale::paginate(10);
 
-            return SaleResource::collection($sales);
+            if(!$sales) {
+                return $this->errorResponse('Sales not found', 404, null);
+            }
+
+            return $this->successResponse('Sales found successfully', 200, SaleResource::collection($sales));
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
@@ -32,7 +37,11 @@ class SaleRepository implements SaleRepositoryInterface
         try {
             $sale = Sale::find($id);
 
-            return new SaleResource($sale);
+            if(!$sale) {
+                return $this->errorResponse('Sale not found', 404, null);
+            }
+
+            return $this->successResponse('Sale found successfully', 200, new SaleResource($sale));
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
@@ -43,7 +52,7 @@ class SaleRepository implements SaleRepositoryInterface
         try {
             $voucherNo = $this->generateVoucherNo( $data['nozzle_id'], $data['cashier_code']);
 
-            $sale = $this->createSale([
+            $sale = $this->addSale([
                 ...$data,
                 'voucher_no' => $voucherNo,
                 'cashier_code' => $data['cashier_code'],
@@ -53,7 +62,7 @@ class SaleRepository implements SaleRepositoryInterface
                 return $this->errorResponse('Failed to create sale', 400, null);
             }
 
-            return $this->successResponse('Sale created successfully', 201, new SaleResource($sale));
+            return $this->successResponse('Sale successfully created', 201, new SaleResource($sale));
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
@@ -70,7 +79,7 @@ class SaleRepository implements SaleRepositoryInterface
 
             $sale->update($data);
 
-            return $this->successResponse('Sale updated successfully', 200, new SaleResource($sale));
+            return $this->successResponse('Sale successfully updated', 200, new SaleResource($sale));
 
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
@@ -88,7 +97,7 @@ class SaleRepository implements SaleRepositoryInterface
 
             $sale->delete();
 
-            return $this->successResponse('Sale deleted successfully', 200, null);
+            return $this->successResponse('Sale successfully deleted', 200, null);
 
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
@@ -100,7 +109,7 @@ class SaleRepository implements SaleRepositoryInterface
         try {
             $voucherNo = $this->generateVoucherNo($data['nozzle_id'], $data['cashier_code']);
 
-            $sale = $this->createSale([
+            $sale = $this->addSale([
                 ...$data,
                 'voucher_no' => $voucherNo,
                 'cashier_code' => $data['cashier_code'],
@@ -116,7 +125,7 @@ class SaleRepository implements SaleRepositoryInterface
 
             $this->getClient()->disconnect();
 
-            return $this->successResponse('Sale created successfully', 201, new SaleResource($sale));
+            return $this->successResponse('Sale successfully created', 201, new SaleResource($sale));
 
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
@@ -128,7 +137,7 @@ class SaleRepository implements SaleRepositoryInterface
         try {
             $voucherNo = $this->generateVoucherNo($data['nozzle_id'], $data['cashier_code']);
 
-            $sale = $this->createSale([
+            $sale = $this->addSale([
                 ...$data,
                 'voucher_no' => $voucherNo,
                 'cashier_code' => $data['cashier_code'],
@@ -142,7 +151,7 @@ class SaleRepository implements SaleRepositoryInterface
 
             $this->getClient()->disconnect();
 
-            return $this->successResponse('Sale created successfully', 201, new SaleResource($sale));
+            return $this->successResponse('Sale successfully created', 201, new SaleResource($sale));
 
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);

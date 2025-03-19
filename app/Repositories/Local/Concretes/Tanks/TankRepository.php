@@ -17,7 +17,11 @@ class TankRepository implements TankRepositoryInterface
         try {
             $tanks = Tank::paginate(10);
 
-            return TankResource::collection($tanks);
+            if(!$tanks) {
+                return $this->errorResponse('Tanks not found', 404, null);
+            }
+
+            return $this->successResponse('Tanks found successfully', 200, TankResource::collection($tanks));
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
@@ -28,7 +32,11 @@ class TankRepository implements TankRepositoryInterface
         try {
             $tank = Tank::find($id);
 
-            return new TankResource($tank);
+            if(!$tank) {
+                return $this->errorResponse('Tank not found', 404, null);
+            }
+
+            return $this->successResponse('Tank found successfully', 200, new TankResource($tank));
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
@@ -43,7 +51,7 @@ class TankRepository implements TankRepositoryInterface
                 return $this->errorResponse('Failed to create tank', 400, null);
             }
 
-            return $this->successResponse('Tank created successfully', 201, new TankResource($tank));
+            return $this->successResponse('Tank successfully created', 201, new TankResource($tank));
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
@@ -60,7 +68,7 @@ class TankRepository implements TankRepositoryInterface
 
             $tank->update($data);
 
-            return $this->successResponse('Tank updated successfully', 200, new TankResource($tank));
+            return $this->successResponse('Tank successfully updated', 200, new TankResource($tank));
 
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
@@ -78,7 +86,7 @@ class TankRepository implements TankRepositoryInterface
 
             $tank->delete();
 
-            return $this->successResponse('Tank deleted successfully', 200, null);
+            return $this->successResponse('Tank successfully deleted', 200, null);
 
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);

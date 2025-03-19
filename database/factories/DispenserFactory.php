@@ -26,7 +26,7 @@ class DispenserFactory extends Factory
             'firmware_version' => 1,
             'boot_count' => 1,
             'retry_count' => 1,
-            'debug_bit' => random_bytes(16),
+            'debug_bit' => Str::random(4),
             'password' => 'password',
             'wifi_ssid' => Str::random(12),
             'wifi_password' => Str::random(8),

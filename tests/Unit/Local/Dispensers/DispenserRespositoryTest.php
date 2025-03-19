@@ -1,61 +1,59 @@
 <?php
 
 use App\Models\Dispenser;
-use App\Repositories\Local\Contracts\Dispensers\DispenserRepositoryInterface;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->dispenserRepository = $this->mock(DispenserRepositoryInterface::class);
+    $this->user = User::factory()->create();
 });
 
-it('can get all dispensers and response with resource', function () {
-    $dispensers = Dispenser::factory()->create();
+// Test: Get All Dispensers
+test('can get all dispensers and response with resource', function () {
+    Dispenser::factory()->count(5)->create();
 
-    $this->dispenserRepository->shouldReceive('getDispensers')->andReturn($dispensers);
+    $response = $this->actingAs($this->user)->get('/api/local/dispensers');
 
-    $response = $this->dispenserRepository->getDispensers(request());
-
-    expect($response)->toBe($dispensers);
+    $response->assertStatus(200)
+             ->assertJsonCount(5, 'data');
 });
 
-it('can get dispenser by id and response with resource', function () {
+// Test: Get Dispenser by ID
+test('can get dispenser by id and response with resource', function () {
     $dispenser = Dispenser::factory()->create();
 
-    $this->dispenserRepository->shouldReceive('getDispenser')->andReturn($dispenser);
+    $response = $this->actingAs($this->user)->get("/api/local/dispensers/{$dispenser->id}");
 
-    $response = $this->dispenserRepository->getDispenser($dispenser->id);
-
-    expect($response->id)->toBe($dispenser->id);
-    expect($dispenser->device_ip)->toBe($dispenser->device_ip);
+    $response->assertStatus(200);
 });
 
-it('can create dispenser and response with resource', function () {
-    $dispenser = Dispenser::factory()->create();
+// Test: Create Dispenser
+test('can create dispenser and response with resource', function () {
+    $dispenserData = Dispenser::factory()->make()->toArray();
 
-    $this->dispenserRepository->shouldReceive('createDispenser')->andReturn($dispenser);
+    $response = $this->actingAs($this->user)->post('/api/local/dispensers', $dispenserData);
 
-    $response = $this->dispenserRepository->createDispenser($dispenser->toArray());
-
-    expect($response->id)->toBe($dispenser->id);
-    expect($dispenser->device_ip)->toBe($dispenser->device_ip);
+    $response->assertStatus(201);
 });
 
-it('can update dispenser and response with resource', function () {
+// Test: Update Dispenser
+test('can update dispenser and response with resource', function () {
     $dispenser = Dispenser::factory()->create();
 
-    $this->dispenserRepository->shouldReceive('updateDispenser')->andReturn($dispenser);
+    $updatedData = Dispenser::factory()->make(['device_ip' => '192.168.1.1'])->toArray();
 
-    $response = $this->dispenserRepository->updateDispenser($dispenser->id, $dispenser->toArray());
+    $response = $this->actingAs($this->user)->put("/api/local/dispensers/{$dispenser->id}", $updatedData);
 
-    expect($response->id)->toBe($dispenser->id);
-    expect($dispenser->device_ip)->toBe($dispenser->device_ip);
+    $response->assertStatus(200);
 });
 
-it('can delete dispenser and response with resource', function () {
+// Test: Delete Dispenser
+test('can delete dispenser and response with resource', function () {
     $dispenser = Dispenser::factory()->create();
 
-    $this->dispenserRepository->shouldReceive('deleteDispenser')->andReturn(['message' => 'Dispenser deleted successfully']);
+    $response = $this->actingAs($this->user)->delete("/api/local/dispensers/{$dispenser->id}");
 
-    $response = $this->dispenserRepository->deleteDispenser($dispenser->id);
-
-    expect($response['message'])->toBe('Dispenser deleted successfully');
+    $response->assertStatus(200);
 });

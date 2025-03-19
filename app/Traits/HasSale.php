@@ -2,16 +2,17 @@
 
 namespace App\Traits;
 
-use App\Models\Sale;
-use Carbon\Carbon;
 use Exception;
+use Carbon\Carbon;
+use App\Models\Sale;
+use App\Models\Nozzle;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
-use Illuminate\Support\Str;
 
 trait HasSale
 {
-    public function createSale(array $attributes)
+    public function addSale(array $attributes)
     {
         $previousSale = Sale::where('nozzle_id', $attributes['nozzle_id'])
             ->latest('id')
@@ -83,9 +84,11 @@ trait HasSale
     {
         $today = Carbon::today()->format('Ymd'); // Get current date
 
-        $nozzle = DB::table('nozzles')->where('id', $nozzleId)->first();
+        $nozzle = Nozzle::find($nozzleId);
 
-        $stationNo = $nozzle->dispenser->station->station_no;
+        dd($nozzle);
+
+        $stationNo = $nozzle->dispenser()->station->station_no;
 
         $latestVoucher = DB::table('sales')
             ->where('nozzle_id', $nozzleId)

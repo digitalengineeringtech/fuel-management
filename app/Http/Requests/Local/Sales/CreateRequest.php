@@ -31,10 +31,10 @@ class CreateRequest extends FormRequest
             'customer_id' => ['nullable'],
             'vehicle_type_id' => ['nullable'],
             'tank_id' => ['required'],
-            'voucher_no' => ['required', 'string'],
+            'voucher_no' => ['nullable','string'],
             'cashier_code' => ['required', 'string'],
             'car_no' => ['nullable', 'string'],
-            'device' => ['required', 'string'],
+            'device' => ['string'],
             'tank_balance' => ['nullable'],
             'totalizer_liter' => ['nullable'],
             'totalizer_amount' => ['nullable'],
@@ -45,7 +45,7 @@ class CreateRequest extends FormRequest
             'total_price' => ['nullable'],
             'is_preset' => ['nullable', 'boolean'],
             'preset_amount' => ['nullable'],
-            'daily_report_date' => ['datetime', 'nullable'],
+            'daily_report_date' => ['nullable'],
         ];
     }
 }

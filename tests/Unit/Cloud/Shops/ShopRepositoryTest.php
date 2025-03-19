@@ -1,60 +1,76 @@
 <?php
 
 use App\Models\Shop;
-use App\Repositories\Cloud\Contracts\Shops\ShopRepositoryInterface;
+use App\Models\User;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->shopRepository = $this->mock(ShopRepositoryInterface::class);
+    $this->user = User::factory()->create();
 });
 
 test('can get all shops and response with resource', function () {
-    $shops = Shop::factory()->create();
+    Shop::factory()->count(5)->create();
 
-    $this->shopRepository->shouldReceive('getShops')->andReturn($shops);
+    $response = $this->actingAs($this->user)->get('/api/cloud/shops');
 
-    $response = $this->shopRepository->getShops(request());
-
-    expect($response)->toBe($shops);
+    $response->assertStatus(200)
+             ->assertJsonCount(5, 'data');
 });
 
 test('can get shop by id and response with resource', function () {
     $shop = Shop::factory()->create();
 
-    $this->shopRepository->shouldReceive('getShop')->andReturn($shop);
+    $response = $this->actingAs($this->user)->get("/api/cloud/shops/{$shop->id}");
 
-    $response = $this->shopRepository->getShop($shop->id);
-
-    expect($response->id)->toBe($shop->id);
+    $response->assertStatus(200);
 });
 
 test('can create shop and response with resource', function () {
-    $shop = Shop::factory()->make();
+    Storage::fake('public'); // Fake the storage
 
-    $this->shopRepository->shouldReceive('createShop')->andReturn($shop);
+    $shopData = [
+        'name' => 'Test Shop',
+        'image' => UploadedFile::fake()->image('shop.png'),
+        'address' => '123 Main St',
+    ];
 
-    $response = $this->shopRepository->createShop($shop->toArray());
+    $shop = Shop::factory()->make($shopData)->toArray();
 
-    expect($response->id)->toBe($shop->id);
-    expect($response->name)->toBe($shop->name);
+    $response = $this->actingAs($this->user)->post('/api/cloud/shops', $shopData);
+
+    $response->assertStatus(201);
 });
 
 test('can update shop and response with resource', function () {
-    $shop = Shop::factory()->create();
+    Storage::fake('public'); // Fake the storage
 
-    $this->shopRepository->shouldReceive('updateShop')->andReturn($shop);
+    $shopData = [
+        'name' => 'Test Shop',
+        'image' => UploadedFile::fake()->image('shop.png'),
+        'address' => '123 Main St',
+    ];
 
-    $response = $this->shopRepository->updateShop($shop->id, $shop->toArray());
+    $shop = Shop::factory()->create($shopData);
 
-    expect($response->id)->toBe($shop->id);
-    expect($response->name)->toBe($shop->name);
+    $updatedData = [
+        'name' => 'Updated Shop',
+        'image' => UploadedFile::fake()->image('shop.png'),
+        'address' => '456 Main St',
+    ];
+
+    $response = $this->actingAs($this->user)->put("/api/cloud/shops/{$shop->id}", $updatedData);
+
+    $response->assertStatus(200);
 });
 
 test('can delete shop and response with resource', function () {
     $shop = Shop::factory()->create();
 
-    $this->shopRepository->shouldReceive('deleteShop')->andReturn(['message' => 'Shop deleted successfully']);
+    $response = $this->actingAs($this->user)->delete("/api/cloud/shops/{$shop->id}");
 
-    $response = $this->shopRepository->deleteShop($shop->id);
-
-    expect($response['message'])->toBe('Shop deleted successfully');
+    $response->assertStatus(200);
 });

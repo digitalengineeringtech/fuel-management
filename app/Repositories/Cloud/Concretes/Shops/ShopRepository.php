@@ -15,20 +15,32 @@ class ShopRepository implements ShopRepositoryInterface
 
     public function getShops($request)
     {
-        $shops = Shop::paginate(10);
+        try {
+            $shops = Shop::paginate(10);
 
-        return ShopResource::collection($shops);
+            if (!$shops) {
+                return $this->errorResponse('Shops not found', 404, null);
+            }
+
+            return $this->successResponse('Shops successfully retrieved', 200, ShopResource::collection($shops));
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
+        }
     }
 
     public function getShop($id)
     {
-        $shop = Shop::find($id);
+        try {
+            $shop = Shop::find($id);
 
-        if (! $shop) {
-            return $this->errorResponse('Shop not found', 404, null);
+            if (!$shop) {
+                return $this->errorResponse('Shop not found', 404, null);
+            }
+
+            return $this->successResponse('Shop successfully retrieved', 200, new ShopResource($shop));
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
         }
-
-        return new ShopResource($shop);
     }
 
     public function createShop($data)
@@ -42,11 +54,11 @@ class ShopRepository implements ShopRepositoryInterface
             // Create a new shop
             $shop = Shop::create($data);
 
-            if (! $shop) {
+            if (!$shop) {
                 return $this->errorResponse('Failed to create shop', 400, null);
             }
 
-            return new ShopResource($shop);
+            return $this->successResponse('Shop successfully created', 201, new ShopResource($shop));
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
@@ -57,7 +69,7 @@ class ShopRepository implements ShopRepositoryInterface
         try {
             $shop = Shop::find($id);
 
-            if (! $shop) {
+            if (!$shop) {
                 return $this->errorResponse('Shop not found', 404, null);
             }
 
@@ -68,7 +80,7 @@ class ShopRepository implements ShopRepositoryInterface
 
             $shop->update($data);
 
-            return new ShopResource($shop);
+            return $this->successResponse('Shop successfully updated', 200, new ShopResource($shop));
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
@@ -76,18 +88,22 @@ class ShopRepository implements ShopRepositoryInterface
 
     public function deleteShop($id)
     {
-        $shop = Shop::find($id);
+        try {
+            $shop = Shop::find($id);
 
-        if (! $shop) {
-            return $this->errorResponse('Shop not found', 404, null);
+            if (!$shop) {
+                return $this->errorResponse('Shop not found', 404, null);
+            }
+
+            if ($shop->image) {
+                $this->deleteImage($shop->image);
+            }
+
+            $shop->delete();
+
+            return $this->successResponse('Shop deleted successfully', 200, null);
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
         }
-
-        if ($shop->image) {
-            $this->deleteImage($shop->image);
-        }
-
-        $shop->delete();
-
-        return $this->successResponse('Shop deleted successfully', 200, null);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,7 +24,7 @@ class CustomerFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'phone' => fake()->phoneNumber(),
             'address' => fake()->address(),
-            'car_number' => rand(000001, 999999),
+            'car_number' => Str::random(5),
             'card_number' => rand(000001, 999999),
         ];
     }

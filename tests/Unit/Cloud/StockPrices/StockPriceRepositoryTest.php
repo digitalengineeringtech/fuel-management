@@ -1,60 +1,54 @@
 <?php
 
 use App\Models\StockPrice;
-use App\Repositories\Cloud\Contracts\StockPrices\StockPriceRepositoryInterface;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->stockPriceRepository = $this->mock(StockPriceRepositoryInterface::class);
+    $this->user = User::factory()->create();
 });
 
 test('can get all stock prices and response with resource', function () {
-    $stock_prices = StockPrice::factory()->create();
+    StockPrice::factory()->count(5)->create();
 
-    $this->stockPriceRepository->shouldReceive('getStockPrices')->andReturn($stock_prices);
+    $response = $this->actingAs($this->user)->get('/api/cloud/stock-prices');
 
-    $response = $this->stockPriceRepository->getStockPrices(request());
-
-    expect($response)->toBe($stock_prices);
+    $response->assertStatus(200)
+             ->assertJsonCount(5, 'data');
 });
 
 test('can get stock price by id and response with resource', function () {
     $stock_price = StockPrice::factory()->create();
 
-    $this->stockPriceRepository->shouldReceive('getStockPrice')->andReturn($stock_price);
+    $response = $this->actingAs($this->user)->get("/api/cloud/stock-prices/{$stock_price->id}");
 
-    $response = $this->stockPriceRepository->getStockPrice($stock_price->id);
-
-    expect($response->id)->toBe($stock_price->id);
+    $response->assertStatus(200);
 });
 
 test('can create stock price and response with resource', function () {
-    $stock_price = StockPrice::factory()->make();
+    $stockPriceData = StockPrice::factory()->make()->toArray();
 
-    $this->stockPriceRepository->shouldReceive('createStockPrice')->andReturn($stock_price);
+    $response = $this->actingAs($this->user)->post('/api/cloud/stock-prices', $stockPriceData);
 
-    $response = $this->stockPriceRepository->createStockPrice($stock_price->toArray());
-
-    expect($response->id)->toBe($stock_price->id);
-    expect($response->name)->toBe($stock_price->name);
+    $response->assertStatus(201);
 });
 
 test('can update stock price and response with resource', function () {
     $stock_price = StockPrice::factory()->create();
 
-    $this->stockPriceRepository->shouldReceive('updateStockPrice')->andReturn($stock_price);
+    $updatedData = StockPrice::factory()->make(['unit_price' => 4000])->toArray();
 
-    $response = $this->stockPriceRepository->updateStockPrice($stock_price->id, $stock_price->toArray());
+    $response = $this->actingAs($this->user)->put("/api/cloud/stock-prices/{$stock_price->id}", $updatedData);
 
-    expect($response->id)->toBe($stock_price->id);
-    expect($response->name)->toBe($stock_price->name);
+    $response->assertStatus(200);
 });
 
 test('can delete stock price and response with resource', function () {
     $stock_price = StockPrice::factory()->create();
 
-    $this->stockPriceRepository->shouldReceive('deleteStockPrice')->andReturn(['message' => 'Stock Price deleted successfully']);
+    $response = $this->actingAs($this->user)->delete("/api/cloud/stock-prices/{$stock_price->id}");
 
-    $response = $this->stockPriceRepository->deleteStockPrice($stock_price->id);
-
-    expect($response['message'])->toBe('Stock Price deleted successfully');
+    $response->assertStatus(200);
 });

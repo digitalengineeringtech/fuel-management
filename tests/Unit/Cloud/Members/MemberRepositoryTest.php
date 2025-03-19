@@ -1,60 +1,54 @@
 <?php
 
 use App\Models\Member;
-use App\Repositories\Cloud\Contracts\Members\MemberRepositoryInterface;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->memberRepository = $this->mock(MemberRepositoryInterface::class);
+    $this->user = User::factory()->create();
 });
 
-test('can get all members and response with resource', function () {
-    $members = Member::factory()->create();
+it('can get all members and response with resource', function () {
+    Member::factory()->count(5)->create();
 
-    $this->memberRepository->shouldReceive('getMembers')->andReturn($members);
+    $response = $this->actingAs($this->user)->get('/api/cloud/members');
 
-    $response = $this->memberRepository->getMembers(request());
-
-    expect($response)->toBe($members);
+    $response->assertStatus(200)
+             ->assertJsonCount(5, 'data');
 });
 
-test('can get member by id and response with resource', function () {
+it('can get member by id and response with resource', function () {
     $member = Member::factory()->create();
 
-    $this->memberRepository->shouldReceive('getMember')->andReturn($member);
+    $response = $this->actingAs($this->user)->get("/api/cloud/members/{$member->id}");
 
-    $response = $this->memberRepository->getMember($member->id);
-
-    expect($response->id)->toBe($member->id);
+    $response->assertStatus(200);
 });
 
-test('can create fuel type and response with resource', function () {
-    $member = Member::factory()->make();
+it('can create member and response with resource', function () {
+    $memberData = Member::factory()->make()->toArray();
 
-    $this->memberRepository->shouldReceive('createMember')->andReturn($member);
+    $response = $this->actingAs($this->user)->post('/api/cloud/members', $memberData);
 
-    $response = $this->memberRepository->createMember($member->toArray());
-
-    expect($response->id)->toBe($member->id);
-    expect($response->name)->toBe($member->name);
+    $response->assertStatus(201);
 });
 
-test('can update fuel type and response with resource', function () {
+it('can update member and response with resource', function () {
     $member = Member::factory()->create();
 
-    $this->memberRepository->shouldReceive('updateMember')->andReturn($member);
+    $updatedData = Member::factory()->make(['type' => 'gold'])->toArray();
 
-    $response = $this->memberRepository->updateMember($member->id, $member->toArray());
+    $response = $this->actingAs($this->user)->put("/api/cloud/members/{$member->id}", $updatedData);
 
-    expect($response->id)->toBe($member->id);
-    expect($response->name)->toBe($member->name);
+    $response->assertStatus(200);
 });
 
-test('can delete fuel type and response with resource', function () {
+it('can delete member and response with resource', function () {
     $member = Member::factory()->create();
 
-    $this->memberRepository->shouldReceive('deleteMember')->andReturn(['message' => 'Member deleted successfully']);
+    $response = $this->actingAs($this->user)->delete("/api/cloud/members/{$member->id}");
 
-    $response = $this->memberRepository->deleteMember($member->id);
-
-    expect($response['message'])->toBe('Member deleted successfully');
+    $response->assertStatus(200);
 });

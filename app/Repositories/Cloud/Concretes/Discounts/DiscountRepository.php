@@ -14,20 +14,32 @@ class DiscountRepository implements DiscountRepositoryInterface
 
     public function getDiscounts($request)
     {
-        $discounts = Discount::paginate(10);
+        try {
+            $discounts = Discount::paginate(10);
 
-        return DiscountResource::collection($discounts);
+            if(!$discounts) {
+                return $this->errorResponse('Discount not found', 404, null);
+            }
+
+            return $this->successResponse('Discount successfully retrieved', 200, DiscountResource::collection($discounts));
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
+        }
     }
 
     public function getDiscount($id)
     {
-        $discount = Discount::find($id);
+        try {
+            $discount = Discount::find($id);
 
-        if (! $discount) {
-            return $this->errorResponse('Discount not found', 404, null);
+            if(!$discount) {
+                return $this->errorResponse('Discount not found', 404, null);
+            }
+
+            return $this->successResponse('Discount successfully retrieved', 200, new DiscountResource($discount));
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
         }
-
-        return new DiscountResource($discount);
     }
 
     public function createDiscount($data)
@@ -37,7 +49,11 @@ class DiscountRepository implements DiscountRepositoryInterface
             // Create a new discount
             $discount = Discount::create($data);
 
-            return new DiscountResource($discount);
+            if(!$discount) {
+                return $this->errorResponse('Discount not found', 404, null);
+            }
+
+            return $this->successResponse('Discount successfully created', 201, new DiscountResource($discount));
 
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
@@ -46,34 +62,41 @@ class DiscountRepository implements DiscountRepositoryInterface
 
     public function updateDiscount($id, $data)
     {
+        try {
+            // find the discount by id
+            $discount = Discount::find($id);
 
-        // find the discount by id
-        $discount = Discount::find($id);
+            // if the discount doesn't exist, return an error response
+            if (!$discount) {
+                return $this->errorResponse('Discount not found', 404, null);
+            }
 
-        // if the discount doesn't exist, return an error response
-        if (! $discount) {
-            return $this->errorResponse('Discount not found', 404, null);
+            // update the discount
+            $discount->update($data);
+
+            return $this->successResponse('Discount successfully updated', 200, new DiscountResource($discount));
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
         }
-
-        // update the discount
-        $discount->update($data);
-
-        return new DiscountResource($discount);
     }
 
     public function deleteDiscount($id)
     {
-        // find the discount by id
-        $discount = Discount::find($id);
+        try {
+            // find the discount by id
+            $discount = Discount::find($id);
 
-        // if the discount doesn't exist, return an error response
-        if (! $discount) {
-            return $this->errorResponse('Discount not found', 404, null);
+            // if the discount doesn't exist, return an error response
+            if (!$discount) {
+                return $this->errorResponse('Discount not found', 404, null);
+            }
+
+            // Delete the discount's database
+            $discount->delete();
+
+            return $this->successResponse('Discount successfully deleted', 200, null);
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
         }
-
-        // Delete the discount's database
-        $discount->delete();
-
-        return $this->successResponse('Discount deleted successfully', 200, null);
     }
 }

@@ -1,60 +1,55 @@
 <?php
 
 use App\Models\Customer;
-use App\Repositories\Cloud\Contracts\Customers\CustomerRepositoryInterface;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->customerRepository = $this->mock(CustomerRepositoryInterface::class);
+    $this->user = User::factory()->create();
 });
 
-test('can get all customers and response with resource', function () {
-    $customers = Customer::factory()->create();
+it('can get all customers and response with resource', function () {
+    Customer::factory()->count(5)->create();
 
-    $this->customerRepository->shouldReceive('getCustomers')->andReturn($customers);
+    $response = $this->actingAs($this->user)->get('/api/cloud/customers');
 
-    $response = $this->customerRepository->getCustomers(request());
-
-    expect($response)->toBe($customers);
+    $response->assertStatus(200)
+             ->assertJsonCount(5, 'data');
 });
 
-test('can get customer by id and response with resource', function () {
+it('can get customer by id and response with resource', function () {
     $customer = Customer::factory()->create();
 
-    $this->customerRepository->shouldReceive('getCustomer')->andReturn($customer);
+    $response = $this->actingAs($this->user)->get("/api/cloud/customers/{$customer->id}");
 
-    $response = $this->customerRepository->getCustomer($customer->id);
-
-    expect($response->id)->toBe($customer->id);
+    $response->assertStatus(200)
+             ->assertJsonPath('data.id', $customer->id);
 });
 
-test('can create customer and response with resource', function () {
-    $customer = Customer::factory()->make();
+it('can create customer and response with resource', function () {
+    $customerData = Customer::factory()->make()->toArray();
 
-    $this->customerRepository->shouldReceive('createCustomer')->andReturn($customer);
+    $response = $this->actingAs($this->user)->post('/api/cloud/customers', $customerData);
 
-    $response = $this->customerRepository->createCustomer($customer->toArray());
-
-    expect($response->id)->toBe($customer->id);
-    expect($response->name)->toBe($customer->name);
+    $response->assertStatus(201);
 });
 
-test('can update customer and response with resource', function () {
+it('can update customer and response with resource', function () {
     $customer = Customer::factory()->create();
 
-    $this->customerRepository->shouldReceive('updateCustomer')->andReturn($customer);
+    $updatedData = Customer::factory()->make(['name' => 'Updated Name'])->toArray();
 
-    $response = $this->customerRepository->updateCustomer($customer->id, $customer->toArray());
+    $response = $this->actingAs($this->user)->put("/api/cloud/customers/{$customer->id}", $updatedData);
 
-    expect($response->id)->toBe($customer->id);
-    expect($response->name)->toBe($customer->name);
+    $response->assertStatus(200);
 });
 
-test('can delete customer and response with resource', function () {
+it('can delete customer and response with resource', function () {
     $customer = Customer::factory()->create();
 
-    $this->customerRepository->shouldReceive('deleteCustomer')->andReturn(['message' => 'Customer deleted successfully']);
+    $response = $this->actingAs($this->user)->delete("/api/cloud/customers/{$customer->id}");
 
-    $response = $this->customerRepository->deleteCustomer($customer->id);
-
-    expect($response['message'])->toBe('Customer deleted successfully');
+    $response->assertStatus(200);
 });

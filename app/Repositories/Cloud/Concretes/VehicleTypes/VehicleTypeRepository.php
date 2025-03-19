@@ -60,7 +60,7 @@ class VehicleTypeRepository implements VehicleTypeRepositoryInterface
                 return $this->errorResponse('Failed to create vehicleType', 400, null);
             }
 
-            return $this->successResponse('VehicleType updated successfully', 200, new VehicleTypeResource($vehicleType));
+            return $this->successResponse('VehicleType successfully created', 201, new VehicleTypeResource($vehicleType));
 
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
@@ -84,7 +84,7 @@ class VehicleTypeRepository implements VehicleTypeRepositoryInterface
             // update the vehicleType
             $vehicleType->update($data);
 
-            return $this->successResponse('VehicleType updated successfully', 200, new VehicleTypeResource($vehicleType));
+            return $this->successResponse('VehicleType successfully updated', 200, new VehicleTypeResource($vehicleType));
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
@@ -104,7 +104,7 @@ class VehicleTypeRepository implements VehicleTypeRepositoryInterface
             // Delete the vehicleType's database
             $vehicleType->delete();
 
-            return $this->successResponse('VehicleType deleted successfully', 200, null);
+            return $this->successResponse('VehicleType successfully deleted', 200, null);
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }

@@ -17,7 +17,11 @@ class DispenserRepository implements DispenserRepositoryInterface
         try {
             $dispensers = Dispenser::paginate(10);
 
-            return DispenserResource::collection($dispensers);
+            if(!$dispensers) {
+                return $this->errorResponse('Dispensers not found', 404, null);
+            }
+
+            return $this->successResponse('Dispensers found successfully', 200, DispenserResource::collection($dispensers));
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
@@ -28,7 +32,11 @@ class DispenserRepository implements DispenserRepositoryInterface
         try {
             $dispenser = Dispenser::find($id);
 
-            return new DispenserResource($dispenser);
+            if (!$dispenser) {
+                return $this->errorResponse('Dispenser not found', 404, null);
+            }
+
+            return $this->successResponse('Dispenser found successfully', 200, new DispenserResource($dispenser));
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
@@ -39,11 +47,11 @@ class DispenserRepository implements DispenserRepositoryInterface
         try {
             $dispenser = Dispenser::create($data);
 
-            if (! $dispenser) {
+            if (!$dispenser) {
                 return $this->errorResponse('Failed to create dispenser', 400, null);
             }
 
-            $this->successResponse('Dispenser created successfully', 201, new DispenserResource($dispenser));
+            return $this->successResponse('Dispenser successfully created', 201, new DispenserResource($dispenser));
 
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
@@ -56,13 +64,13 @@ class DispenserRepository implements DispenserRepositoryInterface
         try {
             $dispenser = Dispenser::find($id);
 
-            if (! $dispenser) {
+            if (!$dispenser) {
                 return $this->errorResponse('Dispenser not found', 404, null);
             }
 
             $dispenser->update($data);
 
-            return $this->successResponse('Dispenser updated successfully', 200, new DispenserResource($dispenser));
+            return $this->successResponse('Dispenser successfully updated', 200, new DispenserResource($dispenser));
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
@@ -73,13 +81,13 @@ class DispenserRepository implements DispenserRepositoryInterface
         try {
             $dispenser = Dispenser::find($id);
 
-            if (! $dispenser) {
+            if (!$dispenser) {
                 return $this->errorResponse('Dispenser not found', 404, null);
             }
 
             $dispenser->delete();
 
-            return $this->successResponse('Dispenser deleted successfully', 200, null);
+            return $this->successResponse('Dispenser successfully deleted', 200, null);
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }

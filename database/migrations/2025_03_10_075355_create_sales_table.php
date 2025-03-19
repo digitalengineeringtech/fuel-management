@@ -22,9 +22,9 @@ return new class extends Migration
             $table->foreignId('customer_id')->nullable();
             $table->foreignId('vehicle_type_id')->nullable();
             $table->foreignId('tank_id');
-            $table->string('voucher_no');
             $table->string('cashier_code');
             $table->string('car_no')->nullable();
+            $table->string('voucher_no')->nullable();
             $table->string('device')->default('web'); // web, mobile, tablet
             $table->float('tank_balance')->default(0);
             $table->float('totalizer_liter')->default(0);
