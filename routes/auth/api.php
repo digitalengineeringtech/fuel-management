@@ -16,29 +16,29 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'guest'], function () {
     // Users Register Route
-    Route::post('users/register', [RegisteredUserController::class, 'store'])->name('register');
+    Route::post('register', [RegisteredUserController::class, 'store'])->name('register');
 
     // Users Login Route
-    Route::post('users/login', [AuthenticatedSessionController::class, 'store'])->name('login');
+    Route::post('login', [AuthenticatedSessionController::class, 'store'])->name('login');
 });
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     // Logout Route
-    Route::post('users/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
     // Users Routed
-    Route::get('users/all', GetUsersController::class)->name('users.all');
-    Route::get('users/show/{id}', GetUserController::class)->name('users.show');
-    Route::post('users/create', CreateUserController::class)->name('users.create');
-    Route::put('users/update/{id}', UpdateUserController::class)->name('users.update');
-    Route::delete('users/delete/{id}', DeleteUserController::class)->name('users.delete');
+    Route::get('all', GetUsersController::class)->name('users.all');
+    Route::get('show/{id}', GetUserController::class)->name('users.show');
+    Route::post('create', CreateUserController::class)->name('users.create');
+    Route::put('update/{id}', UpdateUserController::class)->name('users.update');
+    Route::delete('delete/{id}', DeleteUserController::class)->name('users.delete');
 
     // User Roles and Permissions Routes
-    Route::apiResource('users/roles', RoleController::class);
-    Route::apiResource('users/permissions', PermissionController::class);
+    Route::apiResource('roles', RoleController::class);
+    Route::apiResource('permissions', PermissionController::class);
 
     // User Roles and Permissions Revoke Routes
-    Route::delete('users/{userId}/roles/{roleId}', RemoveRoleFromUserController::class)->name('users.roles.revoke');
-    Route::delete('users/{userId}/permissions/{permissionId}', RemovePermissionFromUserController::class)->name('users.permissions.revoke');
+    Route::delete('{userId}/roles/{roleId}', RemoveRoleFromUserController::class)->name('users.roles.revoke');
+    Route::delete('{userId}/permissions/{permissionId}', RemovePermissionFromUserController::class)->name('users.permissions.revoke');
     Route::delete('roles/{roleId}/permissions/{permissionId}', RemovePermissionFromRoleController::class)->name('roles.permissions.revoke');
 });

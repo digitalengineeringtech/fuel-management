@@ -2,42 +2,65 @@
 
 namespace App\Repositories\Cloud\Concretes\VehicleTypes;
 
-use App\Http\Resources\Cloud\VehicleTypes\VehicleTypeResource;
-use App\Models\VehicleType;
-use App\Repositories\Cloud\Contracts\VehicleTypes\VehicleTypeRepositoryInterface;
-use App\Traits\HasResponse;
 use Exception;
+use App\Traits\HasImage;
+use App\Models\VehicleType;
+use App\Traits\HasResponse;
+use App\Http\Resources\Cloud\VehicleTypes\VehicleTypeResource;
+use App\Repositories\Cloud\Contracts\VehicleTypes\VehicleTypeRepositoryInterface;
 
 class VehicleTypeRepository implements VehicleTypeRepositoryInterface
 {
+    use HasImage;
+
     use HasResponse;
 
     public function getVehicleTypes($request)
     {
-        $vehicle_types = VehicleType::paginate(10);
+        try {
+            $vehicleTypes = VehicleType::paginate(10);
 
-        return VehicleTypeResource::collection($vehicle_types);
+            if(!$vehicleTypes) {
+                return $this->errorResponse('Failed to get vehicleTypes', 400, null);
+            }
+
+            return $this->successResponse('VehicleTypes successfully retrieved', 200, VehicleTypeResource::collection($vehicleTypes));
+        } catch(Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
+        }
     }
 
     public function getVehicleType($id)
     {
-        $vehicle_type = VehicleType::find($id);
+        try {
+            $vehicleType = VehicleType::find($id);
 
-        if (! $vehicle_type) {
-            return $this->errorResponse('Vehicle Type not found', 404, null);
+            if (! $vehicleType) {
+                return $this->errorResponse('VehicleType not found', 404, null);
+            }
+
+            return $this->successResponse('VehicleType successfully retrieved', 200, new VehicleTypeResource($vehicleType));
+
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
         }
-
-        return new VehicleTypeResource($vehicle_type);
     }
 
     public function createVehicleType($data)
     {
         try {
 
-            // Create a new vehicle_type
-            $vehicle_type = VehicleType::create($data);
+            if (isset($data['image'])) {
+                $data['image'] = $this->uploadImage('vehicleTypes', $data['image']);
+            }
+            // Create a new vehicleType
+            $vehicleType = VehicleType::create($data);
 
-            return new VehicleTypeResource($vehicle_type);
+            if(!$vehicleType) {
+                return $this->errorResponse('Failed to create vehicleType', 400, null);
+            }
+
+            return $this->successResponse('VehicleType updated successfully', 200, new VehicleTypeResource($vehicleType));
 
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
@@ -46,34 +69,44 @@ class VehicleTypeRepository implements VehicleTypeRepositoryInterface
 
     public function updateVehicleType($id, $data)
     {
+        try {
+            if (isset($data['image'])) {
+                $data['image'] = $this->uploadImage('vehicleTypes', $data['image']);
+            }
+            // find the vehicleType by id
+            $vehicleType = VehicleType::find($id);
 
-        // find the vehicle_type by id
-        $vehicle_type = VehicleType::find($id);
+            // if the vehicleType doesn't exist, return an error response
+            if (! $vehicleType) {
+                return $this->errorResponse('Fuel Type not found', 404, null);
+            }
 
-        // if the vehicle_type doesn't exist, return an error response
-        if (! $vehicle_type) {
-            return $this->errorResponse('Vehicle Type not found', 404, null);
+            // update the vehicleType
+            $vehicleType->update($data);
+
+            return $this->successResponse('VehicleType updated successfully', 200, new VehicleTypeResource($vehicleType));
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
         }
-
-        // update the vehicle_type
-        $vehicle_type->update($data);
-
-        return new VehicleTypeResource($vehicle_type);
     }
 
     public function deleteVehicleType($id)
     {
-        // find the vehicle_type by id
-        $vehicle_type = VehicleType::find($id);
+        try {
+            // find the vehicleType by id
+            $vehicleType = VehicleType::find($id);
 
-        // if the vehicle_type doesn't exist, return an error response
-        if (! $vehicle_type) {
-            return $this->errorResponse('Vehicle Type not found', 404, null);
+            // if the vehicleType doesn't exist, return an error response
+            if (! $vehicleType) {
+                return $this->errorResponse('VehicleType not found', 404, null);
+            }
+
+            // Delete the vehicleType's database
+            $vehicleType->delete();
+
+            return $this->successResponse('VehicleType deleted successfully', 200, null);
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
         }
-
-        // Delete the vehicle_type's database
-        $vehicle_type->delete();
-
-        return $this->successResponse('Vehicle Type deleted successfully', 200, null);
     }
 }
