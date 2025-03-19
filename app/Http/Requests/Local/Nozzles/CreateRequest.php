@@ -22,6 +22,8 @@ class CreateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'dispenser_id' => ['required'],
+            'stock_price_id' => ['required'],
             'nozzle_no' => ['required', 'numeric'],
             'auto_approve' => ['boolean'],
             'semi_approve' => ['boolean'],

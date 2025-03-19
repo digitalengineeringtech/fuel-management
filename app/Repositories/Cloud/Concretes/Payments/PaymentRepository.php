@@ -60,7 +60,7 @@ class PaymentRepository implements PaymentRepositoryInterface
                 return $this->errorResponse('Failed to create payment', 400, null);
             }
 
-            return $this->successResponse('Payment updated successfully', 200, new PaymentResource($payment));
+            return $this->successResponse('Payment successfully created', 201, new PaymentResource($payment));
 
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
@@ -84,7 +84,7 @@ class PaymentRepository implements PaymentRepositoryInterface
             // update the payment
             $payment->update($data);
 
-            return $this->successResponse('Payment updated successfully', 200, new PaymentResource($payment));
+            return $this->successResponse('Payment successfully updated', 200, new PaymentResource($payment));
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }

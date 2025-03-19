@@ -1,60 +1,54 @@
 <?php
 
 use App\Models\Payment;
-use App\Repositories\Cloud\Contracts\Payments\PaymentRepositoryInterface;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->paymentRepository = $this->mock(PaymentRepositoryInterface::class);
+    $this->user = User::factory()->create();
 });
 
-test('can get all payment and response with resource', function () {
-    $payments = Payment::factory()->create();
+test('can get all payments and response with resource', function () {
+    Payment::factory()->count(5)->create();
 
-    $this->paymentRepository->shouldReceive('getPayments')->andReturn($payments);
+    $response = $this->actingAs($this->user)->get('/api/cloud/payments');
 
-    $response = $this->paymentRepository->getPayments(request());
-
-    expect($response)->toBe($payments);
+    $response->assertStatus(200)
+             ->assertJsonCount(5, 'data');
 });
 
 test('can get payment by id and response with resource', function () {
     $payment = Payment::factory()->create();
 
-    $this->paymentRepository->shouldReceive('getPayment')->andReturn($payment);
+    $response = $this->actingAs($this->user)->get("/api/cloud/payments/{$payment->id}");
 
-    $response = $this->paymentRepository->getPayment($payment->id);
-
-    expect($response->id)->toBe($payment->id);
+    $response->assertStatus(200);
 });
 
 test('can create payment and response with resource', function () {
-    $payment = Payment::factory()->make();
+    $paymentData = Payment::factory()->make()->toArray();
 
-    $this->paymentRepository->shouldReceive('createPayment')->andReturn($payment);
+    $response = $this->actingAs($this->user)->post('/api/cloud/payments', $paymentData);
 
-    $response = $this->paymentRepository->createPayment($payment->toArray());
-
-    expect($response->id)->toBe($payment->id);
-    expect($response->name)->toBe($payment->name);
+    $response->assertStatus(201);
 });
 
 test('can update payment and response with resource', function () {
     $payment = Payment::factory()->create();
 
-    $this->paymentRepository->shouldReceive('updatePayment')->andReturn($payment);
+    $updatedData = Payment::factory()->make(['name' => 'GG'])->toArray();
 
-    $response = $this->paymentRepository->updatePayment($payment->id, $payment->toArray());
+    $response = $this->actingAs($this->user)->put("/api/cloud/payments/{$payment->id}", $updatedData);
 
-    expect($response->id)->toBe($payment->id);
-    expect($response->name)->toBe($payment->name);
+    $response->assertStatus(200);
 });
 
 test('can delete payment and response with resource', function () {
     $payment = Payment::factory()->create();
 
-    $this->paymentRepository->shouldReceive('deletePayment')->andReturn(['message' => 'Payment deleted successfully']);
+    $response = $this->actingAs($this->user)->delete("/api/cloud/payments/{$payment->id}");
 
-    $response = $this->paymentRepository->deletePayment($payment->id);
-
-    expect($response['message'])->toBe('Payment deleted successfully');
+    $response->assertStatus(200);
 });

@@ -1,60 +1,54 @@
 <?php
 
 use App\Models\FuelType;
-use App\Repositories\Cloud\Contracts\FuelTypes\FuelTypeRepositoryInterface;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->fuelTypeRepository = $this->mock(FuelTypeRepositoryInterface::class);
+    $this->user = User::factory()->create();
 });
 
-test('can get all fuel types and response with resource', function () {
-    $fuel_types = FuelType::factory()->create();
+it('can get all fuel types and response with resource', function () {
+    FuelType::factory()->count(5)->create();
 
-    $this->fuelTypeRepository->shouldReceive('getFuelTypes')->andReturn($fuel_types);
+    $response = $this->actingAs($this->user)->get('/api/cloud/fuel-types');
 
-    $response = $this->fuelTypeRepository->getFuelTypes(request());
-
-    expect($response)->toBe($fuel_types);
+    $response->assertStatus(200)
+             ->assertJsonCount(5, 'data');
 });
 
-test('can get fuel type by id and response with resource', function () {
+it('can get fuel type by id and response with resource', function () {
     $fuel_type = FuelType::factory()->create();
 
-    $this->fuelTypeRepository->shouldReceive('getFuelType')->andReturn($fuel_type);
+    $response = $this->actingAs($this->user)->get("/api/cloud/fuel-types/{$fuel_type->id}");
 
-    $response = $this->fuelTypeRepository->getFuelType($fuel_type->id);
-
-    expect($response->id)->toBe($fuel_type->id);
+    $response->assertStatus(200);
 });
 
-test('can create fuel type and response with resource', function () {
-    $fuel_type = FuelType::factory()->make();
+it('can create fuel type and response with resource', function () {
+    $fuelTypeData = FuelType::factory()->make()->toArray();
 
-    $this->fuelTypeRepository->shouldReceive('createFuelType')->andReturn($fuel_type);
+    $response = $this->actingAs($this->user)->post('/api/cloud/fuel-types', $fuelTypeData);
 
-    $response = $this->fuelTypeRepository->createFuelType($fuel_type->toArray());
-
-    expect($response->id)->toBe($fuel_type->id);
-    expect($response->name)->toBe($fuel_type->name);
+    $response->assertStatus(201);
 });
 
-test('can update fuel type and response with resource', function () {
+it('can update fuel type and response with resource', function () {
     $fuel_type = FuelType::factory()->create();
 
-    $this->fuelTypeRepository->shouldReceive('updateFuelType')->andReturn($fuel_type);
+    $updatedData = FuelType::factory()->make(['name' => 'Updated Fuel Type'])->toArray();
 
-    $response = $this->fuelTypeRepository->updateFuelType($fuel_type->id, $fuel_type->toArray());
+    $response = $this->actingAs($this->user)->put("/api/cloud/fuel-types/{$fuel_type->id}", $updatedData);
 
-    expect($response->id)->toBe($fuel_type->id);
-    expect($response->name)->toBe($fuel_type->name);
+    $response->assertStatus(200);
 });
 
-test('can delete fuel type and response with resource', function () {
+it('can delete fuel type and response with resource', function () {
     $fuel_type = FuelType::factory()->create();
 
-    $this->fuelTypeRepository->shouldReceive('deleteFuelType')->andReturn(['message' => 'Fuel Type deleted successfully']);
+    $response = $this->actingAs($this->user)->delete("/api/cloud/fuel-types/{$fuel_type->id}");
 
-    $response = $this->fuelTypeRepository->deleteFuelType($fuel_type->id);
-
-    expect($response['message'])->toBe('Fuel Type deleted successfully');
+    $response->assertStatus(200);
 });

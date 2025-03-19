@@ -19,20 +19,33 @@ class StationRepository implements StationRepositoryInterface
 
     public function getStations($request)
     {
-        $stations = Station::paginate(10);
+        try {
+            $stations = Station::paginate(10);
 
-        return StationResource::collection($stations);
+            if (!$stations) {
+                return $this->errorResponse('Stations not found', 404, null);
+            }
+
+            return $this->successResponse('Stations successfully retrieved', 200, StationResource::collection($stations));
+        } catch(Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
+        }
     }
 
     public function getStation($id)
     {
-        $station = Station::find($id);
+        try {
+            $station = Station::find($id);
 
-        if (! $station) {
-            return $this->errorResponse('Station not found', 404, null);
+            if (!$station) {
+                return $this->errorResponse('Station not found', 404, null);
+            }
+
+            return $this->successResponse('Station found', 200, new StationResource($station));
+
+        } catch(Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
         }
-
-        return new StationResource($station);
     }
 
     public function createStation($data)
@@ -49,7 +62,7 @@ class StationRepository implements StationRepositoryInterface
             $station = Station::create($data);
 
             // if the station doesn't exist, return an error response and delete the database
-            if (! $station) {
+            if (!$station) {
                 DB::statement("DROP DATABASE IF EXISTS $station->station_database");
 
                 return $this->errorResponse('Failed to create station', 400, null);
@@ -73,7 +86,7 @@ class StationRepository implements StationRepositoryInterface
             // Run migrations for the station database using Artisan
             Artisan::call('migrate', ['--database' => 'station']);
 
-            return new StationResource($station);
+            return $this->successResponse('Station successfully created', 201, new StationResource($station));
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
@@ -82,41 +95,49 @@ class StationRepository implements StationRepositoryInterface
     public function updateStation($id, $data)
     {
         // Upload the image if provided
-        if (isset($data['image'])) {
-            $data['image'] = $this->uploadImage('stations', $data['image']);
+        try {
+            if (isset($data['image'])) {
+                $data['image'] = $this->uploadImage('stations', $data['image']);
+            }
+            // find the station by id
+            $station = Station::find($id);
+
+            // if the station doesn't exist, return an error response
+            if (!$station) {
+                return $this->errorResponse('Station not found', 404, null);
+            }
+
+            // update the station
+            $station->update($data);
+
+            return $this->successResponse('Station successfully updated', 200, new StationResource($station));
+        } catch(Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
         }
-        // find the station by id
-        $station = Station::find($id);
-
-        // if the station doesn't exist, return an error response
-        if (! $station) {
-            return $this->errorResponse('Station not found', 404, null);
-        }
-
-        // update the station
-        $station->update($data);
-
-        return new StationResource($station);
     }
 
     public function deleteStation($id)
     {
         // find the station by id
-        $station = Station::find($id);
+        try {
+            $station = Station::find($id);
 
-        // if the station doesn't exist, return an error response
-        if (! $station) {
-            return $this->errorResponse('Station not found', 404, null);
+            // if the station doesn't exist, return an error response
+            if (!$station) {
+                return $this->errorResponse('Station not found', 404, null);
+            }
+
+            // Delete the station's image if it exists
+            if ($station->image) {
+                $this->deleteImage($station->image);
+            }
+
+            // Delete the station's database
+            $station->delete();
+
+            return $this->successResponse('Station successfully deleted', 200, null);
+        } catch(Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
         }
-
-        // Delete the station's image if it exists
-        if ($station->image) {
-            $this->deleteImage($station->image);
-        }
-
-        // Delete the station's database
-        $station->delete();
-
-        return $this->successResponse('Station deleted successfully', 200, null);
     }
 }

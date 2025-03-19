@@ -14,30 +14,46 @@ class FuelTypeRepository implements FuelTypeRepositoryInterface
 
     public function getFuelTypes($request)
     {
-        $fuel_types = FuelType::paginate(10);
+        try {
+            $fuelTypes = FuelType::paginate(10);
 
-        return FuelTypeResource::collection($fuel_types);
+            if(!$fuelTypes) {
+                return $this->errorResponse('FuelType not found', 404, null);
+            }
+
+            return $this->successResponse('FuelType successfully retrieved', 200, FuelTypeResource::collection($fuelTypes));
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
+        }
     }
 
     public function getFuelType($id)
     {
-        $fuel_type = FuelType::find($id);
+        try {
+            $fuelType = FuelType::find($id);
 
-        if (! $fuel_type) {
-            return $this->errorResponse('Fuel Type not found', 404, null);
+            if(!$fuelType) {
+                return $this->errorResponse('FuelType not found', 404, null);
+            }
+
+            return $this->successResponse('FuelType successfully retrieved', 200, new FuelTypeResource($fuelType));
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
         }
-
-        return new FuelTypeResource($fuel_type);
     }
 
     public function createFuelType($data)
     {
         try {
 
-            // Create a new fuel_type
-            $fuel_type = FuelType::create($data);
+            // Create a new fuelType
+            $fuelType = FuelType::create($data);
 
-            return new FuelTypeResource($fuel_type);
+            if(!$fuelType) {
+                return $this->errorResponse('FuelType not found', 404, null);
+            }
+
+            return $this->successResponse('FuelType successfully updated', 201, new FuelTypeResource($fuelType));
 
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
@@ -46,34 +62,41 @@ class FuelTypeRepository implements FuelTypeRepositoryInterface
 
     public function updateFuelType($id, $data)
     {
+        try {
+            // find the fuelType by id
+            $fuelType = FuelType::find($id);
 
-        // find the fuel_type by id
-        $fuel_type = FuelType::find($id);
+            // if the fuelType doesn't exist, return an error response
+            if (!$fuelType) {
+                return $this->errorResponse('FuelType not found', 404, null);
+            }
 
-        // if the fuel_type doesn't exist, return an error response
-        if (! $fuel_type) {
-            return $this->errorResponse('Fuel Type not found', 404, null);
+            // update the fuelType
+            $fuelType->update($data);
+
+            return $this->successResponse('FuelType successfully updated', 200, new FuelTypeResource($fuelType));
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
         }
-
-        // update the fuel_type
-        $fuel_type->update($data);
-
-        return new FuelTypeResource($fuel_type);
     }
 
     public function deleteFuelType($id)
     {
-        // find the fuel_type by id
-        $fuel_type = FuelType::find($id);
+        try {
+            // find the fuelType by id
+            $fuelType = FuelType::find($id);
 
-        // if the fuel_type doesn't exist, return an error response
-        if (! $fuel_type) {
-            return $this->errorResponse('Fuel Type not found', 404, null);
+            // if the fuelType doesn't exist, return an error response
+            if (!$fuelType) {
+                return $this->errorResponse('FuelType not found', 404, null);
+            }
+
+            // Delete the fuelType's database
+            $fuelType->delete();
+
+            return $this->successResponse('FuelType deleted successfully', 200, null);
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
         }
-
-        // Delete the fuel_type's database
-        $fuel_type->delete();
-
-        return $this->successResponse('Fuel Type deleted successfully', 200, null);
     }
 }

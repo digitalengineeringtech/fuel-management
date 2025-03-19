@@ -1,58 +1,61 @@
 <?php
 
 use App\Models\Nozzle;
-use App\Repositories\Local\Contracts\Nozzles\NozzleRepositoryInterface;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->nozzleRepository = $this->mock(NozzleRepositoryInterface::class);
+    $this->user = User::factory()->create();
 });
 
-it('can get all nozzles and response with resource', function () {
-    $nozzles = Nozzle::factory()->create();
+// Test: Get All nozzles
+test('can get all nozzles and response with resource', function () {
+    Nozzle::factory()->count(5)->create();
 
-    $this->nozzleRepository->shouldReceive('getNozzles')->andReturn($nozzles);
+    $response = $this->actingAs($this->user)->get('/api/local/nozzles');
 
-    $response = $this->nozzleRepository->getNozzles(request());
-
-    expect($response)->toBe($nozzles);
+    $response->assertStatus(200)
+             ->assertJsonCount(5, 'data');
 });
 
-it('can get nozzle by id and response with resource', function () {
+// Test: Get Nozzle by ID
+test('can get Nozzle by id and response with resource', function () {
     $nozzle = Nozzle::factory()->create();
 
-    $this->nozzleRepository->shouldReceive('getNozzle')->andReturn($nozzle);
+    $response = $this->actingAs($this->user)->get("/api/local/nozzles/{$nozzle->id}");
 
-    $response = $this->nozzleRepository->getNozzle($nozzle->id);
-
-    expect($response->id)->toBe($nozzle->id);
+    $response->assertStatus(200);
 });
 
-it('can create nozzle and response with resource', function () {
-    $nozzle = Nozzle::factory()->create();
+// Test: Create Nozzle
+test('can create Nozzle and response with resource', function () {
+    $nozzleData = Nozzle::factory()->make()->toArray();
 
-    $this->nozzleRepository->shouldReceive('createNozzle')->andReturn($nozzle);
+    $response = $this->actingAs($this->user)->post('/api/local/nozzles', $nozzleData);
 
-    $response = $this->nozzleRepository->createNozzle($nozzle->toArray());
-
-    expect($response->id)->toBe($nozzle->id);
+    $response->assertStatus(201);
 });
 
-it('can update nozzle and response with resource', function () {
+// Test: Update Nozzle
+test('can update Nozzle and response with resource', function () {
     $nozzle = Nozzle::factory()->create();
 
-    $this->nozzleRepository->shouldReceive('updateNozzle')->andReturn($nozzle);
+    $updatedData = Nozzle::factory()->make([
+        'auto_approve' => true,
+    ])->toArray();
 
-    $response = $this->nozzleRepository->updateNozzle($nozzle->id, $nozzle->toArray());
+    $response = $this->actingAs($this->user)->put("/api/local/nozzles/{$nozzle->id}", $updatedData);
 
-    expect($response->id)->toBe($nozzle->id);
+    $response->assertStatus(200);
 });
 
-it('can delete nozzle and response with resource', function () {
+// Test: Delete Nozzle
+test('can delete Nozzle and response with resource', function () {
     $nozzle = Nozzle::factory()->create();
 
-    $this->nozzleRepository->shouldReceive('deleteNozzle')->andReturn(['message' => 'Nozzle deleted successfully']);
+    $response = $this->actingAs($this->user)->delete("/api/local/nozzles/{$nozzle->id}");
 
-    $response = $this->nozzleRepository->deleteNozzle($nozzle->id);
-
-    expect($response['message'])->toBe('Nozzle deleted successfully');
+    $response->assertStatus(200);
 });

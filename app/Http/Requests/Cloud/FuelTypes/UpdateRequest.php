@@ -22,6 +22,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'tank_id' => 'required',
             'name' => 'required|string|max:30',
             'description' => 'nullable|string|max:100',
         ];

@@ -17,7 +17,11 @@ class FuelInRepository implements FuelInRepositoryInterface
         try {
             $fuelIns = FuelIn::paginate(10);
 
-            return FuelInResource::collection($fuelIns);
+            if(!$fuelIns) {
+                return $this->errorResponse('FuelIns not found', 404, null);
+            }
+
+            return $this->successResponse('FuelIns found successfully', 200, FuelInResource::collection($fuelIns));
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage());
         }
@@ -28,7 +32,12 @@ class FuelInRepository implements FuelInRepositoryInterface
         try {
             $fuelIn = FuelIn::find($id);
 
-            return new FuelInResource($fuelIn);
+            if (!$fuelIn) {
+                return $this->errorResponse('FuelIn not found', 404, null);
+            }
+
+            return $this->successResponse('FuelIn found successfully', 200, new FuelInResource($fuelIn));
+
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
@@ -38,7 +47,7 @@ class FuelInRepository implements FuelInRepositoryInterface
     {
         try {
 
-            $lastFuelIn = FuelIn::where('tank_no', $data['tank_no'])
+            $lastFuelIn = FuelIn::where('tank_id', $data['tank_id'])
                 ->orderBy('code', 'desc')
                 ->first();
 
@@ -46,11 +55,11 @@ class FuelInRepository implements FuelInRepositoryInterface
 
             $fuelIn = FuelIn::create($data);
 
-            if (! $fuelIn) {
+            if (!$fuelIn) {
                 return $this->errorResponse('Failed to create fuelIn', 400, null);
             }
 
-            return $this->successResponse('FuelIn created successfully', 201, new FuelInResource($fuelIn));
+            return $this->successResponse('FuelIn successfully created', 201, new FuelInResource($fuelIn));
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
@@ -61,13 +70,13 @@ class FuelInRepository implements FuelInRepositoryInterface
         try {
             $fuelIn = FuelIn::find($id);
 
-            if (! $fuelIn) {
+            if (!$fuelIn) {
                 return $this->errorResponse('FuelIn not found', 404, null);
             }
 
             $fuelIn->update($data);
 
-            return $this->successResponse('FuelIn updated successfully', 200, new FuelInResource($fuelIn));
+            return $this->successResponse('FuelIn successfully updated', 200, new FuelInResource($fuelIn));
 
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
@@ -79,13 +88,13 @@ class FuelInRepository implements FuelInRepositoryInterface
         try {
             $fuelIn = FuelIn::find($id);
 
-            if (! $fuelIn) {
+            if (!$fuelIn) {
                 return $this->errorResponse('FuelIn not found', 404, null);
             }
 
             $fuelIn->delete();
 
-            return $this->successResponse('FuelIn deleted successfully', 200, null);
+            return $this->successResponse('FuelIn successfully deleted', 200, null);
 
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);

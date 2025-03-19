@@ -1,58 +1,64 @@
 <?php
 
 use App\Models\Tank;
-use App\Repositories\Local\Contracts\Tanks\TankRepositoryInterface;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->tankRepository = $this->mock(TankRepositoryInterface::class);
+    $this->user = User::factory()->create();
 });
 
-it('can get all tanks and response with resource', function () {
-    $tanks = Tank::factory()->create();
+// Test: Get All Tanks
+test('can get all tanks and return success response', function () {
+    Tank::factory()->count(5)->create();
 
-    $this->tankRepository->shouldReceive('getTanks')->andReturn($tanks);
+    $response = $this->actingAs($this->user)->get('/api/local/tanks');
 
-    $response = $this->tankRepository->getTanks(request());
-
-    expect($response)->toBe($tanks);
+    $response->assertStatus(200)
+             ->assertJsonCount(5, 'data');
 });
 
-it('can get tank by id and response with resource', function () {
+// Test: Get Tank by ID
+test('can get tank by id and return success response', function () {
     $tank = Tank::factory()->create();
 
-    $this->tankRepository->shouldReceive('getTank')->andReturn($tank);
+    $response = $this->actingAs($this->user)->get("/api/local/tanks/{$tank->id}");
 
-    $response = $this->tankRepository->getTank($tank->id);
-
-    expect($response->id)->toBe($tank->id);
+    $response->assertStatus(200)
+             ->assertJsonFragment(['id' => $tank->id]);
 });
 
-it('can create tank and response with resource', function () {
+// Test: Create Tank
+test('can create tank and return success response', function () {
+    $tankData = Tank::factory()->make()->toArray();
+
+    $response = $this->actingAs($this->user)->post('/api/local/tanks', $tankData);
+
+    $response->assertStatus(201);
+});
+
+// Test: Update Tank
+test('can update tank and return success response', function () {
     $tank = Tank::factory()->create();
 
-    $this->tankRepository->shouldReceive('createTank')->andReturn($tank);
+    $updatedData = Tank::factory()->make([
+        'level' => 5000
+    ])->toArray();
 
-    $response = $this->tankRepository->createTank($tank->toArray());
+    $response = $this->actingAs($this->user)->put("/api/local/tanks/{$tank->id}", $updatedData);
 
-    expect($response->id)->toBe($tank->id);
+    $response->assertStatus(200);
 });
 
-it('can update tank and response with resource', function () {
+// Test: Delete Tank
+test('can delete tank and return success response', function () {
     $tank = Tank::factory()->create();
 
-    $this->tankRepository->shouldReceive('updateTank')->andReturn($tank);
+    $response = $this->actingAs($this->user)->delete("/api/local/tanks/{$tank->id}");
 
-    $response = $this->tankRepository->updateTank($tank->id, $tank->toArray());
-
-    expect($response->id)->toBe($tank->id);
+    $response->assertStatus(200);
 });
 
-it('can delete tank and response with resource', function () {
-    $tank = Tank::factory()->create();
-
-    $this->tankRepository->shouldReceive('deleteTank')->andReturn(['message' => 'Tank deleted successfully']);
-
-    $response = $this->tankRepository->deleteTank($tank->id);
-
-    expect($response['message'])->toBe('Tank deleted successfully');
-});

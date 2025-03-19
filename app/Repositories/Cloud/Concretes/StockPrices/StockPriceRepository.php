@@ -14,30 +14,46 @@ class StockPriceRepository implements StockPriceRepositoryInterface
 
     public function getStockPrices($request)
     {
-        $stock_prices = StockPrice::with('station', 'fuelType')->paginate(10);
+        try {
+            $stockPrices = StockPrice::paginate(10);
 
-        return StockPriceResource::collection($stock_prices);
+            if(!$stockPrices) {
+                return $this->errorResponse('StockPrice not found', 404, null);
+            }
+
+            return $this->successResponse('StockPrice successfully retrieved', 200, StockPriceResource::collection($stockPrices));
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
+        }
     }
 
     public function getStockPrice($id)
     {
-        $stock_price = StockPrice::find($id);
+        try {
+            $stockPrice = StockPrice::find($id);
 
-        if (! $stock_price) {
-            return $this->errorResponse('Stock price not found', 404, null);
+            if(!$stockPrice) {
+                return $this->errorResponse('StockPrice not found', 404, null);
+            }
+
+            return $this->successResponse('StockPrice successfully retrieved', 200, new StockPriceResource($stockPrice));
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
         }
-
-        return new StockPriceResource($stock_price);
     }
 
     public function createStockPrice($data)
     {
         try {
 
-            // Create a new stock price
-            $stock_price = StockPrice::create($data);
+            // Create a new stockPrice
+            $stockPrice = StockPrice::create($data);
 
-            return new StockPriceResource($stock_price);
+            if(!$stockPrice) {
+                return $this->errorResponse('StockPrice not found', 404, null);
+            }
+
+            return $this->successResponse('StockPrice successfully created', 201, new StockPriceResource($stockPrice));
 
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
@@ -46,34 +62,41 @@ class StockPriceRepository implements StockPriceRepositoryInterface
 
     public function updateStockPrice($id, $data)
     {
+        try {
+            // find the stockPrice by id
+            $stockPrice = StockPrice::find($id);
 
-        // find the stock price by id
-        $stock_price = StockPrice::find($id);
+            // if the stockPrice doesn't exist, return an error response
+            if (!$stockPrice) {
+                return $this->errorResponse('StockPrice not found', 404, null);
+            }
 
-        // if the stock price doesn't exist, return an error response
-        if (! $stock_price) {
-            return $this->errorResponse('Stock price not found', 404, null);
+            // update the stockPrice
+            $stockPrice->update($data);
+
+            return $this->successResponse('StockPrice successfully updated', 200, new StockPriceResource($stockPrice));
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
         }
-
-        // update the stock price
-        $stock_price->update($data);
-
-        return new StockPriceResource($stock_price);
     }
 
     public function deleteStockPrice($id)
     {
-        // find the stock price by id
-        $stock_price = StockPrice::find($id);
+        try {
+            // find the stockPrice by id
+            $stockPrice = StockPrice::find($id);
 
-        // if the stock price doesn't exist, return an error response
-        if (! $stock_price) {
-            return $this->errorResponse('Stock price not found', 404, null);
+            // if the stockPrice doesn't exist, return an error response
+            if (!$stockPrice) {
+                return $this->errorResponse('StockPrice not found', 404, null);
+            }
+
+            // Delete the stockPrice's database
+            $stockPrice->delete();
+
+            return $this->successResponse('StockPrice successfully deleted', 200, null);
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
         }
-
-        // Delete the stock price's database
-        $stock_price->delete();
-
-        return $this->successResponse('Stock price deleted successfully', 200, null);
     }
 }

@@ -1,60 +1,54 @@
 <?php
 
 use App\Models\VehicleType;
-use App\Repositories\Cloud\Contracts\VehicleTypes\VehicleTypeRepositoryInterface;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->vehicleTypeRepository = $this->mock(VehicleTypeRepositoryInterface::class);
+    $this->user = User::factory()->create();
 });
 
 test('can get all vehicle types and response with resource', function () {
-    $vehicle_types = VehicleType::factory()->create();
+    VehicleType::factory()->count(5)->create();
 
-    $this->vehicleTypeRepository->shouldReceive('getVehicleTypes')->andReturn($vehicle_types);
+    $response = $this->actingAs($this->user)->get('/api/cloud/vehicle-types');
 
-    $response = $this->vehicleTypeRepository->getVehicleTypes(request());
-
-    expect($response)->toBe($vehicle_types);
+    $response->assertStatus(200)
+             ->assertJsonCount(5, 'data');
 });
 
 test('can get vehicle type by id and response with resource', function () {
     $vehicle_type = VehicleType::factory()->create();
 
-    $this->vehicleTypeRepository->shouldReceive('getVehicleType')->andReturn($vehicle_type);
+    $response = $this->actingAs($this->user)->get("/api/cloud/vehicle-types/{$vehicle_type->id}");
 
-    $response = $this->vehicleTypeRepository->getVehicleType($vehicle_type->id);
-
-    expect($response->id)->toBe($vehicle_type->id);
+    $response->assertStatus(200);
 });
 
 test('can create vehicle type and response with resource', function () {
-    $vehicle_type = VehicleType::factory()->make();
+    $vehicleTypeData = VehicleType::factory()->make()->toArray();
 
-    $this->vehicleTypeRepository->shouldReceive('createVehicleType')->andReturn($vehicle_type);
+    $response = $this->actingAs($this->user)->post('/api/cloud/vehicle-types', $vehicleTypeData);
 
-    $response = $this->vehicleTypeRepository->createVehicleType($vehicle_type->toArray());
-
-    expect($response->id)->toBe($vehicle_type->id);
-    expect($response->name)->toBe($vehicle_type->name);
+    $response->assertStatus(201);
 });
 
 test('can update vehicle type and response with resource', function () {
     $vehicle_type = VehicleType::factory()->create();
 
-    $this->vehicleTypeRepository->shouldReceive('updateVehicleType')->andReturn($vehicle_type);
+    $updatedData = VehicleType::factory()->make(['name' => 'Updated Vehicle Type'])->toArray();
 
-    $response = $this->vehicleTypeRepository->updateVehicleType($vehicle_type->id, $vehicle_type->toArray());
+    $response = $this->actingAs($this->user)->put("/api/cloud/vehicle-types/{$vehicle_type->id}", $updatedData);
 
-    expect($response->id)->toBe($vehicle_type->id);
-    expect($response->name)->toBe($vehicle_type->name);
+    $response->assertStatus(200);
 });
 
 test('can delete vehicle type and response with resource', function () {
     $vehicle_type = VehicleType::factory()->create();
 
-    $this->vehicleTypeRepository->shouldReceive('deleteVehicleType')->andReturn(['message' => 'Vehicle Type deleted successfully']);
+    $response = $this->actingAs($this->user)->delete("/api/cloud/vehicle-types/{$vehicle_type->id}");
 
-    $response = $this->vehicleTypeRepository->deleteVehicleType($vehicle_type->id);
-
-    expect($response['message'])->toBe('Vehicle Type deleted successfully');
+    $response->assertStatus(200);
 });
