@@ -86,9 +86,7 @@ trait HasSale
 
         $nozzle = Nozzle::find($nozzleId);
 
-        dd($nozzle);
-
-        $stationNo = $nozzle->dispenser()->station->station_no;
+        $stationNo = $nozzle->dispenser->station->station_no;
 
         $latestVoucher = DB::table('sales')
             ->where('nozzle_id', $nozzleId)

@@ -50,13 +50,7 @@ class SaleRepository implements SaleRepositoryInterface
     public function createSale($data)
     {
         try {
-            $voucherNo = $this->generateVoucherNo( $data['nozzle_id'], $data['cashier_code']);
-
-            $sale = $this->addSale([
-                ...$data,
-                'voucher_no' => $voucherNo,
-                'cashier_code' => $data['cashier_code'],
-            ]);
+            $sale = Sale::create($data);
 
             if (! $sale) {
                 return $this->errorResponse('Failed to create sale', 400, null);

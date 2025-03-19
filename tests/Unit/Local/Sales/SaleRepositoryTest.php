@@ -1,61 +1,61 @@
 <?php
 
-namespace Tests\Unit\Local\Sales;
-
 use App\Models\Sale;
-use App\Repositories\Local\Contracts\Sales\SaleRepositoryInterface;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->saleRepository = $this->mock(SaleRepositoryInterface::class);
+    $this->user = User::factory()->create();
 });
 
-it('can get all sales and response with resource', function () {
-    $sales = Sale::factory()->create();
+// Test: Get All Sales
+test('can get all sales and return success response', function () {
+    Sale::factory()->count(5)->create();
 
-    $this->saleRepository->shouldReceive('getSales')->andReturn($sales);
+    $response = $this->actingAs($this->user)->get('/api/local/sales');
 
-    $response = $this->saleRepository->getSales(request());
-
-    expect($response)->toBe($sales);
+    $response->assertStatus(200)
+             ->assertJsonCount(5, 'data');
 });
 
-it('can get sale by id and response with resource', function () {
+// Test: Get Sale by ID
+test('can get sale by id and return success response', function () {
     $sale = Sale::factory()->create();
 
-    $this->saleRepository->shouldReceive('getSale')->andReturn($sale);
+    $response = $this->actingAs($this->user)->get("/api/local/sales/{$sale->id}");
 
-    $response = $this->saleRepository->getSale($sale->id);
-
-    expect($response->id)->toBe($sale->id);
-    expect($sale->device_ip)->toBe($sale->device_ip);
+    $response->assertStatus(200)
+             ->assertJsonFragment(['id' => $sale->id]);
 });
 
-it('can create sale and response with resource', function () {
+// Test: Create Sale
+test('can create sale and return success response', function () {
+    $saleData = Sale::factory()->make()->toArray();
+
+    $response = $this->actingAs($this->user)->post('/api/local/sales', $saleData);
+
+    $response->assertStatus(201);
+});
+
+// Test: Update Sale
+test('can update sale and return success response', function () {
     $sale = Sale::factory()->create();
 
-    $this->saleRepository->shouldReceive('createSale')->andReturn($sale);
+    $updatedData = Sale::factory()->make(['voucher_no' => 'UpdatedVoucherNo'])->toArray();
 
-    $response = $this->saleRepository->createSale($sale->toArray());
+    $response = $this->actingAs($this->user)->put("/api/local/sales/{$sale->id}", $updatedData);
 
-    expect($response->id)->toBe($sale->id);
+    $response->assertStatus(200);
 });
 
-it('can update sale and response with resource', function () {
+// Test: Delete Sale
+test('can delete sale and return success response', function () {
     $sale = Sale::factory()->create();
 
-    $this->saleRepository->shouldReceive('updateSale')->andReturn($sale);
+    $response = $this->actingAs($this->user)->delete("/api/local/sales/{$sale->id}");
 
-    $response = $this->saleRepository->updateSale($sale->id, $sale->toArray());
-
-    expect($response->id)->toBe($sale->id);
+    $response->assertStatus(200);
 });
 
-it('can delete sale and response with resource', function () {
-    $sale = Sale::factory()->create();
-
-    $this->saleRepository->shouldReceive('deleteSale')->andReturn(['message' => 'Sale deleted successfully']);
-
-    $response = $this->saleRepository->deleteSale($sale->id);
-
-    expect($response['message'])->toBe('Sale deleted successfully');
-});
