@@ -40,5 +40,5 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // User Roles and Permissions Revoke Routes
     Route::delete('users/{userId}/roles/{roleId}', RemoveRoleFromUserController::class)->name('users.roles.revoke');
     Route::delete('users/{userId}/permissions/{permissionId}', RemovePermissionFromUserController::class)->name('users.permissions.revoke');
-    Route::delete('roles/{roleId}/permissions/{permissionId}', RemovePermissionFromRoleController::class)->name('roles.permissions.revoke');
+    Route::delete('users/roles/{roleId}/permissions/{permissionId}', RemovePermissionFromRoleController::class)->name('roles.permissions.revoke');
 });

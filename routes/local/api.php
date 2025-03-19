@@ -11,13 +11,11 @@ Route::get('/', function () {
     return response()->json(['message' => 'Local API is working']);
 });
 
-Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::apiResource('tanks', TankController::class);
-    Route::apiResource('fuelins', FuelInController::class);
-    Route::apiResource('nozzles', NozzleController::class);
-    Route::apiResource('dispensers', DispenserController::class);
+Route::apiResource('tanks', TankController::class);
+Route::apiResource('fuelins', FuelInController::class);
+Route::apiResource('nozzles', NozzleController::class);
+Route::apiResource('dispensers', DispenserController::class);
 
-    Route::apiResource('sales', SaleController::class);
-    Route::post('sales/{type}/preset', [SaleController::class, 'presetSale'])->name('sales.preset');
-    Route::post('sales/approve-by/cashier', [SaleController::class, 'cashierSale'])->name('sales.cashier');
-});
+Route::apiResource('sales', SaleController::class);
+Route::post('sales/{type}/preset', [SaleController::class, 'presetSale'])->name('sales.preset');
+Route::post('sales/approve-by/cashier', [SaleController::class, 'cashierSale'])->name('sales.cashier');
