@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Redis;
+
 test('new users can register', function () {
     $response = $this->post('/api/users/register', [
         'station_id' => null,
@@ -10,6 +12,7 @@ test('new users can register', function () {
         'phone' => '1234567890',
         'card_id' => '00001',
         'tank_count' => 8,
+        'cloud_user' => false,
     ]);
 
     $responseData = $response->json();
