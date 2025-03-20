@@ -23,7 +23,6 @@ COPY docker/supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 # Copy application source code
 COPY . /var/www/html
 
-# Expose necessary ports
 EXPOSE 5000
 
 # Start Supervisor as the main process
