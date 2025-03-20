@@ -24,3 +24,4 @@ yarn-error.log
 .DS_Store
 supervisord.log
 supervisord.pid
+docker/mosquitto/data/mosquitto.db
