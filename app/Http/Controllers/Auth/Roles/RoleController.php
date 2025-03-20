@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Auth\Roles;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Auth\Roles\RoleResource;
 use App\Traits\HasResponse;
+use Dedoc\Scramble\Attributes\Group;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Spatie\Permission\Exceptions\RoleAlreadyExists;
 use Spatie\Permission\Models\Role;
 
+#[Group('Role')]
 class RoleController extends Controller
 {
     use HasResponse;

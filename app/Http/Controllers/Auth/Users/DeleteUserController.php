@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Auth\Users;
 
-use App\Http\Controllers\Controller;
 use App\Traits\HasResponse;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Dedoc\Scramble\Attributes\Group;
 
+#[Group('User')]
 class DeleteUserController extends Controller
 {
     use HasResponse;

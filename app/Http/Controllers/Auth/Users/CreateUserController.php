@@ -2,18 +2,26 @@
 
 namespace App\Http\Controllers\Auth\Users;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\Auth\Users\UserResource;
+use Exception;
 use App\Models\User;
 use App\Traits\HasResponse;
-use Exception;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Dedoc\Scramble\Attributes\Group;
 use Illuminate\Support\Facades\Hash;
-
+use App\Http\Resources\Auth\Users\UserResource;
+#[Group('User')]
 class CreateUserController extends Controller
 {
     use HasResponse;
 
+     /**
+     * Handle an incoming create request.
+     *
+     * @return JsonResponse
+     *
+     * @throws \Exception
+     */
     public function __invoke(Request $request)
     {
         try {

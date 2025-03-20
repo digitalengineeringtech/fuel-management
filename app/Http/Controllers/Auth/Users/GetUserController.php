@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Auth\Users;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\Auth\Users\UserResource;
 use App\Models\User;
 use App\Traits\HasResponse;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Dedoc\Scramble\Attributes\Group;
+use App\Http\Resources\Auth\Users\UserResource;
 
+#[Group('User')]
 class GetUserController extends Controller
 {
     use HasResponse;

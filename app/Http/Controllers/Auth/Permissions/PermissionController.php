@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Auth\Permissions;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\Auth\Permissions\PermissionResource;
 use App\Traits\HasResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Spatie\Permission\Exceptions\PermissionAlreadyExists;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Dedoc\Scramble\Attributes\Group;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Exceptions\PermissionAlreadyExists;
+use App\Http\Resources\Auth\Permissions\PermissionResource;
 
+#[Group('Permission')]
 class PermissionController extends Controller
 {
     use HasResponse;
