@@ -81,11 +81,7 @@ return [
      * ],
      * ```
      */
-    'servers' => [
-        'Local API URL' => env('APP_URL') . '/api/local',
-        'Cloud API URL' => env('APP_URL') . '/api/cloud',
-        'Auth & User API URL' => env('APP_URL') . '/api/users',
-    ],
+    'servers' => null,
 
     'middleware' => [
         'web',
