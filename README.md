@@ -91,12 +91,12 @@ php artisan test
 
 ## API Documentation and To Test
 
-```http
+```php
 Example: http://fuel-management.test/docs/api 
 
-See your APP_URL in .env file
+# See your APP_URL in .env file
 
-APP_URL/docs/api
+# APP_URL/docs/api
 ```
 
 
