@@ -16,7 +16,7 @@ it('can get all customers and response with resource', function () {
     $response = $this->actingAs($this->user)->get('/api/cloud/customers');
 
     $response->assertStatus(200)
-             ->assertJsonCount(5, 'data');
+        ->assertJsonCount(5, 'data');
 });
 
 it('can get customer by id and response with resource', function () {
@@ -25,7 +25,7 @@ it('can get customer by id and response with resource', function () {
     $response = $this->actingAs($this->user)->get("/api/cloud/customers/{$customer->id}");
 
     $response->assertStatus(200)
-             ->assertJsonPath('data.id', $customer->id);
+        ->assertJsonPath('data.id', $customer->id);
 });
 
 it('can create customer and response with resource', function () {

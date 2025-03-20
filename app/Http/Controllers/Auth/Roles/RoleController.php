@@ -18,7 +18,9 @@ class RoleController extends Controller
     use HasResponse;
 
     /**
-     * Display a listing of the resource.
+     * All Roles
+     *
+     * @response array{message: string, code: int, data: RoleResource[]}
      */
     public function index()
     {
@@ -28,7 +30,9 @@ class RoleController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create Role
+     *
+     * @response array{message: string, code: int, data: RoleResource}
      */
     public function store(Request $request)
     {
@@ -56,21 +60,30 @@ class RoleController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Single Role
+     *
+     * @response array{message: string, code: int, data: RoleResource}
      */
     public function show(string $id)
     {
-        $role = Role::find($id);
+        try {
+            $role = Role::find($id);
 
-        if (! $role) {
-            return $this->errorResponse('Role not found', 404, null);
+            if (! $role) {
+                return $this->errorResponse('Role not found', 404, null);
+            }
+
+            return $this->successResponse('Role retrieved successfully', 200, new RoleResource($role));
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
+
         }
-
-        return new RoleResource($role);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update Role
+     *
+     * @response array{message: string, code: int, data: RoleResource}
      */
     public function update(Request $request, string $id)
     {
@@ -92,7 +105,9 @@ class RoleController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete Role
+     *
+     * @response array{message: string, code: int, data: null}
      */
     public function destroy(string $id)
     {

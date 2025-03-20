@@ -18,7 +18,9 @@ class DiscountController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * All Discounts
+     *
+     * @response array{message: string, code: int, data: DiscountResource[]}
      */
     public function index(Request $request)
     {
@@ -26,7 +28,9 @@ class DiscountController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create Discount
+     *
+     * @response array{message: string, code: int, data: DiscountResource}
      */
     public function store(CreateRequest $request)
     {
@@ -34,7 +38,9 @@ class DiscountController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Single Discount
+     *
+     * @response array{message: string, code: int, data: DiscountResource}
      */
     public function show($id)
     {
@@ -42,7 +48,9 @@ class DiscountController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update Discount
+     *
+     * @response array{message: string, code: int, data: DiscountResource}
      */
     public function update(UpdateRequest $request, $id)
     {
@@ -50,7 +58,9 @@ class DiscountController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete Discount
+     *
+     * @response array{message: string, code: int, data: null}
      */
     public function destroy($id)
     {

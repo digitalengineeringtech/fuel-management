@@ -16,7 +16,7 @@ test('can get all payments and response with resource', function () {
     $response = $this->actingAs($this->user)->get('/api/cloud/payments');
 
     $response->assertStatus(200)
-             ->assertJsonCount(5, 'data');
+        ->assertJsonCount(5, 'data');
 });
 
 test('can get payment by id and response with resource', function () {

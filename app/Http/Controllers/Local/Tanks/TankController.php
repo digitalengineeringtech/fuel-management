@@ -10,20 +10,27 @@ use Illuminate\Http\Request;
 
 class TankController extends Controller
 {
-    private TankRepositoryInterface $tankRepository;
+    public TankRepositoryInterface $tankRepository;
 
     public function __construct(TankRepositoryInterface $tankRepository)
     {
         $this->tankRepository = $tankRepository;
     }
 
+    /**
+     * All Tanks
+     *
+     * @response array{message: string, code: int, data: TankResource[]}
+     */
     public function index(Request $request)
     {
         return $this->tankRepository->getTanks($request);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create Tank
+     *
+     * @response array{message: string, code: int, data: TankResource}
      */
     public function store(CreateRequest $request)
     {
@@ -31,7 +38,9 @@ class TankController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Single Tank
+     *
+     * @response array{message: string, code: int, data: TankResource}
      */
     public function show(string $id)
     {
@@ -39,7 +48,9 @@ class TankController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update Tank
+     *
+     * @response array{message: string, code: int, data: TankResource}
      */
     public function update(UpdateRequest $request, string $id)
     {
@@ -47,7 +58,9 @@ class TankController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete Tank
+     *
+     * @response array{message: string, code: int, data: null}
      */
     public function destroy(string $id)
     {

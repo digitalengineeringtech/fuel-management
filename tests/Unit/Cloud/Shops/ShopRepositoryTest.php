@@ -2,9 +2,9 @@
 
 use App\Models\Shop;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
@@ -18,7 +18,7 @@ test('can get all shops and response with resource', function () {
     $response = $this->actingAs($this->user)->get('/api/cloud/shops');
 
     $response->assertStatus(200)
-             ->assertJsonCount(5, 'data');
+        ->assertJsonCount(5, 'data');
 });
 
 test('can get shop by id and response with resource', function () {

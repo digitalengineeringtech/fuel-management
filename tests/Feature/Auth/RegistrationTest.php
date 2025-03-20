@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Redis;
-
 test('new users can register', function () {
     $response = $this->post('/api/users/register', [
         'station_id' => null,

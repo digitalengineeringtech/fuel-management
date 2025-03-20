@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Payment;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class PaymentTableSeeder extends Seeder
 {
@@ -40,10 +39,10 @@ class PaymentTableSeeder extends Seeder
             ],
             [
                 'name' => 'Visa',
-            ]
+            ],
         ];
 
-        foreach($payments as $payment) {
+        foreach ($payments as $payment) {
             Payment::create($payment);
         }
     }

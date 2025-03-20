@@ -17,7 +17,7 @@ test('can get all sales and return success response', function () {
     $response = $this->actingAs($this->user)->get('/api/local/sales');
 
     $response->assertStatus(200)
-             ->assertJsonCount(5, 'data');
+        ->assertJsonCount(5, 'data');
 });
 
 // Test: Get Sale by ID
@@ -27,7 +27,7 @@ test('can get sale by id and return success response', function () {
     $response = $this->actingAs($this->user)->get("/api/local/sales/{$sale->id}");
 
     $response->assertStatus(200)
-             ->assertJsonFragment(['id' => $sale->id]);
+        ->assertJsonFragment(['id' => $sale->id]);
 });
 
 // Test: Create Sale
@@ -58,4 +58,3 @@ test('can delete sale and return success response', function () {
 
     $response->assertStatus(200);
 });
-

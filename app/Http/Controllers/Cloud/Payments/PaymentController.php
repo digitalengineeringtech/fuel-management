@@ -18,7 +18,9 @@ class PaymentController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * All Payments
+     *
+     * @response array{message: string, code: int, data: PaymentResource[]}
      */
     public function index(Request $request)
     {
@@ -26,7 +28,9 @@ class PaymentController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create Payment
+     *
+     * @response array{message: string, code: int, data: PaymentResource}
      */
     public function store(CreateRequest $request)
     {
@@ -34,7 +38,9 @@ class PaymentController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Single Payment
+     *
+     * @response array{message: string, code: int, data: PaymentResource}
      */
     public function show($id)
     {
@@ -42,7 +48,9 @@ class PaymentController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update Payment
+     *
+     * @response array{message: string, code: int, data: PaymentResource}
      */
     public function update(UpdateRequest $request, $id)
     {
@@ -50,7 +58,9 @@ class PaymentController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete Payment
+     *
+     * @response array{message: string, code: int, data: null}
      */
     public function destroy($id)
     {

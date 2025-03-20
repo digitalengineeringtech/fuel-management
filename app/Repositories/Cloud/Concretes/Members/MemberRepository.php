@@ -17,7 +17,7 @@ class MemberRepository implements MemberRepositoryInterface
         try {
             $members = Member::paginate(10);
 
-            if(!$members) {
+            if (! $members) {
                 return $this->errorResponse('Member not found', 404, null);
             }
 
@@ -32,7 +32,7 @@ class MemberRepository implements MemberRepositoryInterface
         try {
             $member = Member::find($id);
 
-            if(!$member) {
+            if (! $member) {
                 return $this->errorResponse('Member not found', 404, null);
             }
 
@@ -49,7 +49,7 @@ class MemberRepository implements MemberRepositoryInterface
             // Create a new member
             $member = Member::create($data);
 
-            if(!$member) {
+            if (! $member) {
                 return $this->errorResponse('Member not found', 404, null);
             }
 
@@ -67,7 +67,7 @@ class MemberRepository implements MemberRepositoryInterface
             $member = Member::find($id);
 
             // if the member doesn't exist, return an error response
-            if (!$member) {
+            if (! $member) {
                 return $this->errorResponse('Member not found', 404, null);
             }
 
@@ -87,7 +87,7 @@ class MemberRepository implements MemberRepositoryInterface
             $member = Member::find($id);
 
             // if the member doesn't exist, return an error response
-            if (!$member) {
+            if (! $member) {
                 return $this->errorResponse('Member not found', 404, null);
             }
 

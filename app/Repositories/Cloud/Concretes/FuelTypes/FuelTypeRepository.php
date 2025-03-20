@@ -17,7 +17,7 @@ class FuelTypeRepository implements FuelTypeRepositoryInterface
         try {
             $fuelTypes = FuelType::paginate(10);
 
-            if(!$fuelTypes) {
+            if (! $fuelTypes) {
                 return $this->errorResponse('FuelType not found', 404, null);
             }
 
@@ -32,7 +32,7 @@ class FuelTypeRepository implements FuelTypeRepositoryInterface
         try {
             $fuelType = FuelType::find($id);
 
-            if(!$fuelType) {
+            if (! $fuelType) {
                 return $this->errorResponse('FuelType not found', 404, null);
             }
 
@@ -49,7 +49,7 @@ class FuelTypeRepository implements FuelTypeRepositoryInterface
             // Create a new fuelType
             $fuelType = FuelType::create($data);
 
-            if(!$fuelType) {
+            if (! $fuelType) {
                 return $this->errorResponse('FuelType not found', 404, null);
             }
 
@@ -67,7 +67,7 @@ class FuelTypeRepository implements FuelTypeRepositoryInterface
             $fuelType = FuelType::find($id);
 
             // if the fuelType doesn't exist, return an error response
-            if (!$fuelType) {
+            if (! $fuelType) {
                 return $this->errorResponse('FuelType not found', 404, null);
             }
 
@@ -87,7 +87,7 @@ class FuelTypeRepository implements FuelTypeRepositoryInterface
             $fuelType = FuelType::find($id);
 
             // if the fuelType doesn't exist, return an error response
-            if (!$fuelType) {
+            if (! $fuelType) {
                 return $this->errorResponse('FuelType not found', 404, null);
             }
 

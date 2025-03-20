@@ -18,7 +18,9 @@ class ShopController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * All Shops
+     *
+     * @response array{message: string, code: int, data: ShopResource[]}
      */
     public function index(Request $request)
     {
@@ -26,7 +28,9 @@ class ShopController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create Shop
+     *
+     * @response array{message: string, code: int, data: ShopResource}
      */
     public function store(CreateRequest $request)
     {
@@ -34,7 +38,9 @@ class ShopController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Single Shop
+     *
+     * @response array{message: string, code: int, data: ShopResource}
      */
     public function show(string $id)
     {
@@ -42,7 +48,9 @@ class ShopController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update Shop
+     *
+     * @response array{message: string, code: int, data: ShopResource}
      */
     public function update(UpdateRequest $request, string $id)
     {
@@ -50,7 +58,9 @@ class ShopController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete Shop
+     *
+     * @response array{message: string, code: int, data: null}
      */
     public function destroy(string $id)
     {

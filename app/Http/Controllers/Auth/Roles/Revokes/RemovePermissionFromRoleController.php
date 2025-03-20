@@ -15,13 +15,10 @@ class RemovePermissionFromRoleController extends Controller
     use HasResponse;
 
     /**
-     * Handle an incoming user role remove request.
+     * Remove permission from role
      *
-     * @return JsonResponse
-     *
-     * @throws \Exception
+     * @response array{message: string, code: int, data: null}
      */
-
     public function __invoke($roleId, $permissionId)
     {
         try {

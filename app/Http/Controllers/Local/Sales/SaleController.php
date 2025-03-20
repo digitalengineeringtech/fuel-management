@@ -18,7 +18,9 @@ class SaleController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * All Sales
+     *
+     * @response array{message: string, code: int, data: SaleResource[]}
      */
     public function index(Request $request)
     {
@@ -26,7 +28,9 @@ class SaleController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create Sale
+     *
+     * @response array{message: string, code: int, data: SaleResource}
      */
     public function store(CreateRequest $request)
     {
@@ -34,7 +38,9 @@ class SaleController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Single Sale
+     *
+     * @response array{message: string, code: int, data: SaleResource}
      */
     public function show(string $id)
     {
@@ -42,7 +48,9 @@ class SaleController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update Sale
+     *
+     * @response array{message: string, code: int, data: SaleResource}
      */
     public function update(UpdateRequest $request, string $id)
     {
@@ -50,7 +58,9 @@ class SaleController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete Sale
+     *
+     * @response array{message: string, code: int, data: null}
      */
     public function destroy(string $id)
     {
@@ -60,7 +70,9 @@ class SaleController extends Controller
     /**
      * Create Preset Sale
      *
-     * @param  string  $type  = liter or kyat ( default kyat )
+     * @param  string  $type  = liter or kyat (default kyat)
+     *
+     * @response array{message: string, code: int, data: SaleResource}
      */
     public function presetSale(CreateRequest $request, string $type = 'kyat')
     {
@@ -68,7 +80,9 @@ class SaleController extends Controller
     }
 
     /**
-     * Approve By Casher Sale Request
+     * Approve By Cashier Sale Request
+     *
+     * @response array{message: string, code: int, data: SaleResource}
      */
     public function cashierSale(CreateRequest $request)
     {

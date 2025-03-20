@@ -22,12 +22,12 @@ class StationRepository implements StationRepositoryInterface
         try {
             $stations = Station::paginate(10);
 
-            if (!$stations) {
+            if (! $stations) {
                 return $this->errorResponse('Stations not found', 404, null);
             }
 
             return $this->successResponse('Stations successfully retrieved', 200, StationResource::collection($stations));
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
     }
@@ -37,13 +37,13 @@ class StationRepository implements StationRepositoryInterface
         try {
             $station = Station::find($id);
 
-            if (!$station) {
+            if (! $station) {
                 return $this->errorResponse('Station not found', 404, null);
             }
 
             return $this->successResponse('Station found', 200, new StationResource($station));
 
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
     }
@@ -62,7 +62,7 @@ class StationRepository implements StationRepositoryInterface
             $station = Station::create($data);
 
             // if the station doesn't exist, return an error response and delete the database
-            if (!$station) {
+            if (! $station) {
                 DB::statement("DROP DATABASE IF EXISTS $station->station_database");
 
                 return $this->errorResponse('Failed to create station', 400, null);
@@ -103,7 +103,7 @@ class StationRepository implements StationRepositoryInterface
             $station = Station::find($id);
 
             // if the station doesn't exist, return an error response
-            if (!$station) {
+            if (! $station) {
                 return $this->errorResponse('Station not found', 404, null);
             }
 
@@ -111,7 +111,7 @@ class StationRepository implements StationRepositoryInterface
             $station->update($data);
 
             return $this->successResponse('Station successfully updated', 200, new StationResource($station));
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
     }
@@ -123,7 +123,7 @@ class StationRepository implements StationRepositoryInterface
             $station = Station::find($id);
 
             // if the station doesn't exist, return an error response
-            if (!$station) {
+            if (! $station) {
                 return $this->errorResponse('Station not found', 404, null);
             }
 
@@ -136,7 +136,7 @@ class StationRepository implements StationRepositoryInterface
             $station->delete();
 
             return $this->successResponse('Station successfully deleted', 200, null);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
     }

@@ -16,7 +16,7 @@ it('can get all discounts and response with resource', function () {
     $response = $this->actingAs($this->user)->get('/api/cloud/discounts');
 
     $response->assertStatus(200)
-             ->assertJsonCount(5, 'data');
+        ->assertJsonCount(5, 'data');
 });
 
 it('can get discount by id and response with resource', function () {
@@ -25,7 +25,7 @@ it('can get discount by id and response with resource', function () {
     $response = $this->actingAs($this->user)->get("/api/cloud/discounts/{$discount->id}");
 
     $response->assertStatus(200)
-             ->assertJsonPath('data.id', $discount->id);
+        ->assertJsonPath('data.id', $discount->id);
 });
 
 it('can create discount and response with resource', function () {

@@ -2,17 +2,16 @@
 
 namespace App\Repositories\Cloud\Concretes\VehicleTypes;
 
-use Exception;
-use App\Traits\HasImage;
-use App\Models\VehicleType;
-use App\Traits\HasResponse;
 use App\Http\Resources\Cloud\VehicleTypes\VehicleTypeResource;
+use App\Models\VehicleType;
 use App\Repositories\Cloud\Contracts\VehicleTypes\VehicleTypeRepositoryInterface;
+use App\Traits\HasImage;
+use App\Traits\HasResponse;
+use Exception;
 
 class VehicleTypeRepository implements VehicleTypeRepositoryInterface
 {
     use HasImage;
-
     use HasResponse;
 
     public function getVehicleTypes($request)
@@ -20,12 +19,12 @@ class VehicleTypeRepository implements VehicleTypeRepositoryInterface
         try {
             $vehicleTypes = VehicleType::paginate(10);
 
-            if(!$vehicleTypes) {
+            if (! $vehicleTypes) {
                 return $this->errorResponse('Failed to get vehicleTypes', 400, null);
             }
 
             return $this->successResponse('VehicleTypes successfully retrieved', 200, VehicleTypeResource::collection($vehicleTypes));
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
     }
@@ -56,7 +55,7 @@ class VehicleTypeRepository implements VehicleTypeRepositoryInterface
             // Create a new vehicleType
             $vehicleType = VehicleType::create($data);
 
-            if(!$vehicleType) {
+            if (! $vehicleType) {
                 return $this->errorResponse('Failed to create vehicleType', 400, null);
             }
 

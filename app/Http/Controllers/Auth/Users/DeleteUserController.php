@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Auth\Users;
 
-use App\Traits\HasResponse;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Traits\HasResponse;
 use Dedoc\Scramble\Attributes\Group;
+use Illuminate\Http\Request;
 
 #[Group('User')]
 class DeleteUserController extends Controller
@@ -13,11 +13,9 @@ class DeleteUserController extends Controller
     use HasResponse;
 
     /**
-     * Handle an incoming delete request.
+     * Delete a user
      *
-     * @return JsonResponse
-     *
-     * @throws \Exception
+     * @response array{message: string, code: int, data: null}
      */
     public function __invoke(Request $request)
     {

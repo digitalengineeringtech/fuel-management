@@ -3,7 +3,6 @@
 namespace App\Repositories\Local\Concretes\Sales;
 
 use App\Http\Resources\Local\Sales\SaleResource;
-use App\Models\Nozzle;
 use App\Models\Sale;
 use App\Repositories\Local\Contracts\Sales\SaleRepositoryInterface;
 use App\Traits\HasMqtt;
@@ -22,7 +21,7 @@ class SaleRepository implements SaleRepositoryInterface
         try {
             $sales = Sale::paginate(10);
 
-            if(!$sales) {
+            if (! $sales) {
                 return $this->errorResponse('Sales not found', 404, null);
             }
 
@@ -37,7 +36,7 @@ class SaleRepository implements SaleRepositoryInterface
         try {
             $sale = Sale::find($id);
 
-            if(!$sale) {
+            if (! $sale) {
                 return $this->errorResponse('Sale not found', 404, null);
             }
 

@@ -18,7 +18,7 @@ class ShopRepository implements ShopRepositoryInterface
         try {
             $shops = Shop::paginate(10);
 
-            if (!$shops) {
+            if (! $shops) {
                 return $this->errorResponse('Shops not found', 404, null);
             }
 
@@ -33,7 +33,7 @@ class ShopRepository implements ShopRepositoryInterface
         try {
             $shop = Shop::find($id);
 
-            if (!$shop) {
+            if (! $shop) {
                 return $this->errorResponse('Shop not found', 404, null);
             }
 
@@ -54,7 +54,7 @@ class ShopRepository implements ShopRepositoryInterface
             // Create a new shop
             $shop = Shop::create($data);
 
-            if (!$shop) {
+            if (! $shop) {
                 return $this->errorResponse('Failed to create shop', 400, null);
             }
 
@@ -69,7 +69,7 @@ class ShopRepository implements ShopRepositoryInterface
         try {
             $shop = Shop::find($id);
 
-            if (!$shop) {
+            if (! $shop) {
                 return $this->errorResponse('Shop not found', 404, null);
             }
 
@@ -91,7 +91,7 @@ class ShopRepository implements ShopRepositoryInterface
         try {
             $shop = Shop::find($id);
 
-            if (!$shop) {
+            if (! $shop) {
                 return $this->errorResponse('Shop not found', 404, null);
             }
 

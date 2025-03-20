@@ -18,7 +18,9 @@ class DispenserController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * All Dispensers
+     *
+     * @response array{message: string, code: int, data: Collection<DispenserResource>}
      */
     public function index(Request $request)
     {
@@ -26,7 +28,9 @@ class DispenserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create Dispenser
+     *
+     * @response array{message: string, code: int, data: DispenserResource}
      */
     public function store(CreateRequest $request)
     {
@@ -34,7 +38,9 @@ class DispenserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Single Dispenser
+     *
+     * @response array{message: string, code: int, data: DispenserResource}
      */
     public function show(string $id)
     {
@@ -42,7 +48,9 @@ class DispenserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update Dispenser
+     *
+     * @response array{message: string, code: int, data: DispenserResource}
      */
     public function update(UpdateRequest $request, string $id)
     {
@@ -50,7 +58,9 @@ class DispenserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete Dispenser
+     *
+     * @response array{message: string, code: int, data: null}
      */
     public function destroy(string $id)
     {

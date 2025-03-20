@@ -17,7 +17,7 @@ class DispenserRepository implements DispenserRepositoryInterface
         try {
             $dispensers = Dispenser::paginate(10);
 
-            if(!$dispensers) {
+            if (! $dispensers) {
                 return $this->errorResponse('Dispensers not found', 404, null);
             }
 
@@ -32,7 +32,7 @@ class DispenserRepository implements DispenserRepositoryInterface
         try {
             $dispenser = Dispenser::find($id);
 
-            if (!$dispenser) {
+            if (! $dispenser) {
                 return $this->errorResponse('Dispenser not found', 404, null);
             }
 
@@ -47,7 +47,7 @@ class DispenserRepository implements DispenserRepositoryInterface
         try {
             $dispenser = Dispenser::create($data);
 
-            if (!$dispenser) {
+            if (! $dispenser) {
                 return $this->errorResponse('Failed to create dispenser', 400, null);
             }
 
@@ -64,7 +64,7 @@ class DispenserRepository implements DispenserRepositoryInterface
         try {
             $dispenser = Dispenser::find($id);
 
-            if (!$dispenser) {
+            if (! $dispenser) {
                 return $this->errorResponse('Dispenser not found', 404, null);
             }
 
@@ -81,7 +81,7 @@ class DispenserRepository implements DispenserRepositoryInterface
         try {
             $dispenser = Dispenser::find($id);
 
-            if (!$dispenser) {
+            if (! $dispenser) {
                 return $this->errorResponse('Dispenser not found', 404, null);
             }
 

@@ -34,7 +34,7 @@ class ProcessPermit
     {
         $nozzle = Nozzle::where('nozzle_no', $this->messages[0])->first();
 
-        $voucherNo = $this->generateVoucherNo ($nozzle->id, $this->user);
+        $voucherNo = $this->generateVoucherNo($nozzle->id, $this->user);
 
         if ($nozzle->auto_approve || $nozzle->semi_approve) {
             $sale = $this->addSale([

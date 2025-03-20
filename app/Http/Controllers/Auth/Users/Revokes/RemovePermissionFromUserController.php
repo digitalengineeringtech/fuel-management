@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Auth\Users\Revokes;
 
-use Exception;
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Traits\HasResponse;
-use App\Http\Controllers\Controller;
 use Dedoc\Scramble\Attributes\Group;
+use Exception;
 use Spatie\Permission\Models\Permission;
 
 #[Group('User')]
@@ -15,11 +15,9 @@ class RemovePermissionFromUserController extends Controller
     use HasResponse;
 
     /**
-     * Handle an incoming user role remove request.
+     * Remove permission from user
      *
-     * @return JsonResponse
-     *
-     * @throws \Exception
+     * @response array{message: string, code: int, data: null}
      */
     public function __invoke($userId, $permissionId)
     {

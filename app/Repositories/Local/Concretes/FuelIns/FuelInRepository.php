@@ -17,7 +17,7 @@ class FuelInRepository implements FuelInRepositoryInterface
         try {
             $fuelIns = FuelIn::paginate(10);
 
-            if(!$fuelIns) {
+            if (! $fuelIns) {
                 return $this->errorResponse('FuelIns not found', 404, null);
             }
 
@@ -32,7 +32,7 @@ class FuelInRepository implements FuelInRepositoryInterface
         try {
             $fuelIn = FuelIn::find($id);
 
-            if (!$fuelIn) {
+            if (! $fuelIn) {
                 return $this->errorResponse('FuelIn not found', 404, null);
             }
 
@@ -55,7 +55,7 @@ class FuelInRepository implements FuelInRepositoryInterface
 
             $fuelIn = FuelIn::create($data);
 
-            if (!$fuelIn) {
+            if (! $fuelIn) {
                 return $this->errorResponse('Failed to create fuelIn', 400, null);
             }
 
@@ -70,7 +70,7 @@ class FuelInRepository implements FuelInRepositoryInterface
         try {
             $fuelIn = FuelIn::find($id);
 
-            if (!$fuelIn) {
+            if (! $fuelIn) {
                 return $this->errorResponse('FuelIn not found', 404, null);
             }
 
@@ -88,7 +88,7 @@ class FuelInRepository implements FuelInRepositoryInterface
         try {
             $fuelIn = FuelIn::find($id);
 
-            if (!$fuelIn) {
+            if (! $fuelIn) {
                 return $this->errorResponse('FuelIn not found', 404, null);
             }
 

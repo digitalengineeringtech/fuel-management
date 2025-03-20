@@ -18,7 +18,9 @@ class StationController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * All Stations
+     *
+     * @response array{message: string, code: int, data: StationResource[]}
      */
     public function index(Request $request)
     {
@@ -26,7 +28,9 @@ class StationController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create Station
+     *
+     * @response array{message: string, code: int, data: StationResource}
      */
     public function store(CreateRequest $request)
     {
@@ -34,7 +38,9 @@ class StationController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Single Station
+     *
+     * @response array{message: string, code: int, data: StationResource}
      */
     public function show($id)
     {
@@ -42,7 +48,9 @@ class StationController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update Station
+     *
+     * @response array{message: string, code: int, data: StationResource}
      */
     public function update(UpdateRequest $request, $id)
     {
@@ -50,7 +58,9 @@ class StationController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete Station
+     *
+     * @response array{message: string, code: int, data: null}
      */
     public function destroy($id)
     {

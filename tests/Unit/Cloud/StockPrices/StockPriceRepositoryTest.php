@@ -16,7 +16,7 @@ test('can get all stock prices and response with resource', function () {
     $response = $this->actingAs($this->user)->get('/api/cloud/stock-prices');
 
     $response->assertStatus(200)
-             ->assertJsonCount(5, 'data');
+        ->assertJsonCount(5, 'data');
 });
 
 test('can get stock price by id and response with resource', function () {

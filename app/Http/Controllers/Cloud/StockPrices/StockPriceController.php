@@ -18,7 +18,9 @@ class StockPriceController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * All Stock Prices
+     *
+     * @response array{message: string, code: int, data: StockPriceResource[]}
      */
     public function index(Request $request)
     {
@@ -26,7 +28,9 @@ class StockPriceController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create Stock Price
+     *
+     * @response array{message: string, code: int, data: StockPriceResource}
      */
     public function store(CreateRequest $request)
     {
@@ -34,7 +38,9 @@ class StockPriceController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Single Stock Price
+     *
+     * @response array{message: string, code: int, data: StockPriceResource}
      */
     public function show($id)
     {
@@ -42,7 +48,9 @@ class StockPriceController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update Stock Price
+     *
+     * @response array{message: string, code: int, data: StockPriceResource}
      */
     public function update(UpdateRequest $request, $id)
     {
@@ -50,7 +58,9 @@ class StockPriceController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete Stock Price
+     *
+     * @response array{message: string, code: int, data: null}
      */
     public function destroy($id)
     {

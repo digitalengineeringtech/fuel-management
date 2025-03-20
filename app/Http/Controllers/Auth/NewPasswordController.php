@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rules;
-use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Dedoc\Scramble\Attributes\Group;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 
 #[Group('Auth')]
 class NewPasswordController extends Controller
 {
     /**
-     * Handle an incoming new password request.
+     * Reset the user's forgotten password.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @response array{status: string}
      */
     public function store(Request $request): JsonResponse
     {
