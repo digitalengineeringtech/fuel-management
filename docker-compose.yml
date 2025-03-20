@@ -54,6 +54,21 @@ services:
             - detpos
         restart: unless-stopped
 
+    mosquitto-two:
+        image: eclipse-mosquitto
+        container_name: mosquitto-two
+        volumes:
+            - ./docker/mosquitto/mosquitto-two.conf:/etc/mosquitto/mosquitto.conf
+            - ./docker/mosquitto/passwd:/etc/mosquitto/passwd
+            - ./docker/mosquitto/data:/etc/mosquitto/data
+        command: mosquitto -c /etc/mosquitto/mosquitto-two.conf
+        ports:
+            - "1884:1884"
+            - "9002:9002"
+        networks:
+            - detpos
+        restart: unless-stopped
+
     redis:
         image: redis:latest
         container_name: redis
