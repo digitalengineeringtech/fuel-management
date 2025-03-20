@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\Users\CreateRequest;
 use App\Http\Resources\Auth\Users\UserResource;
 use App\Models\User;
 use App\Traits\HasResponse;
 use Dedoc\Scramble\Attributes\Group;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redis;
-use Illuminate\Validation\Rules;
 
 #[Group('Auth')]
 class RegisteredUserController extends Controller
@@ -19,22 +18,13 @@ class RegisteredUserController extends Controller
     use HasResponse;
 
     /**
-     * Handle an incoming registration request.
+     * Register User
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @response array{message: string, code: int, data: array{token: string, token_type: string, user: UserResource}}
      */
-    public function store(Request $request): JsonResponse
+    public function store(CreateRequest $request): JsonResponse
     {
-        $request->validate([
-            'station_id' => ['nullable'],
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'phone' => ['nullable', 'string', 'max:20'],
-            'card_id' => ['nullable', 'string', 'max:15'],
-            'tank_count' => ['nullable', 'integer'],
-            'cloud_user' => ['boolean'],
-        ]);
+        $request->validated();
 
         $user = User::create([
             'station_id' => null,

@@ -17,7 +17,7 @@ test('can get all nozzles and response with resource', function () {
     $response = $this->actingAs($this->user)->get('/api/local/nozzles');
 
     $response->assertStatus(200)
-             ->assertJsonCount(5, 'data');
+        ->assertJsonCount(5, 'data');
 });
 
 // Test: Get Nozzle by ID

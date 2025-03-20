@@ -18,7 +18,9 @@ class MemberController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * All Members
+     *
+     * @response array{message: string, code: int, data: MemberResource[]}
      */
     public function index(Request $request)
     {
@@ -26,7 +28,9 @@ class MemberController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create Member
+     *
+     * @response array{message: string, code: int, data: MemberResource}
      */
     public function store(CreateRequest $request)
     {
@@ -34,7 +38,9 @@ class MemberController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Single Member
+     *
+     * @response array{message: string, code: int, data: MemberResource}
      */
     public function show($id)
     {
@@ -42,7 +48,9 @@ class MemberController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update Member
+     *
+     * @response array{message: string, code: int, data: MemberResource}
      */
     public function update(UpdateRequest $request, $id)
     {
@@ -50,7 +58,9 @@ class MemberController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete Member
+     *
+     * @response array{message: string, code: int, data: null}
      */
     public function destroy($id)
     {

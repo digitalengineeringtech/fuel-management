@@ -16,7 +16,7 @@ it('can get all members and response with resource', function () {
     $response = $this->actingAs($this->user)->get('/api/cloud/members');
 
     $response->assertStatus(200)
-             ->assertJsonCount(5, 'data');
+        ->assertJsonCount(5, 'data');
 });
 
 it('can get member by id and response with resource', function () {

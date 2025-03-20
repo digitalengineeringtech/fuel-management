@@ -2,13 +2,13 @@
 
 namespace App\Traits;
 
-use Exception;
-use Carbon\Carbon;
-use App\Models\Sale;
 use App\Models\Nozzle;
-use Illuminate\Support\Str;
+use App\Models\Sale;
+use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Str;
 
 trait HasSale
 {

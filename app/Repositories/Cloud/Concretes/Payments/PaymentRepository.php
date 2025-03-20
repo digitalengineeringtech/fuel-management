@@ -2,17 +2,16 @@
 
 namespace App\Repositories\Cloud\Concretes\Payments;
 
-use Exception;
+use App\Http\Resources\Cloud\Payments\PaymentResource;
 use App\Models\Payment;
+use App\Repositories\Cloud\Contracts\Payments\PaymentRepositoryInterface;
 use App\Traits\HasImage;
 use App\Traits\HasResponse;
-use App\Http\Resources\Cloud\Payments\PaymentResource;
-use App\Repositories\Cloud\Contracts\Payments\PaymentRepositoryInterface;
+use Exception;
 
 class PaymentRepository implements PaymentRepositoryInterface
 {
     use HasImage;
-
     use HasResponse;
 
     public function getPayments($request)
@@ -20,12 +19,12 @@ class PaymentRepository implements PaymentRepositoryInterface
         try {
             $payments = Payment::paginate(10);
 
-            if(!$payments) {
+            if (! $payments) {
                 return $this->errorResponse('Failed to get payments', 400, null);
             }
 
             return $this->successResponse('Payments successfully retrieved', 200, PaymentResource::collection($payments));
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
     }
@@ -56,7 +55,7 @@ class PaymentRepository implements PaymentRepositoryInterface
             // Create a new payment
             $payment = Payment::create($data);
 
-            if(!$payment) {
+            if (! $payment) {
                 return $this->errorResponse('Failed to create payment', 400, null);
             }
 

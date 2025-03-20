@@ -31,7 +31,7 @@ class UpdateRequest extends FormRequest
             'customer_id' => ['nullable'],
             'vehicle_type_id' => ['nullable'],
             'tank_id' => ['required'],
-            'voucher_no' => [ 'nullable','string'],
+            'voucher_no' => ['nullable', 'string'],
             'cashier_code' => ['required', 'string'],
             'car_no' => ['nullable', 'string'],
             'device' => ['string'],

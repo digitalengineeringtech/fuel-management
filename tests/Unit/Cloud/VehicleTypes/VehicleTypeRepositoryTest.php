@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\VehicleType;
 use App\Models\User;
+use App\Models\VehicleType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -16,7 +16,7 @@ test('can get all vehicle types and response with resource', function () {
     $response = $this->actingAs($this->user)->get('/api/cloud/vehicle-types');
 
     $response->assertStatus(200)
-             ->assertJsonCount(5, 'data');
+        ->assertJsonCount(5, 'data');
 });
 
 test('can get vehicle type by id and response with resource', function () {

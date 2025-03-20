@@ -24,5 +24,3 @@ Route::prefix('cloud')
 Route::prefix('local')
     ->middleware('auth:sanctum')
     ->group(base_path('routes/local/api.php'));
-
-

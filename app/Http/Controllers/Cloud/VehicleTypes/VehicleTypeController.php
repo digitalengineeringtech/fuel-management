@@ -18,7 +18,9 @@ class VehicleTypeController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * All Vehicle Types
+     *
+     * @response array{message: string, code: int, data: VehicleTypeResource[]}
      */
     public function index(Request $request)
     {
@@ -26,7 +28,9 @@ class VehicleTypeController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create Vehicle Type
+     *
+     * @response array{message: string, code: int, data: VehicleTypeResource}
      */
     public function store(CreateRequest $request)
     {
@@ -34,7 +38,9 @@ class VehicleTypeController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Single Vehicle Type
+     *
+     * @response array{message: string, code: int, data: VehicleTypeResource}
      */
     public function show($id)
     {
@@ -42,7 +48,9 @@ class VehicleTypeController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update Vehicle Type
+     *
+     * @response array{message: string, code: int, data: VehicleTypeResource}
      */
     public function update(UpdateRequest $request, $id)
     {
@@ -50,7 +58,9 @@ class VehicleTypeController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete Vehicle Type
+     *
+     * @response array{message: string, code: int, data: null}
      */
     public function destroy($id)
     {

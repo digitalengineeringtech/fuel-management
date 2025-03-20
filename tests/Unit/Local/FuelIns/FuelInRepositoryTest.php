@@ -17,7 +17,7 @@ test('can get all fuelins and response with resource', function () {
     $response = $this->actingAs($this->user)->get('/api/local/fuelins');
 
     $response->assertStatus(200)
-             ->assertJsonCount(5, 'data');
+        ->assertJsonCount(5, 'data');
 });
 
 // Test: Get FuelIn by ID

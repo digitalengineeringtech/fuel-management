@@ -17,7 +17,7 @@ class StockPriceRepository implements StockPriceRepositoryInterface
         try {
             $stockPrices = StockPrice::paginate(10);
 
-            if(!$stockPrices) {
+            if (! $stockPrices) {
                 return $this->errorResponse('StockPrice not found', 404, null);
             }
 
@@ -32,7 +32,7 @@ class StockPriceRepository implements StockPriceRepositoryInterface
         try {
             $stockPrice = StockPrice::find($id);
 
-            if(!$stockPrice) {
+            if (! $stockPrice) {
                 return $this->errorResponse('StockPrice not found', 404, null);
             }
 
@@ -49,7 +49,7 @@ class StockPriceRepository implements StockPriceRepositoryInterface
             // Create a new stockPrice
             $stockPrice = StockPrice::create($data);
 
-            if(!$stockPrice) {
+            if (! $stockPrice) {
                 return $this->errorResponse('StockPrice not found', 404, null);
             }
 
@@ -67,7 +67,7 @@ class StockPriceRepository implements StockPriceRepositoryInterface
             $stockPrice = StockPrice::find($id);
 
             // if the stockPrice doesn't exist, return an error response
-            if (!$stockPrice) {
+            if (! $stockPrice) {
                 return $this->errorResponse('StockPrice not found', 404, null);
             }
 
@@ -87,7 +87,7 @@ class StockPriceRepository implements StockPriceRepositoryInterface
             $stockPrice = StockPrice::find($id);
 
             // if the stockPrice doesn't exist, return an error response
-            if (!$stockPrice) {
+            if (! $stockPrice) {
                 return $this->errorResponse('StockPrice not found', 404, null);
             }
 

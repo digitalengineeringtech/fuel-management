@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Auth\Users;
 
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Auth\Users\UserResource;
 use App\Models\User;
 use App\Traits\HasResponse;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Dedoc\Scramble\Attributes\Group;
-use App\Http\Resources\Auth\Users\UserResource;
+use Illuminate\Http\Request;
 
 #[Group('User')]
 class GetUsersController extends Controller
@@ -15,11 +15,9 @@ class GetUsersController extends Controller
     use HasResponse;
 
     /**
-     * Handle an incoming get request.
+     * Get all users
      *
-     * @return JsonResponse all users
-     *
-     * @throws \Exception
+     * @response array{message: string, code: int, data: UserResource[]}
      */
     public function __invoke(Request $request)
     {

@@ -18,7 +18,9 @@ class FuelInController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * All FuelIns
+     *
+     * @response array{message: string, code: int, data: FuelInResource[]}
      */
     public function index(Request $request)
     {
@@ -26,7 +28,9 @@ class FuelInController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create FuelIn
+     *
+     * @response array{message: string, code: int, data: FuelInResource}
      */
     public function store(CreateRequest $request)
     {
@@ -34,7 +38,9 @@ class FuelInController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Single FuelIn
+     *
+     * @response array{message: string, code: int, data: FuelInResource}
      */
     public function show(string $id)
     {
@@ -42,7 +48,9 @@ class FuelInController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update FuelIn
+     *
+     * @response array{message: string, code: int, data: FuelInResource}
      */
     public function update(UpdateRequest $request, string $id)
     {
@@ -50,7 +58,9 @@ class FuelInController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete FuelIn
+     *
+     * @response array{message: string, code: int, data: null}
      */
     public function destroy(string $id)
     {

@@ -17,7 +17,7 @@ class TankRepository implements TankRepositoryInterface
         try {
             $tanks = Tank::paginate(10);
 
-            if(!$tanks) {
+            if (! $tanks) {
                 return $this->errorResponse('Tanks not found', 404, null);
             }
 
@@ -32,7 +32,7 @@ class TankRepository implements TankRepositoryInterface
         try {
             $tank = Tank::find($id);
 
-            if(!$tank) {
+            if (! $tank) {
                 return $this->errorResponse('Tank not found', 404, null);
             }
 

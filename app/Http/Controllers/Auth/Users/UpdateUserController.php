@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Auth\Users;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\Users\UpdateRequest;
+use App\Http\Resources\Auth\Users\UserResource;
 use App\Models\User;
 use App\Traits\HasResponse;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Dedoc\Scramble\Attributes\Group;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Resources\Auth\Users\UserResource;
 
 #[Group('User')]
 class UpdateUserController extends Controller
@@ -16,13 +17,11 @@ class UpdateUserController extends Controller
     use HasResponse;
 
     /**
-     * Handle an incoming update request.
+     * Update a user
      *
-     * @return JsonResponse
-     *
-     * @throws \Exception
+     * @response array{message: string, code: int, data: UserResource}
      */
-    public function __invoke(Request $request, $id)
+    public function __invoke(UpdateRequest $request, $id)
     {
         try {
             // Validate the request
@@ -31,16 +30,6 @@ class UpdateUserController extends Controller
             if (! $user) {
                 return $this->errorResponse('User not found', 404, null);
             }
-
-            $request->validate([
-                'name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
-                'password' => ['required', 'min:8'],
-                'phone' => ['nullable', 'string', 'max:20'],
-                'card_id' => ['nullable', 'string', 'max:15'],
-                'tank_count' => ['nullable', 'integer'],
-                'cloud_user' => ['boolean'],
-            ]);
 
             $user->update([
                 'station_id' => $request->station_id,

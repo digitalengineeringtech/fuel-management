@@ -17,7 +17,7 @@ class DiscountRepository implements DiscountRepositoryInterface
         try {
             $discounts = Discount::paginate(10);
 
-            if(!$discounts) {
+            if (! $discounts) {
                 return $this->errorResponse('Discount not found', 404, null);
             }
 
@@ -32,7 +32,7 @@ class DiscountRepository implements DiscountRepositoryInterface
         try {
             $discount = Discount::find($id);
 
-            if(!$discount) {
+            if (! $discount) {
                 return $this->errorResponse('Discount not found', 404, null);
             }
 
@@ -49,7 +49,7 @@ class DiscountRepository implements DiscountRepositoryInterface
             // Create a new discount
             $discount = Discount::create($data);
 
-            if(!$discount) {
+            if (! $discount) {
                 return $this->errorResponse('Discount not found', 404, null);
             }
 
@@ -67,7 +67,7 @@ class DiscountRepository implements DiscountRepositoryInterface
             $discount = Discount::find($id);
 
             // if the discount doesn't exist, return an error response
-            if (!$discount) {
+            if (! $discount) {
                 return $this->errorResponse('Discount not found', 404, null);
             }
 
@@ -87,7 +87,7 @@ class DiscountRepository implements DiscountRepositoryInterface
             $discount = Discount::find($id);
 
             // if the discount doesn't exist, return an error response
-            if (!$discount) {
+            if (! $discount) {
                 return $this->errorResponse('Discount not found', 404, null);
             }
 

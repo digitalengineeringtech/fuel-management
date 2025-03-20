@@ -18,7 +18,9 @@ class CustomerController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * All Customers
+     *
+     * @response array{message: string, code: int, data: CustomerResource[]}
      */
     public function index(Request $request)
     {
@@ -26,7 +28,9 @@ class CustomerController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create Customer
+     *
+     * @response array{message: string, code: int, data: CustomerResource}
      */
     public function store(CreateRequest $request)
     {
@@ -34,7 +38,9 @@ class CustomerController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Single Customer
+     *
+     * @response array{message: string, code: int, data: CustomerResource}
      */
     public function show($id)
     {
@@ -42,7 +48,9 @@ class CustomerController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update Customer
+     *
+     * @response array{message: string, code: int, data: CustomerResource}
      */
     public function update(UpdateRequest $request, $id)
     {
@@ -50,7 +58,9 @@ class CustomerController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete Customer
+     *
+     * @response array{message: string, code: int, data: null}
      */
     public function destroy($id)
     {

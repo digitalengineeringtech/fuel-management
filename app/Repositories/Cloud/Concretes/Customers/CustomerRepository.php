@@ -7,7 +7,6 @@ use App\Models\Customer;
 use App\Repositories\Cloud\Contracts\Customers\CustomerRepositoryInterface;
 use App\Traits\HasResponse;
 use Exception;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Response;
 
 class CustomerRepository implements CustomerRepositoryInterface
@@ -19,7 +18,7 @@ class CustomerRepository implements CustomerRepositoryInterface
         try {
             $customers = Customer::paginate(10);
 
-            if (!$customers) {
+            if (! $customers) {
                 return $this->errorResponse('Customers not found', 404, null);
             }
 
@@ -35,7 +34,7 @@ class CustomerRepository implements CustomerRepositoryInterface
         try {
             $customer = Customer::find($id);
 
-            if (!$customer) {
+            if (! $customer) {
                 return $this->errorResponse('Customer not found', 404, null);
             }
 
@@ -51,7 +50,7 @@ class CustomerRepository implements CustomerRepositoryInterface
             // Create a new customer
             $customer = Customer::create($data);
 
-            if(!$customer) {
+            if (! $customer) {
                 return $this->errorResponse('Customer not created', 500, null);
             }
 
@@ -69,7 +68,7 @@ class CustomerRepository implements CustomerRepositoryInterface
             $customer = Customer::find($id);
 
             // if the customer doesn't exist, return an error response
-            if (!$customer) {
+            if (! $customer) {
                 return $this->errorResponse('Customer not found', 404, null);
             }
 
@@ -89,7 +88,7 @@ class CustomerRepository implements CustomerRepositoryInterface
             $customer = Customer::find($id);
 
             // if the customer doesn't exist, return an error response
-            if (!$customer) {
+            if (! $customer) {
                 return $this->errorResponse('Customer not found', 404, null);
             }
 

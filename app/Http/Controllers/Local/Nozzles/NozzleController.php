@@ -18,7 +18,9 @@ class NozzleController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * All Nozzles
+     *
+     * @response array{message: string, code: int, data: NozzleResource[]}
      */
     public function index(Request $request)
     {
@@ -26,7 +28,9 @@ class NozzleController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create Nozzle
+     *
+     * @response array{message: string, code: int, data: NozzleResource}
      */
     public function store(CreateRequest $request)
     {
@@ -34,7 +38,9 @@ class NozzleController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Single Nozzle
+     *
+     * @response array{message: string, code: int, data: NozzleResource}
      */
     public function show(string $id)
     {
@@ -42,7 +48,9 @@ class NozzleController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update Nozzle
+     *
+     * @response array{message: string, code: int, data: NozzleResource}
      */
     public function update(UpdateRequest $request, string $id)
     {
@@ -50,7 +58,9 @@ class NozzleController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete Nozzle
+     *
+     * @response array{message: string, code: int, data: null}
      */
     public function destroy(string $id)
     {

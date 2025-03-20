@@ -16,7 +16,7 @@ class NozzleRepository implements NozzleRepositoryInterface
         try {
             $nozzles = Nozzle::paginate(10);
 
-            if(!$nozzles) {
+            if (! $nozzles) {
                 return $this->errorResponse('Nozzle not found', 404, null);
             }
 
@@ -31,7 +31,7 @@ class NozzleRepository implements NozzleRepositoryInterface
         try {
             $nozzle = Nozzle::find($id);
 
-            if (!$nozzle) {
+            if (! $nozzle) {
                 return $this->errorResponse('Nozzle not found', 404, null);
             }
 
@@ -46,7 +46,7 @@ class NozzleRepository implements NozzleRepositoryInterface
         try {
             $nozzle = Nozzle::create($data);
 
-            if (!$nozzle) {
+            if (! $nozzle) {
                 return $this->errorResponse('Failed to create nozzle', 400, null);
             }
 
@@ -61,7 +61,7 @@ class NozzleRepository implements NozzleRepositoryInterface
         try {
             $nozzle = Nozzle::find($id);
 
-            if (!$nozzle) {
+            if (! $nozzle) {
                 return $this->errorResponse('Nozzle not found', 404, null);
             }
 
@@ -79,7 +79,7 @@ class NozzleRepository implements NozzleRepositoryInterface
         try {
             $nozzle = Nozzle::find($id);
 
-            if (!$nozzle) {
+            if (! $nozzle) {
                 return $this->errorResponse('Nozzle not found', 404, null);
             }
 

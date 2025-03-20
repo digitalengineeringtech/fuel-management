@@ -18,7 +18,9 @@ class AuthenticatedSessionController extends Controller
     use HasResponse;
 
     /**
-     * Handle an incoming authentication request.
+     * Login User
+     *
+     * @response array{message: string, code: int, data: array{token: string, token_type: string, user: UserResource}}
      */
     public function store(LoginRequest $request): JsonResponse
     {
@@ -36,7 +38,7 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
-     * Destroy an authenticated session.
+     * Logout User
      */
     public function destroy(Request $request): JsonResponse
     {

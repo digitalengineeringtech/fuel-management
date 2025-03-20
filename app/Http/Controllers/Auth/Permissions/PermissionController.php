@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Auth\Permissions;
 
-use App\Traits\HasResponse;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Dedoc\Scramble\Attributes\Group;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Exceptions\PermissionAlreadyExists;
 use App\Http\Resources\Auth\Permissions\PermissionResource;
+use App\Traits\HasResponse;
+use Dedoc\Scramble\Attributes\Group;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Spatie\Permission\Exceptions\PermissionAlreadyExists;
+use Spatie\Permission\Models\Permission;
 
 #[Group('Permission')]
 class PermissionController extends Controller
@@ -17,7 +17,9 @@ class PermissionController extends Controller
     use HasResponse;
 
     /**
-     * Display a listing of the resource.
+     * All Permissions
+     *
+     * @response array{message: string, code: int, data: PermissionResource[]}
      */
     public function index()
     {
@@ -27,7 +29,9 @@ class PermissionController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create Permission
+     *
+     * @response array{message: string, code: int, data: PermissionResource}
      */
     public function store(Request $request)
     {
@@ -51,50 +55,68 @@ class PermissionController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Single Permission
+     *
+     * @response array{message: string, code: int, data: PermissionResource}
      */
     public function show(string $id)
     {
-        $permission = Permission::find($id);
+        try {
+            $permission = Permission::find($id);
 
-        if (! $permission) {
-            return $this->errorResponse('Permission not found', 404, null);
+            if (! $permission) {
+                return $this->errorResponse('Permission not found', 404, null);
+            }
+
+            return $this->successResponse('Permission retrieved successfully', 200, new PermissionResource($permission));
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
         }
-
-        return new PermissionResource($permission);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update Permission
+     *
+     * @response array{message: string, code: int, data: PermissionResource}
      */
     public function update(Request $request, string $id)
     {
-        $permission = Permission::find($id);
+        try {
+            $permission = Permission::find($id);
 
-        if (! $permission) {
-            return $this->errorResponse('Permission not found', 404, null);
+            if (! $permission) {
+                return $this->errorResponse('Permission not found', 404, null);
+            }
+
+            $permission->update([
+                'name' => Str::lower($request->name),
+            ]);
+
+            return $this->successResponse('Permission updated successfully', 200, new PermissionResource($permission));
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
         }
-
-        $permission->update([
-            'name' => Str::lower($request->name),
-        ]);
-
-        return $this->successResponse('Permission updated successfully', 200, new PermissionResource($permission));
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete Permission
+     *
+     * @response array{message: string, code: int, data: null}
      */
     public function destroy(string $id)
     {
-        $permission = Permission::find($id);
+        try {
+            $permission = Permission::find($id);
 
-        if (! $permission) {
-            return $this->errorResponse('Permission not found', 404, null);
+            if (! $permission) {
+                return $this->errorResponse('Permission not found', 404, null);
+            }
+
+            $permission->delete();
+
+            return $this->successResponse('Permission deleted successfully', 200, null);
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
         }
-
-        $permission->delete();
-
-        return $this->successResponse('Permission deleted successfully', 200, null);
     }
 }
