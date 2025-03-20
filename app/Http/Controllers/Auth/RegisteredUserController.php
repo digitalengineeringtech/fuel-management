@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Auth\Users\UserResource;
 use App\Models\User;
 use App\Traits\HasResponse;
+use Dedoc\Scramble\Attributes\Group;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Validation\Rules;
 
+#[Group('Auth')]
 class RegisteredUserController extends Controller
 {
     use HasResponse;

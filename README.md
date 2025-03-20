@@ -89,6 +89,16 @@ To run tests, run the following command
 php artisan test
 ```
 
+## API Documentation and To Test
+
+```http
+Example: http://fuel-management.test/docs/api 
+
+See your APP_URL in .env file
+
+APP_URL/docs/api
+```
+
 
 
     

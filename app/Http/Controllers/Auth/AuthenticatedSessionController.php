@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\Auth\Users\UserResource;
 use App\Traits\HasResponse;
+use Dedoc\Scramble\Attributes\Group;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
 
+#[Group('Auth')]
 class AuthenticatedSessionController extends Controller
 {
     use HasResponse;

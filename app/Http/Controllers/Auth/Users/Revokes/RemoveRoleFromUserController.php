@@ -2,15 +2,25 @@
 
 namespace App\Http\Controllers\Auth\Users\Revokes;
 
-use App\Http\Controllers\Controller;
+use Exception;
 use App\Models\User;
 use App\Traits\HasResponse;
-use Exception;
 use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
+use Dedoc\Scramble\Attributes\Group;
 
+#[Group('User')]
 class RemoveRoleFromUserController extends Controller
 {
     use HasResponse;
+
+     /**
+     * Handle an incoming user role remove request.
+     *
+     * @return JsonResponse
+     *
+     * @throws \Exception
+     */
 
     public function __invoke($userId, $roleId)
     {
