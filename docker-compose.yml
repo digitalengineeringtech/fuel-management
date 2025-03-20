@@ -1,0 +1,86 @@
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - ./:/var/www/html
+            - ./docker/supervisor/supervisord.conf:/etc/supervisor/supervisord.conf
+        working_dir: /var/www/html
+        restart: unless-stopped
+        networks:
+            - detpos
+
+    web:
+        image: nginx:latest
+        working_dir: /var/www/html
+        ports:
+            - "8080:80"
+        volumes:
+            - ./:/var/www/html
+            - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+        restart: unless-stopped
+        networks:
+            - detpos
+
+    mysql:
+        image: mysql:latest
+        container_name: mysql
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+        volumes:
+            - mysqldata:/var/lib/mysql
+        ports:
+            - "3306:${DB_PORT}"
+        restart: unless-stopped
+        networks:
+            - detpos
+
+    mosquitto:
+        image: eclipse-mosquitto
+        container_name: mosquitto
+        volumes:
+            - ./docker/mosquitto/mosquitto.conf:/etc/mosquitto/mosquitto.conf
+            - ./docker/mosquitto/passwd:/etc/mosquitto/passwd
+            - ./docker/mosquitto/data:/etc/mosquitto/data
+        command: mosquitto -c /etc/mosquitto/mosquitto.conf
+        ports:
+            - "1883:1883"
+            - "9001:9001"
+        networks:
+            - detpos
+        restart: unless-stopped
+
+    mosquitto-two:
+        image: eclipse-mosquitto
+        container_name: mosquitto-two
+        volumes:
+            - ./docker/mosquitto/mosquitto-two.conf:/etc/mosquitto/mosquitto.conf
+            - ./docker/mosquitto/passwd:/etc/mosquitto/passwd
+            - ./docker/mosquitto/data:/etc/mosquitto/data
+        command: mosquitto -c /etc/mosquitto/mosquitto-two.conf
+        ports:
+            - "1884:1884"
+            - "9002:9002"
+        networks:
+            - detpos
+        restart: unless-stopped
+
+    redis:
+        image: redis:latest
+        container_name: redis
+        ports:
+            - "6379:6379"
+        restart: unless-stopped
+        networks:
+            - detpos
+
+networks:
+    detpos:
+        driver: bridge
+
+volumes:
+    mysqldata:
