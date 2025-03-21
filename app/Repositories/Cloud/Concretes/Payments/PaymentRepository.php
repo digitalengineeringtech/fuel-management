@@ -23,7 +23,7 @@ class PaymentRepository implements PaymentRepositoryInterface
                 return $this->errorResponse('Failed to get payments', 400, null);
             }
 
-            return $this->successResponse('Payments successfully retrieved', 200, PaymentResource::collection($payments));
+            return PaymentResource::collection($payments);
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }

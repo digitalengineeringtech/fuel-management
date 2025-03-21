@@ -26,7 +26,7 @@ class StationRepository implements StationRepositoryInterface
                 return $this->errorResponse('Stations not found', 404, null);
             }
 
-            return $this->successResponse('Stations successfully retrieved', 200, StationResource::collection($stations));
+            return StationResource::collection($stations);
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }

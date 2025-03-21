@@ -21,7 +21,7 @@ class DiscountRepository implements DiscountRepositoryInterface
                 return $this->errorResponse('Discount not found', 404, null);
             }
 
-            return $this->successResponse('Discount successfully retrieved', 200, DiscountResource::collection($discounts));
+            return DiscountResource::collection($discounts);
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }

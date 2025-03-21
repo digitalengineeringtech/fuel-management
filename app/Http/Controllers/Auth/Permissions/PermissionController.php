@@ -22,9 +22,17 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        $permissions = Permission::paginate(10);
+        try {
+            $permissions = Permission::paginate(10);
 
-        return PermissionResource::collection($permissions);
+            if(!$permissions) {
+                return $this->errorResponse('Permissions not found', 404, null);
+            }
+
+            return PermissionResource::collection($permissions);
+        } catch(Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
+        }
     }
 
     /**

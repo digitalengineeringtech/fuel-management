@@ -21,7 +21,7 @@ class TankRepository implements TankRepositoryInterface
                 return $this->errorResponse('Tanks not found', 404, null);
             }
 
-            return $this->successResponse('Tanks found successfully', 200, TankResource::collection($tanks));
+            return TankResource::collection($tanks);
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }

@@ -21,7 +21,7 @@ class FuelTypeRepository implements FuelTypeRepositoryInterface
                 return $this->errorResponse('FuelType not found', 404, null);
             }
 
-            return $this->successResponse('FuelType successfully retrieved', 200, FuelTypeResource::collection($fuelTypes));
+            return FuelTypeResource::collection($fuelTypes);
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
