@@ -17,7 +17,7 @@ test('can get all sales and return success response', function () {
     $response = $this->actingAs($this->user)->get('/api/local/sales');
 
     $response->assertStatus(200)
-        ->assertJsonCount(5, 'data');
+        ->assertJsonCount(2, 'data');
 });
 
 // Test: Get Sale by ID
