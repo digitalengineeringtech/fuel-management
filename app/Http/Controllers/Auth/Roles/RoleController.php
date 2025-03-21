@@ -22,11 +22,19 @@ class RoleController extends Controller
      *
      * @response array{message: string, code: int, data: RoleResource[]}
      */
-    public function index()
+    public function index(Request $request)
     {
-        $roles = Role::paginate(10);
+        try {
+            $roles = Role::paginate(10);
 
-        return RoleResource::collection($roles);
+            if(!$roles) {
+                return $this->errorResponse('Roles not found', 404, null);
+            }
+
+            return $this->successResponse('Roles retrieved successfully', 200, RoleResource::collection($roles));
+        } catch(Exception $e) {
+            return $this->errorResponse($e->getMessage(), 500, null);
+        }
     }
 
     /**

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Cloud\Payments;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cloud\Payments\CreateRequest;
 use App\Http\Requests\Cloud\Payments\UpdateRequest;
+use App\Http\Resources\Cloud\Payments\PaymentResource;
 use App\Repositories\Cloud\Contracts\Payments\PaymentRepositoryInterface;
-use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {

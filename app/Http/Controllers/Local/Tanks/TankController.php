@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Local\Tanks;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Local\Tanks\CreateRequest;
 use App\Http\Requests\Local\Tanks\UpdateRequest;
+use App\Http\Resources\Local\Tanks\TankResource;
 use App\Repositories\Local\Contracts\Tanks\TankRepositoryInterface;
-use Illuminate\Http\Request;
 
 class TankController extends Controller
 {
