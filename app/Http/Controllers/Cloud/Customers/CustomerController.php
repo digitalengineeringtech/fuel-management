@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Cloud\Customers;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cloud\Customers\CreateRequest;
 use App\Http\Requests\Cloud\Customers\UpdateRequest;
+use App\Http\Resources\Cloud\Customers\CustomerResource;
 use App\Repositories\Cloud\Contracts\Customers\CustomerRepositoryInterface;
-use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Cloud\FuelTypes;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cloud\FuelTypes\CreateRequest;
 use App\Http\Requests\Cloud\FuelTypes\UpdateRequest;
+use App\Http\Resources\Cloud\FuelTypes\FuelTypeResource;
 use App\Repositories\Cloud\Contracts\FuelTypes\FuelTypeRepositoryInterface;
-use Illuminate\Http\Request;
 
 class FuelTypeController extends Controller
 {
