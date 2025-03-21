@@ -23,7 +23,7 @@ class VehicleTypeRepository implements VehicleTypeRepositoryInterface
                 return $this->errorResponse('Failed to get vehicleTypes', 400, null);
             }
 
-            return $this->successResponse('VehicleTypes successfully retrieved', 200, VehicleTypeResource::collection($vehicleTypes));
+            return VehicleTypeResource::collection($vehicleTypes);
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }

@@ -20,7 +20,7 @@ class NozzleRepository implements NozzleRepositoryInterface
                 return $this->errorResponse('Nozzle not found', 404, null);
             }
 
-            return $this->successResponse('Nozzle found successfully', 200, NozzleResource::collection($nozzles));
+            return NozzleResource::collection($nozzles);
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }

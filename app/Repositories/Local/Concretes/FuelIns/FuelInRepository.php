@@ -21,7 +21,7 @@ class FuelInRepository implements FuelInRepositoryInterface
                 return $this->errorResponse('FuelIns not found', 404, null);
             }
 
-            return $this->successResponse('FuelIns found successfully', 200, FuelInResource::collection($fuelIns));
+            return FuelInResource::collection($fuelIns);
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage());
         }

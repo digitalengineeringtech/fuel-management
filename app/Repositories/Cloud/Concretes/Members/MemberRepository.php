@@ -21,7 +21,7 @@ class MemberRepository implements MemberRepositoryInterface
                 return $this->errorResponse('Member not found', 404, null);
             }
 
-            return $this->successResponse('Member successfully retrieved', 200, MemberResource::collection($members));
+            return MemberResource::collection($members);
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }

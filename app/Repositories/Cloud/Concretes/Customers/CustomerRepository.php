@@ -22,7 +22,7 @@ class CustomerRepository implements CustomerRepositoryInterface
                 return $this->errorResponse('Customers not found', 404, null);
             }
 
-            return $this->successResponse('Customers successfully retrieved', 200, CustomerResource::collection($customers));
+            return CustomerResource::collection($customers);
 
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);

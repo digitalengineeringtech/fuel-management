@@ -29,7 +29,7 @@ class RoleController extends Controller
                 return $this->errorResponse('Roles not found', 404, null);
             }
 
-            return $this->successResponse('Roles retrieved successfully', 200, RoleResource::collection($roles));
+            return RoleResource::collection($roles);
         } catch(Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }

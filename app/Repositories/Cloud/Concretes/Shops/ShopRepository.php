@@ -22,7 +22,7 @@ class ShopRepository implements ShopRepositoryInterface
                 return $this->errorResponse('Shops not found', 404, null);
             }
 
-            return $this->successResponse('Shops successfully retrieved', 200, ShopResource::collection($shops));
+            return ShopResource::collection($shops);
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }

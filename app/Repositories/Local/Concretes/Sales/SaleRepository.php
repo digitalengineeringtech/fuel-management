@@ -19,13 +19,15 @@ class SaleRepository implements SaleRepositoryInterface
     public function getSales($request)
     {
         try {
-            $sales = Sale::paginate(10);
+            $query = Sale::query();
 
-            if (! $sales) {
+            if (!$query) {
                 return $this->errorResponse('Sales not found', 404, null);
             }
 
-            return $this->successResponse('Sales found successfully', 200, SaleResource::collection($sales));
+            $sales = $query->paginate(2)->withQueryString();
+
+            return SaleResource::collection($sales);
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
