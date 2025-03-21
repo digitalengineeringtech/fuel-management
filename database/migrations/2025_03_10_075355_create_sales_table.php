@@ -35,7 +35,7 @@ return new class extends Migration
             $table->bigInteger('sale_price')->default(0);
             $table->bigInteger('total_price')->default(0);
             $table->boolean('is_preset')->nullable();
-            $table->bigInteger('preset_amount')->default(0);
+            $table->string('preset_amount')->default(0);
             $table->dateTime('daily_report_date')->default(now());
             $table->timestamps();
         });

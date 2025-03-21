@@ -46,6 +46,8 @@ class SaleResource extends JsonResource
             'sale_price' => $this->sale_price,
             'sale_liter' => $this->sale_liter,
             'total_price' => $this->total_price,
+            'is_preset' => $this->is_preset,
+            'preset_amount' => $this->preset_amount,
             'daily_report_date' => $this->daily_report_date,
         ];
     }
