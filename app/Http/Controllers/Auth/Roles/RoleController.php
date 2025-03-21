@@ -12,14 +12,12 @@ use Illuminate\Support\Str;
 use Spatie\Permission\Exceptions\RoleAlreadyExists;
 use Spatie\Permission\Models\Role;
 
-#[Group('Role')]
 class RoleController extends Controller
 {
     use HasResponse;
 
     /**
      * All Roles
-     *
      * @response array{message: string, code: int, data: RoleResource[]}
      */
     public function index(Request $request)

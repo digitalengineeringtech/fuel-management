@@ -11,7 +11,6 @@ use Illuminate\Support\Str;
 use Spatie\Permission\Exceptions\PermissionAlreadyExists;
 use Spatie\Permission\Models\Permission;
 
-#[Group('Permission')]
 class PermissionController extends Controller
 {
     use HasResponse;
