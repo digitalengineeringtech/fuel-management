@@ -101,22 +101,25 @@ class SaleRepository implements SaleRepositoryInterface
     {
         try {
             $voucherNo = $this->generateVoucherNo($data['nozzle_id'], $data['cashier_code']);
+            $presetAmount = $this->getPresetAmount($type, $data['preset_amount']);
 
             $sale = $this->addSale([
                 ...$data,
                 'voucher_no' => $voucherNo,
                 'cashier_code' => $data['cashier_code'],
                 'is_preset' => true,
-                'preset_amount' => $this->getPresetAmount($type, $data['preset_amount']),
+                'preset_amount' => $presetAmount,
             ]);
 
             if (! $sale) {
                 return $this->errorResponse('Failed to create sale', 400, null);
             }
 
-            $this->getClient()->publish('detpos/local_server/preset', $sale->nozzle->nozzle_no.$type.$data['preset_amount']);
+            $client = $this->getClient();
 
-            $this->getClient()->disconnect();
+            $client->publish('detpos/local_server/preset', $sale->nozzle->nozzle_no.$type.$data['preset_amount']);
+
+            $client->disconnect();
 
             return $this->successResponse('Sale successfully created', 201, new SaleResource($sale));
 
@@ -139,10 +142,11 @@ class SaleRepository implements SaleRepositoryInterface
             if (! $sale) {
                 return $this->errorResponse('Failed to create sale', 400, null);
             }
+            $client = $this->getClient();
 
-            $this->getClient()->publish('detpos/local_server/'.$sale->dispenser->dispenser_no, $sale->nozzle->nozzle_no.'D1S1');
+            $client->publish('detpos/local_server/'.$sale->dispenser->dispenser_no, $sale->nozzle->nozzle_no.'D1S1');
 
-            $this->getClient()->disconnect();
+            // $client->disconnect();
 
             return $this->successResponse('Sale successfully created', 201, new SaleResource($sale));
 
