@@ -27,5 +27,5 @@ COPY . /var/www/html
 
 EXPOSE 5000
 
-# Start Supervisor as the main process
+# Start Supervisor as the main processdc 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
