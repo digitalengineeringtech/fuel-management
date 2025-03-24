@@ -10,9 +10,11 @@ RUN apt-get update && apt-get install -y \
     unzip \
     curl \
     libzip-dev \
-    && docker-php-ext-install zip pdo pdo_mysql gd \
+    && docker-php-ext-install zip pdo pdo_mysql \
     && pecl install redis \
-    && docker-php-ext-enable redis gd
+    && docker-php-ext-enable redis
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -25,5 +27,5 @@ COPY . /var/www/html
 
 EXPOSE 5000
 
-# Start Supervisor as the main process
+# Start Supervisor as the main processdc 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]

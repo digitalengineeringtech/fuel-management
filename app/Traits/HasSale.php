@@ -90,6 +90,7 @@ trait HasSale
 
         $latestVoucher = DB::table('sales')
             ->where('nozzle_id', $nozzleId)
+            ->where('created_at', now())
             ->latest('id')
             ->value('voucher_no');
 
