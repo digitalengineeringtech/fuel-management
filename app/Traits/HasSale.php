@@ -56,11 +56,13 @@ trait HasSale
             'device_totalizer_amount' => $messages[5],
         ];
 
-        $updatedSale = Sale::where('id', $cachedSale['id'])->update($data);
+        $currentSale = Sale::where('id', $cachedSale['id'])->first();
+
+        $currentSale->update($data);
 
         Redis::delete('sale');
 
-        return $updatedSale;
+        return $currentSale;
     }
 
     public function checkCachedSaleExist($nozzleId)
