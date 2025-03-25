@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth\Permissions;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Auth\Permissions\PermissionResource;
 use App\Traits\HasResponse;
-use Dedoc\Scramble\Attributes\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Spatie\Permission\Exceptions\PermissionAlreadyExists;
@@ -25,12 +24,12 @@ class PermissionController extends Controller
         try {
             $permissions = Permission::paginate(10);
 
-            if(!$permissions) {
+            if (! $permissions) {
                 return $this->errorResponse('Permissions not found', 404, null);
             }
 
             return PermissionResource::collection($permissions);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
     }

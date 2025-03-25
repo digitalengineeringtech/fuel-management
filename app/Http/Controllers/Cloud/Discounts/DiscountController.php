@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Cloud\Discounts;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cloud\Discounts\CreateRequest;
 use App\Http\Requests\Cloud\Discounts\UpdateRequest;
 use App\Http\Resources\Cloud\Discounts\DiscountResource;
 use App\Repositories\Cloud\Contracts\Discounts\DiscountRepositoryInterface;
+use Illuminate\Http\Request;
 
 class DiscountController extends Controller
 {

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth\Roles;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Auth\Roles\RoleResource;
 use App\Traits\HasResponse;
-use Dedoc\Scramble\Attributes\Group;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -18,6 +17,7 @@ class RoleController extends Controller
 
     /**
      * All Roles
+     *
      * @response array{message: string, code: int, data: RoleResource[]}
      */
     public function index(Request $request)
@@ -25,12 +25,12 @@ class RoleController extends Controller
         try {
             $roles = Role::paginate(10);
 
-            if(!$roles) {
+            if (! $roles) {
                 return $this->errorResponse('Roles not found', 404, null);
             }
 
             return RoleResource::collection($roles);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);
         }
     }

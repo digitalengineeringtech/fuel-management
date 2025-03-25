@@ -20,6 +20,7 @@ class DispenserRepository implements DispenserRepositoryInterface
             if (! $dispensers) {
                 return $this->errorResponse('Dispensers not found', 404, null);
             }
+
             return DispenserResource::collection($dispensers);
         } catch (Exception $e) {
             return $this->errorResponse($e->getMessage(), 500, null);

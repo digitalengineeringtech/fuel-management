@@ -5,8 +5,8 @@ namespace App\Jobs;
 use App\Models\Nozzle;
 use App\Traits\HasMqtt;
 use App\Traits\HasSale;
-use Illuminate\Support\Facades\Redis;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Support\Facades\Redis;
 
 class ProcessFinal
 {

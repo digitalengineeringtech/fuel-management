@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Local\Dispensers;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Local\Dispensers\CreateRequest;
 use App\Http\Requests\Local\Dispensers\UpdateRequest;
 use App\Http\Resources\Local\Dispensers\DispenserResource;
 use App\Repositories\Local\Contracts\Dispensers\DispenserRepositoryInterface;
+use Illuminate\Http\Request;
 
 class DispenserController extends Controller
 {

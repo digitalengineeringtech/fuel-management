@@ -21,7 +21,7 @@ class SaleRepository implements SaleRepositoryInterface
         try {
             $query = Sale::query();
 
-            if (!$query) {
+            if (! $query) {
                 return $this->errorResponse('Sales not found', 404, null);
             }
 
