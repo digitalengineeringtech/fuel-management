@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('bowser_no', 20);
             $table->float('tank_capacity');
             $table->float('opening_balance')->nullable();
+            $table->float('closing_balance')->nullable();
             $table->float('current_balance')->nullable();
             $table->float('send_balance')->nullable();
             $table->float('receive_balance')->nullable();
