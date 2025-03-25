@@ -31,6 +31,7 @@ class CreateRequest extends FormRequest
             'bowser_no' => ['required', 'string', 'max:20'],
             'tank_capacity' => ['required', 'numeric'],
             'opening_balance' => ['nullable', 'numeric'],
+            'closing_balance' => ['nullable', 'numeric'],
             'current_balance' => ['nullable', 'numeric'],
             'send_balance' => ['nullable', 'numeric'],
             'receive_balance' => ['nullable', 'numeric'],
