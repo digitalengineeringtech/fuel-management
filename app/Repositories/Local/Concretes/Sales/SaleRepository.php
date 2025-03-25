@@ -148,7 +148,7 @@ class SaleRepository implements SaleRepositoryInterface
 
             $client->publish('detpos/local_server/'.$sale->dispenser->dispenser_no, $sale->nozzle->nozzle_no.'D1S1');
 
-            // $client->disconnect();
+            $client->disconnect();
 
             return $this->successResponse('Sale successfully created', 201, new SaleResource($sale));
 
