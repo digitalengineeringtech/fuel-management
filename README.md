@@ -75,12 +75,6 @@ php artisan db:seed
 ```bash
 php artisan subscribe:message
 ```
-### Run laravel queue work command
-
-```bash
-php artisan queue:work
-```
-
 ## Running Tests
 
 To run tests, run the following command
