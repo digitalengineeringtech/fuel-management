@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Local\Sales;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Local\Sales\CreateRequest;
 use App\Http\Requests\Local\Sales\UpdateRequest;
 use App\Http\Resources\Local\Sales\SaleResource;
 use App\Repositories\Local\Contracts\Sales\SaleRepositoryInterface;
+use Illuminate\Http\Request;
 
 class SaleController extends Controller
 {

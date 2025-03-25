@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Local\FuelIns;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Local\Fuelins\CreateRequest;
 use App\Http\Requests\Local\Fuelins\UpdateRequest;
 use App\Http\Resources\Local\FuelIns\FuelInResource;
 use App\Repositories\Local\Contracts\FuelIns\FuelInRepositoryInterface;
+use Illuminate\Http\Request;
 
 class FuelInController extends Controller
 {

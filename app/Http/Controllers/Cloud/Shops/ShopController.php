@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Cloud\Shops;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cloud\Shops\CreateRequest;
 use App\Http\Requests\Cloud\Shops\UpdateRequest;
 use App\Http\Resources\Cloud\Shops\ShopResource;
 use App\Repositories\Cloud\Contracts\Shops\ShopRepositoryInterface;
+use Illuminate\Http\Request;
 
 class ShopController extends Controller
 {

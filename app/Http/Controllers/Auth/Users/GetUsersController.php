@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Auth\Users;
 
-use Exception;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Auth\Users\UserResource;
 use App\Models\User;
 use App\Traits\HasResponse;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Dedoc\Scramble\Attributes\Group;
-use App\Http\Resources\Auth\Users\UserResource;
+use Exception;
+use Illuminate\Http\Request;
 
 #[Group('User')]
 class GetUsersController extends Controller
@@ -25,7 +25,7 @@ class GetUsersController extends Controller
         try {
             $users = User::paginate(10);
 
-            if(!$users) {
+            if (! $users) {
                 return $this->errorResponse('Users not found', 404, null);
             }
 

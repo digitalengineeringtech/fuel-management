@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Local\Nozzles;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Local\Nozzles\CreateRequest;
 use App\Http\Requests\Local\Nozzles\UpdateRequest;
 use App\Http\Resources\Local\Nozzles\NozzleResource;
 use App\Repositories\Local\Contracts\Nozzles\NozzleRepositoryInterface;
+use Illuminate\Http\Request;
 
 class NozzleController extends Controller
 {
