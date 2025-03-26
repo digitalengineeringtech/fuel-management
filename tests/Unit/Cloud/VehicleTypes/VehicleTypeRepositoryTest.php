@@ -3,6 +3,8 @@
 use App\Models\User;
 use App\Models\VehicleType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
 
@@ -28,7 +30,11 @@ test('can get vehicle type by id and response with resource', function () {
 });
 
 test('can create vehicle type and response with resource', function () {
+    Storage::fake();
+
     $vehicleTypeData = VehicleType::factory()->make()->toArray();
+
+    $vehicleTypeData['image'] = UploadedFile::fake()->image('vehicle-type.png');
 
     $response = $this->actingAs($this->user)->post('/api/cloud/vehicle-types', $vehicleTypeData);
 
@@ -36,9 +42,13 @@ test('can create vehicle type and response with resource', function () {
 });
 
 test('can update vehicle type and response with resource', function () {
+    Storage::fake();
+
     $vehicle_type = VehicleType::factory()->create();
 
-    $updatedData = VehicleType::factory()->make(['name' => 'Updated Vehicle Type'])->toArray();
+    $updatedData = VehicleType::factory()->make(['name' => 'GG'])->toArray();
+
+    $updatedData['image'] = UploadedFile::fake()->image('vehicle-type.png');
 
     $response = $this->actingAs($this->user)->put("/api/cloud/vehicle-types/{$vehicle_type->id}", $updatedData);
 

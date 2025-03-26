@@ -34,8 +34,11 @@ test('can create shop and response with resource', function () {
 
     $shopData = [
         'name' => 'Test Shop',
+        'code' => 'TS',
         'image' => UploadedFile::fake()->image('shop.png'),
         'address' => '123 Main St',
+        'importer_name' => 'ABC',
+        'importer_company' => 'ABC Company',
     ];
 
     $shop = Shop::factory()->make($shopData)->toArray();
@@ -50,16 +53,22 @@ test('can update shop and response with resource', function () {
 
     $shopData = [
         'name' => 'Test Shop',
+        'code' => 'TS',
         'image' => UploadedFile::fake()->image('shop.png'),
         'address' => '123 Main St',
+        'importer_name' => 'ABC',
+        'importer_company' => 'ABC Company',
     ];
 
     $shop = Shop::factory()->create($shopData);
 
     $updatedData = [
         'name' => 'Updated Shop',
+        'code' => 'US',
         'image' => UploadedFile::fake()->image('shop.png'),
         'address' => '456 Main St',
+        'importer_name' => 'ABC',
+        'importer_company' => 'ABC Company',
     ];
 
     $response = $this->actingAs($this->user)->put("/api/cloud/shops/{$shop->id}", $updatedData);

@@ -20,7 +20,7 @@ class StationResource extends JsonResource
             'shop' => new ShopResource($this->shop),
             'name' => $this->name,
             'station_no' => $this->station_no,
-            'image' => asset($this->image),
+            'image' => $this->image,
             'phone_one' => $this->phone_one,
             'phone_two' => $this->phone_two,
             'address' => $this->address,

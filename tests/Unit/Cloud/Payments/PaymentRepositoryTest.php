@@ -3,6 +3,8 @@
 use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
 
@@ -28,7 +30,11 @@ test('can get payment by id and response with resource', function () {
 });
 
 test('can create payment and response with resource', function () {
+    Storage::fake();
+
     $paymentData = Payment::factory()->make()->toArray();
+
+    $paymentData['image'] = UploadedFile::fake()->image('payment.png');
 
     $response = $this->actingAs($this->user)->post('/api/cloud/payments', $paymentData);
 
@@ -36,9 +42,13 @@ test('can create payment and response with resource', function () {
 });
 
 test('can update payment and response with resource', function () {
+    Storage::fake();
+
     $payment = Payment::factory()->create();
 
     $updatedData = Payment::factory()->make(['name' => 'GG'])->toArray();
+
+    $updatedData['image'] = UploadedFile::fake()->image('payment.png');
 
     $response = $this->actingAs($this->user)->put("/api/cloud/payments/{$payment->id}", $updatedData);
 

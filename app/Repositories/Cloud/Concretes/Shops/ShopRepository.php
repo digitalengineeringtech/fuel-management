@@ -5,11 +5,13 @@ namespace App\Repositories\Cloud\Concretes\Shops;
 use App\Http\Resources\Cloud\Shops\ShopResource;
 use App\Models\Shop;
 use App\Repositories\Cloud\Contracts\Shops\ShopRepositoryInterface;
+use App\Traits\HasGenerate;
 use App\Traits\HasImage;
 use App\Traits\HasResponse;
 
 class ShopRepository implements ShopRepositoryInterface
 {
+    use HasGenerate;
     use HasImage;
     use HasResponse;
 
@@ -46,13 +48,15 @@ class ShopRepository implements ShopRepositoryInterface
     public function createShop($data)
     {
         try {
-            // Upload the image if provided
-            if (isset($data['image'])) {
-                $data['image'] = $this->uploadImage('shops', $data['image']);
-            }
-
             // Create a new shop
-            $shop = Shop::create($data);
+            $shop = Shop::create([
+                'name' => $data['name'],
+                'code' => $this->generateShopNumber($data['name']),
+                'image' => isset($data['image']) ?? $this->uploadImage('shops', $data['image']),
+                'address' => $data['address'],
+                'importer_name' => $data['importer_name'],
+                'importer_company' => $data['importer_company'],
+            ]);
 
             if (! $shop) {
                 return $this->errorResponse('Failed to create shop', 400, null);
@@ -73,12 +77,14 @@ class ShopRepository implements ShopRepositoryInterface
                 return $this->errorResponse('Shop not found', 404, null);
             }
 
-            // Upload the image if provided
-            if (isset($data['image'])) {
-                $data['image'] = $this->uploadImage('shops', $data['image']);
-            }
-
-            $shop->update($data);
+            $shop->update([
+                'name' => $data['name'],
+                'code' => $this->generateShopNumber($data['name']),
+                'image' => isset($data['image']) ?? $this->uploadImage('shops', $data['image']),
+                'address' => $data['address'],
+                'importer_name' => $data['importer_name'],
+                'importer_company' => $data['importer_company'],
+            ]);
 
             return $this->successResponse('Shop successfully updated', 200, new ShopResource($shop));
         } catch (Exception $e) {
