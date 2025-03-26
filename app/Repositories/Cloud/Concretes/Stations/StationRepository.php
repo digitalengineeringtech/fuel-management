@@ -5,15 +5,16 @@ namespace App\Repositories\Cloud\Concretes\Stations;
 use App\Http\Resources\Cloud\Stations\StationResource;
 use App\Models\Station;
 use App\Repositories\Cloud\Contracts\Stations\StationRepositoryInterface;
+use App\Traits\HasGenerate;
 use App\Traits\HasImage;
 use App\Traits\HasResponse;
 use Exception;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class StationRepository implements StationRepositoryInterface
 {
+    use HasGenerate;
     use HasImage;
     use HasResponse;
 
@@ -51,15 +52,31 @@ class StationRepository implements StationRepositoryInterface
     public function createStation($data)
     {
         try {
-            // Generate a unique database name for the station
-            $data['station_database'] = 'station_'.Str::slug($data['name'], '_').'_'.Str::lower($data['station_no']);
 
-            // Upload the image if provided
-            if (isset($data['image'])) {
-                $data['image'] = $this->uploadImage('stations', $data['image']);
-            }
+            // Generate station number
+            $stationNo = $this->generateStationNumber($data['shop_id']);
+
+            // Generate a unique database name for the station
+            $stationDatabase = $this->generateDatabaseName($stationNo);
+
             // Create a new station
-            $station = Station::create($data);
+            $station = Station::create([
+                'shop_id' => $data['shop_id'],
+                'name' => $data['name'],
+                'station_no' => $stationNo,
+                'license_no' => $data['license_no'],
+                'image' => isset($data['image']) ?? $this->uploadImage('stations', $data['image']),
+                'phone_one' => $data['phone_one'],
+                'phone_two' => $data['phone_two'],
+                'address' => $data['address'],
+                'opening_date' => $data['opening_date'],
+                'subscribe_year' => $data['subscribe_year'],
+                'expiry_date' => $data['expiry_date'],
+                'opening_hour' => $data['opening_hour'],
+                'closing_hour' => $data['closing_hour'],
+                'station_database' => $stationDatabase,
+                'expose_url' => $data['expose_url'],
+            ]);
 
             // if the station doesn't exist, return an error response and delete the database
             if (! $station) {
@@ -96,9 +113,6 @@ class StationRepository implements StationRepositoryInterface
     {
         // Upload the image if provided
         try {
-            if (isset($data['image'])) {
-                $data['image'] = $this->uploadImage('stations', $data['image']);
-            }
             // find the station by id
             $station = Station::find($id);
 
@@ -108,7 +122,23 @@ class StationRepository implements StationRepositoryInterface
             }
 
             // update the station
-            $station->update($data);
+            $station->update([
+                'shop_id' => $data['shop_id'],
+                'name' => $data['name'],
+                'station_no' => $station->station_no,
+                'license_no' => $data['license_no'],
+                'image' => isset($data['image']) ?? $this->uploadImage('stations', $data['image']),
+                'phone_one' => $data['phone_one'],
+                'phone_two' => $data['phone_two'],
+                'address' => $data['address'],
+                'opening_date' => $data['opening_date'],
+                'subscribe_year' => $data['subscribe_year'],
+                'expiry_date' => $data['expiry_date'],
+                'opening_hour' => $data['opening_hour'],
+                'closing_hour' => $data['closing_hour'],
+                'station_database' => $station->station_database,
+                'expose_url' => $data['expose_url'],
+            ]);
 
             return $this->successResponse('Station successfully updated', 200, new StationResource($station));
         } catch (Exception $e) {

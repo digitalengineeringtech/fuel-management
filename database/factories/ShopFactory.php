@@ -18,8 +18,11 @@ class ShopFactory extends Factory
     {
         return [
             'name' => fake()->name,
+            'code' => fake()->uuid,
             'image' => fake()->imageUrl(),
             'address' => fake()->address,
+            'importer_name' => fake()->name,
+            'importer_company' => fake()->company,
         ];
     }
 }

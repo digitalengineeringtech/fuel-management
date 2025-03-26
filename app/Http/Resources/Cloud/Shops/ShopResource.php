@@ -17,7 +17,7 @@ class ShopResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'image' => asset($this->image),
+            'image' => $this->image,
             'address' => $this->address,
             'created_at' => $this->created_at->format('d-m-Y'),
             'updated_at' => $this->updated_at->format('d-m-Y'),

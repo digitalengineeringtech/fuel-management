@@ -17,9 +17,10 @@ class StationFactory extends Factory
     public function definition(): array
     {
         return [
-            'store_id' => rand(1, 3),
+            'shop_id' => rand(1, 3),
             'name' => fake()->name(),
             'station_no' => rand(000001, 999999),
+            'license_no' => rand(000001, 999999),
             'image' => fake()->imageUrl(500, 500),
             'phone_one' => fake()->phoneNumber(),
             'phone_two' => fake()->phoneNumber(),
@@ -29,6 +30,8 @@ class StationFactory extends Factory
             'expiry_date' => fake()->date(),
             'opening_hour' => fake()->time(),
             'closing_hour' => fake()->time(),
+            'station_database' => null,
+            'expose_url' => null,
         ];
     }
 }

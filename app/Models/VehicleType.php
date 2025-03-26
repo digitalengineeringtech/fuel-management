@@ -17,4 +17,13 @@ class VehicleType extends Model
     {
         return $this->hasMany(Sale::class);
     }
+
+    public function getImageAttribute()
+    {
+        if ($this->attributes['image'] == null) {
+            return asset('images/six-kendra.jpg');
+        }
+
+        return asset('storage/'.$this->attributes['image']);
+    }
 }

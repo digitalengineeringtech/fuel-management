@@ -18,6 +18,7 @@ class PaymentFactory extends Factory
     {
         return [
             'name' => 'Kpay',
+            'image' => fake()->imageUrl(),
         ];
     }
 }

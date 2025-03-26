@@ -19,6 +19,7 @@ class VehicleTypeFactory extends Factory
         return [
             'name' => 'Car',
             'description' => 'Car vehicle type',
+            'image' => fake()->imageUrl(),
         ];
     }
 }
