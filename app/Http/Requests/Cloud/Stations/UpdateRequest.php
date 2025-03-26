@@ -24,7 +24,7 @@ class UpdateRequest extends FormRequest
         return [
             'shop_id' => 'required',
             'name' => 'required|string|max:50',
-            'station_no' => 'required|string|max:20',
+            'station_no' => 'string',
             'license_no' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:4096',
             'phone_one' => 'required|string|max:20',
