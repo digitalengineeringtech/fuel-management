@@ -2,13 +2,14 @@
 
 namespace App\Traits;
 
-use App\Models\Nozzle;
-use App\Models\Sale;
-use Carbon\Carbon;
 use Exception;
+use Carbon\Carbon;
+use App\Models\Sale;
+use App\Models\FuelIn;
+use App\Models\Nozzle;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
-use Illuminate\Support\Str;
 
 trait HasSale
 {
@@ -40,13 +41,22 @@ trait HasSale
 
     public function updateSale(array $cachedSale, array $messages)
     {
-        // $tank = Tank::where('id', $cachedSale['tank_id'])->first();
-
         $previousSale = Sale::where('id', '!=', $cachedSale['id'])
             ->where('nozzle_id', $cachedSale['nozzle_id'])
             ->where('dispenser_id', $cachedSale['dispenser_id'])
             ->latest('id')
             ->first();
+
+        $fuelIn = FuelIn::where('fuel_type_id', $cachedSale['fuel_type_id'])->first();
+
+        $fuelIn->update([
+            'current_balance' => $fuelIn->current_balance - $messages[2],
+        ]);
+
+        $fuelIn->tank->update([
+            'volume' => $fuelIn->tank->volume - $messages[2],
+            'avaliable_oil_weight' => $fuelIn->tank->avaliable_oil_weight + $messages[2],
+        ]);
 
         $data = [
             'sale_price' => $messages[1],
@@ -56,6 +66,7 @@ trait HasSale
             'totalizer_amount' => $previousSale ? ($previousSale->totalizer_amount + $messages[3]) : $messages[3],
             'device_totalizer_liter' => $messages[4],
             'device_totalizer_amount' => $messages[5],
+            'tank_balance' => $fuelIn->tank->volume,
         ];
 
         $currentSale = Sale::where('id', $cachedSale['id'])->first();
