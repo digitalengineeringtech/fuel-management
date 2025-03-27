@@ -18,7 +18,7 @@ class MessageReceived implements ShouldBroadcastNow
 
     public $message;
 
-    public function __construct(string $user, string $topic, string $message)
+    public function __construct(object $user, string $topic, string $message)
     {
         $this->user = $user;
         $this->topic = $topic;

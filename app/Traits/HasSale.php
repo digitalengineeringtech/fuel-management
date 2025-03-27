@@ -2,13 +2,14 @@
 
 namespace App\Traits;
 
-use App\Models\Nozzle;
-use App\Models\Sale;
-use Carbon\Carbon;
 use Exception;
+use Carbon\Carbon;
+use App\Models\Sale;
+use App\Models\FuelIn;
+use App\Models\Nozzle;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
-use Illuminate\Support\Str;
 
 trait HasSale
 {
@@ -46,6 +47,17 @@ trait HasSale
             ->latest('id')
             ->first();
 
+        $fuelIn = FuelIn::where('fuel_type_id', $cachedSale['fuel_type_id'])->first();
+
+        $fuelIn->update([
+            'current_balance' => $fuelIn->current_balance - $messages[2],
+        ]);
+
+        $fuelIn->tank->update([
+            'volume' => $fuelIn->tank->volume - $messages[2],
+            'avaliable_oil_weight' => $fuelIn->tank->avaliable_oil_weight + $messages[2],
+        ]);
+
         $data = [
             'sale_price' => $messages[1],
             'sale_liter' => $messages[2],
@@ -54,6 +66,7 @@ trait HasSale
             'totalizer_amount' => $previousSale ? ($previousSale->totalizer_amount + $messages[3]) : $messages[3],
             'device_totalizer_liter' => $messages[4],
             'device_totalizer_amount' => $messages[5],
+            'tank_balance' => $fuelIn->tank->volume,
         ];
 
         $currentSale = Sale::where('id', $cachedSale['id'])->first();
@@ -90,23 +103,26 @@ trait HasSale
 
         $stationNo = $nozzle->dispenser->station->station_no;
 
-        $latestVoucher = DB::table('sales')
+        $lastVoucher = DB::table('sales')
             ->where('nozzle_id', $nozzleId)
-            ->where('created_at', now())
+            ->whereDate('created_at', now())
             ->latest('id')
-            ->value('voucher_no');
+            ->first();
 
         // Extract last counter if available
-        if ($latestVoucher) {
-            $parts = explode('/', $latestVoucher);
+        if ($lastVoucher) {
+            $parts = explode('/', $lastVoucher->voucher_no);
             $lastCounter = (int) end($parts); // Get last counter
             $counter = $lastCounter + 1;
         } else {
             $counter = 1; // Start from 1 if no record for today
+
         }
 
         // Generate new voucher number
-        $voucherNo = "{$stationNo}/".Str::upper($cashier).'/'.$today."/{$counter}";
+        $voucherNo = "{$stationNo}/". Str::upper(trim($cashier)) .'/'.$today."/{$counter}";
+
+        // dd($voucherNo);
 
         return $voucherNo;
     }

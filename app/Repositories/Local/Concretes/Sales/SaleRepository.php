@@ -5,6 +5,7 @@ namespace App\Repositories\Local\Concretes\Sales;
 use App\Http\Resources\Local\Sales\SaleResource;
 use App\Models\Sale;
 use App\Repositories\Local\Contracts\Sales\SaleRepositoryInterface;
+use App\Traits\HasGenerate;
 use App\Traits\HasMqtt;
 use App\Traits\HasResponse;
 use App\Traits\HasSale;
@@ -15,6 +16,7 @@ class SaleRepository implements SaleRepositoryInterface
     use HasMqtt;
     use HasResponse;
     use HasSale;
+    use HasGenerate;
 
     public function getSales($request)
     {
@@ -102,13 +104,16 @@ class SaleRepository implements SaleRepositoryInterface
     public function presetSale($type, $data)
     {
         try {
-            $voucherNo = $this->generateVoucherNo($data['nozzle_id'], $data['cashier_code']);
+            $voucherNo = $this->generateVoucherNo($data['nozzle_id'], auth()->user()->name);
+
             $presetAmount = $this->getPresetAmount($type, $data['preset_amount']);
+
+            $role = auth()->user()->roles->first()->name;
 
             $sale = $this->addSale([
                 ...$data,
                 'voucher_no' => $voucherNo,
-                'cashier_code' => $data['cashier_code'],
+                'cashier_code' => $this->generateCashierCode($role, $data['station_id']),
                 'is_preset' => true,
                 'preset_amount' => $presetAmount,
             ]);
@@ -133,12 +138,13 @@ class SaleRepository implements SaleRepositoryInterface
     public function cashierSale($data)
     {
         try {
-            $voucherNo = $this->generateVoucherNo($data['nozzle_id'], $data['cashier_code']);
+            $role = auth()->user()->roles->first()->name;
+            $voucherNo = $this->generateVoucherNo($data['nozzle_id'], auth()->user()->name);
 
             $sale = $this->addSale([
                 ...$data,
                 'voucher_no' => $voucherNo,
-                'cashier_code' => $data['cashier_code'],
+                'cashier_code' => $this->generateCashierCode($role, $data['station_id']),
             ]);
 
             if (! $sale) {

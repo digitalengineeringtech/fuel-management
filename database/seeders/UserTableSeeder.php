@@ -21,7 +21,7 @@ class UserTableSeeder extends Seeder
             'tank_count' => 10,
         ]);
 
-        $user->syncRoles('admin');
+        $user->syncRoles('manager');
         $user->syncPermissions('create', 'read', 'update', 'delete');
     }
 }
