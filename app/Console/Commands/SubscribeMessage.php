@@ -2,8 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Events\MessageReceived;
+use App\Models\User;
 use App\Traits\HasMqtt;
+use App\Events\MessageReceived;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Redis;
 
@@ -34,9 +35,11 @@ class SubscribeMessage extends Command
             $client = $this->getClient();
 
             $client->subscribe('detpos/#', function ($topic, $message) {
-                $user = Redis::get('user');
+                $redis = Redis::get('user');
 
-                if (empty($user)) {
+                $user = User::where('id', $redis)->first();
+
+                if ($user == null) {
                     $this->error('Please login first...');
 
                     return;

@@ -40,6 +40,8 @@ trait HasSale
 
     public function updateSale(array $cachedSale, array $messages)
     {
+        // $tank = Tank::where('id', $cachedSale['tank_id'])->first();
+
         $previousSale = Sale::where('id', '!=', $cachedSale['id'])
             ->where('nozzle_id', $cachedSale['nozzle_id'])
             ->where('dispenser_id', $cachedSale['dispenser_id'])
@@ -90,23 +92,26 @@ trait HasSale
 
         $stationNo = $nozzle->dispenser->station->station_no;
 
-        $latestVoucher = DB::table('sales')
+        $lastVoucher = DB::table('sales')
             ->where('nozzle_id', $nozzleId)
-            ->where('created_at', now())
+            ->whereDate('created_at', now())
             ->latest('id')
-            ->value('voucher_no');
+            ->first();
 
         // Extract last counter if available
-        if ($latestVoucher) {
-            $parts = explode('/', $latestVoucher);
+        if ($lastVoucher) {
+            $parts = explode('/', $lastVoucher->voucher_no);
             $lastCounter = (int) end($parts); // Get last counter
             $counter = $lastCounter + 1;
         } else {
             $counter = 1; // Start from 1 if no record for today
+
         }
 
         // Generate new voucher number
-        $voucherNo = "{$stationNo}/".Str::upper($cashier).'/'.$today."/{$counter}";
+        $voucherNo = "{$stationNo}/". Str::upper(trim($cashier)) .'/'.$today."/{$counter}";
+
+        // dd($voucherNo);
 
         return $voucherNo;
     }

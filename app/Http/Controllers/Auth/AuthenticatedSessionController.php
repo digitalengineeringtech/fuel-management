@@ -28,7 +28,7 @@ class AuthenticatedSessionController extends Controller
 
         $token = $request->user()->createToken('auth_token')->plainTextToken;
 
-        Redis::set('user', $request->user()->name);
+        Redis::set('user', $request->user()->id);
 
         return $this->successResponse('Success', '200', [
             'token' => $token,

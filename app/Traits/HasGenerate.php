@@ -26,10 +26,10 @@ trait HasGenerate
         $station = DB::table('stations')->where('shop_id', $shopId)->count();
 
         if ($station != 0) {
-            return $shop->code.'-'.$station + 1;
+            return $shop->code.'-'. sprintf('%03d', $station + 1);
         }
 
-        return $shop->code.'-'. 1;
+        return $shop->code.'-'. sprintf('%03d', 1);
     }
 
     public function generateDatabaseName(string $stationNo)
@@ -39,16 +39,16 @@ trait HasGenerate
 
     public function generateCashierCode(string $role, int $stationId)
     {
-
         $station = DB::table('stations')->where('id', $stationId)->first();
 
         $user = DB::table('users')->where('station_id', $stationId)->count();
 
-        switch ($role) {
+        switch($role) {
             case 'manager':
-                return $user != 0 ? 'M-'.$station->code.'-'.$user + 1 : 'M-'.$station->code.'-'. 1;
+                return $user != 0 ? 'M-' . $station->station_no . '-' . $user + 1 : 'M-' . $station->station_no . '-' . 1;
+                break;
             case 'cashier':
-                return $user != 0 ? 'C-'.$station->code.'-'.$user + 1 : 'C-'.$station->code.'-'. 1;
+                return $user != 0 ? 'C-' . $station->station_no . '-' . $user + 1 : 'C-' . $station->station_no . '-' . 1;
                 break;
             default:
                 break;

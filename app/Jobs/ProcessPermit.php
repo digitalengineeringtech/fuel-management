@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Nozzle;
+use App\Traits\HasGenerate;
 use App\Traits\HasMqtt;
 use App\Traits\HasSale;
 use Illuminate\Foundation\Queue\Queueable;
@@ -13,6 +14,7 @@ class ProcessPermit
     use HasMqtt;
     use HasSale;
     use Queueable;
+    use HasGenerate;
 
     public $user;
 
@@ -20,7 +22,7 @@ class ProcessPermit
 
     public $client;
 
-    public function __construct(string $user, array $messages)
+    public function __construct(object $user, array $messages)
     {
         $this->user = $user;
         $this->messages = $messages;
@@ -34,7 +36,10 @@ class ProcessPermit
     {
         $nozzle = Nozzle::where('nozzle_no', $this->messages[0])->first();
 
-        $voucherNo = $this->generateVoucherNo($nozzle->id, $this->user);
+        $role = $this->user->roles->first()->name;
+
+        $voucherNo = $this->generateVoucherNo($nozzle->id, $this->user->name);
+        $cashierCode = $this->generateCashierCode($role, $nozzle->dispenser->station_id);
 
         if ($nozzle->auto_approve || $nozzle->semi_approve) {
             $sale = $this->addSale([
@@ -44,7 +49,7 @@ class ProcessPermit
                 'fuel_type_id' => $nozzle->stockPrice->fuel_type_id,
                 'tank_id' => $nozzle->stockPrice->fuelType->tank->id,
                 'voucher_no' => $voucherNo,
-                'cashier_code' => Str::lower($this->user),
+                'cashier_code' => $cashierCode,
             ]);
 
             $this->client->publish('detpos/local_server/'.$sale->dispenser->dispenser_no, $sale->nozzle->nozzle_no.'appro');

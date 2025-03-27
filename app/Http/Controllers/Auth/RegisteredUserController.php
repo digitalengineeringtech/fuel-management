@@ -37,7 +37,7 @@ class RegisteredUserController extends Controller
             'cloud_user' => false,
         ]);
 
-        Redis::set('user', $user->name);
+        Redis::set('user', $user->id);
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
